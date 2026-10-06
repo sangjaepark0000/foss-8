@@ -1,6 +1,7 @@
 import ast
 import json
 import os
+import re
 import subprocess
 import sys
 from pathlib import Path
@@ -14,6 +15,7 @@ from foss8.guide import Catalog, display_markdown
 from foss8.templates import get, save
 from foss8.tui import GuideApp, HelpHint, HelpScreen, StartScreen, WeekScreen
 from foss8 import weeks, focus
+from foss8 import completion
 from foss8.completion import install as install_completion
 
 
@@ -52,6 +54,32 @@ def test_template_extraction_preserves_multiblock_form_and_nested_fences():
     assert "홍길동" not in blank and "[x]" not in blank and "2026-10-13" not in blank
     assert "해당 주차" in blank and "활동 로그" in blank
     assert get(catalog, "minutes-example")["derived"] is False
+
+
+@pytest.mark.parametrize("name,count,pages,deadline,last", [
+    ("proposal", 7, [15], "10/1(목) 18:00", "기대 효과 및 목표"),
+    ("midterm", 6, [33], "11/5(목) 18:00", "남은 계획"),
+    ("final", 8, [34, 35], "12/17(목) 18:00", "회고와 향후 계획"),
+])
+def test_report_forms_keep_required_sections_submission_and_portable_sources(name, count, pages, deadline, last, tmp_path, capsys):
+    template = get(Catalog(), name)
+    content = template["content"]
+    assert len(re.findall(r"^## \d+\. ", content, re.M)) == count
+    assert f"## {count}. {last}" in content
+    assert "## 표지" in content and "## 목차" in content and deadline in content
+    assert template["derived"] is True and template["source"]["pages"] == pages
+    assert "기능 4개" in content and "팀명: \n" in content and "[작성]" in content
+    assert not re.search(r"\]\((?!https://)[^)]+\)", content)
+    if name == "final":
+        assert "## 부록" in content and "회의록 10회 링크" in content and "대표 풀 리퀘스트 2개 링크" in content
+    if name == "midterm":
+        assert "동작하는 기능 2개" in content and "충돌 해결 사례 1개" in content
+    target = tmp_path / f"{name}.md"
+    assert main(["format", name, "-o", str(target), "--json"]) == 0
+    result = json.loads(capsys.readouterr().out)
+    assert result["ok"] and target.read_text(encoding="utf-8") == content
+    assert name in completion.forms()
+    assert name in GuideApp().forms
 
 
 def test_cli_json_success_error_and_explicit_overwrite(tmp_path, capsys):
