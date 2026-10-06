@@ -1,5 +1,8 @@
 import ast
 import json
+import os
+import subprocess
+import sys
 from pathlib import Path
 from datetime import date
 
@@ -11,6 +14,7 @@ from foss8.guide import Catalog, display_markdown
 from foss8.templates import get, save
 from foss8.tui import GuideApp, HelpHint, HelpScreen, StartScreen, WeekScreen
 from foss8 import weeks, focus
+from foss8.completion import install as install_completion
 
 
 def test_catalog_covers_source_pages_and_search_has_reproducible_location():
@@ -228,3 +232,55 @@ async def test_focus_hints_dropdown_help_and_input_restore():
         await pilot.pause()
         assert app.screen.focused is destination and destination.value == "내 회의록.md"
         assert "저장 경로" in str(app.screen.query_one(HelpHint).render())
+
+
+def test_cli_incomplete_commands_show_choices_and_keep_json_contract(capsys):
+    for arguments, expected in [(["help"], "oss completion bash --install"),
+                                (["guide"], "oss guide search"),
+                                (["guide", "show"], "calendar"),
+                                (["guide", "search"], "검색어"),
+                                (["format"], "minutes-example")]:
+        assert main(arguments) == 0
+        output = capsys.readouterr()
+        assert expected in output.out and not output.err
+    assert main(["format", "unknown"]) == 2
+    assert "지원 양식: minutes, minutes-example" in capsys.readouterr().err
+    assert main(["guide", "wrong"]) == 2
+    assert "oss guide search" in capsys.readouterr().err
+    assert main(["guide", "show", "--json"]) == 2
+    output = capsys.readouterr()
+    assert not output.err and not json.loads(output.out)["ok"]
+    assert main(["format", "--json"]) == 0
+    output = capsys.readouterr()
+    assert not output.err and json.loads(output.out)["data"][0]["id"] == "minutes"
+
+
+def test_shell_completion_offers_context_values_and_output_paths(tmp_path):
+    def complete(line):
+        destination = tmp_path / "completion-output"
+        env = dict(os.environ, _ARGCOMPLETE="1", COMP_LINE=line, COMP_POINT=str(len(line)),
+                   _ARGCOMPLETE_STDOUT_FILENAME=str(destination), _ARGCOMPLETE_IFS="\v")
+        result = subprocess.run([sys.executable, "-m", "foss8"], env=env, capture_output=True, text=True)
+        assert result.returncode == 0 and not result.stdout and not result.stderr
+        return {item.strip() for item in destination.read_text().split("\v")}
+    assert {"week", "guide", "format", "completion"} <= complete("oss ")
+    assert complete("oss guide ") == {"list", "show", "search"}
+    assert complete("oss format min") == {"minutes", "minutes-example"}
+    assert {"6", "week-04-makeup"} <= complete("oss week ")
+    assert "minutes" in complete("oss guide show min")
+    assert "--output" in complete("oss format minutes --")
+    target = tmp_path / "my-minutes.md"
+    target.write_text("preserve")
+    assert str(target) in complete("oss format minutes --output " + str(tmp_path) + "/my-")
+    assert target.read_text() == "preserve"
+
+
+def test_completion_install_is_repeatable_and_protects_existing_customization(tmp_path, monkeypatch):
+    monkeypatch.setenv("XDG_DATA_HOME", str(tmp_path))
+    path, activate = install_completion("bash")
+    assert Path(path).read_text().startswith("# foss-8 shell completion\n")
+    assert "source " in activate and install_completion("bash")[0] == path
+    Path(path).write_text("my custom completion")
+    with pytest.raises(ValueError, match="보호"):
+        install_completion("bash")
+    assert Path(path).read_text() == "my custom completion"

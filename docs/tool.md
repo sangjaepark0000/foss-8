@@ -31,6 +31,22 @@ Git 소스 설치에는 Git도 필요합니다. 설치 후에는 저장소 클�
 
 개발용 로컬 설치: `uv tool install .`. 업데이트는 같은 소스로 `uv tool install --reinstall .`를 실행합니다. 브랜치 설치는 개발 버전이며, 안정적인 재현에는 커밋 SHA 또는 출시한 태그를 사용합니다.
 
+## CLI 안내와 Tab 자동완성
+
+`oss help` 또는 `oss --help`는 명령 목록과 예시를 보여줍니다. `oss guide`는 다음에 쓸 하위 명령, `oss guide show`는 문서 이름과 설명, `oss format`은 지원 양식 이름을 보여줍니다. 잘못된 양식 이름을 넣어도 지원 목록을 바로 안내합니다.
+
+```bash
+oss help
+oss guide
+oss guide show
+oss format
+oss completion bash --install
+```
+
+Bash에서는 bash-completion이 활성화되어 있으면 사용자용 자동완성 파일을 자동으로 읽습니다. 설치 후 새 터미널을 열거나 현재 터미널에서 `source <(oss completion bash)`를 한 번 실행하세요. 이후 `oss `, `oss guide `, `oss format `, `oss week `, `oss guide show ` 뒤에서 Tab으로 다음에 쓸 수 있는 값을 완성합니다. 후보가 여러 개면 Bash 기본 설정에서는 Tab을 두 번 눌러 목록을 봅니다. 옵션은 `--` 뒤에서 완성하며 저장 경로도 파일 완성을 지원합니다. 자동완성 때문에 조회·저장·TUI가 실행되지는 않습니다.
+
+zsh는 `eval "$(oss completion zsh)"`로 활성화합니다. fish는 `oss completion fish --install`로 사용자 설정에 설치할 수 있습니다. 해당 셸에서 지원하는 방식으로 스크립트를 제공하며, 실제 키보드 Tab 동작은 이 PC의 Bash에서 검증합니다. 자동완성은 [argcomplete 공식 문서](https://kislyuk.github.io/argcomplete/)의 argparse 연동 방식으로 생성합니다.
+
 ## 에이전트·자동화
 
 ```bash
