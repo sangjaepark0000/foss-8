@@ -3,7 +3,7 @@ from pathlib import PurePosixPath
 from urllib.parse import unquote, urlsplit
 
 from rich.text import Text
-from textual import on
+from textual import events, on
 from textual.app import App, ComposeResult
 from textual.binding import Binding
 from textual.containers import Horizontal, Vertical, VerticalScroll
@@ -17,6 +17,79 @@ from . import focus
 from . import weeks
 
 
+CONTROL_HINTS = {
+    "start-options": "↑↓ 메뉴 선택 · Enter 열기",
+    "week-choice": "주차 선택: Enter/Space로 목록 펼치기 · ↑↓ 선택 · Enter 적용",
+    "category": "분류 선택: Enter/Space로 목록 펼치기 · ↑↓ 선택 · Enter 적용",
+    "search": "검색어 입력 · 예: 회의록 제출, 중간보고서 · Enter로 결과 목록 이동",
+    "results": "↑↓ 항목 선택 · Enter 본문 열기",
+    "week-reader": "↑↓/PgUp/PgDn 본문 스크롤 · Tab으로 링크·버튼 이동",
+    "reader": "↑↓/PgUp/PgDn 본문 스크롤 · Ctrl+S 본문/양식 저장",
+    "focus-text": "↑↓/PgUp/PgDn 스크롤 · 아래 버튼에서 회의록 양식 저장",
+    "week-checklist": "Enter: 선택한 주차의 개인 점검표와 할 일 전환",
+    "week-deadline": "Enter: 오늘 기준 가장 가까운 제출 마감 확인",
+    "week-back": "Enter: 처음 화면으로 돌아가기",
+    "focus-save": "Enter: 빈 회의록 양식의 저장 경로 입력",
+    "focus-back": "Enter: 이전 화면으로 돌아가기",
+    "destination": "저장 경로 입력 · 예: 회의록.md, docs/meetings/회의록.md · Enter 저장",
+    "confirm-save": "Enter: 입력한 경로에 저장 · 기존 파일은 보호합니다",
+    "cancel-save": "Enter: 저장 취소",
+}
+START_HINTS = [
+    "주차별 할 일: 주차를 골라 할 일·제출물·개인 점검표 확인",
+    "회의록 양식 저장: 빈 양식을 파일로 저장하고 작성",
+    "검색: 안내서 전체 검색 · 예: 회의록 제출, 중간보고서",
+    "전체 안내서: 모든 장·부록을 목록에서 선택해 읽기",
+]
+
+
+class HelpHint(Static):
+    DEFAULT_CSS = """
+    HelpHint { height: auto; min-height: 2; max-height: 4; margin-top: 1;
+               padding: 0 1; color: $text-muted; background: $panel; }
+    """
+
+    def __init__(self, hint, **kwargs):
+        super().__init__(Text(hint + "\nTab 다음 · Shift+Tab 이전 · F1 도움말 · Ctrl+Q 종료"), **kwargs)
+
+    def show_hint(self, hint):
+        self.update(Text(hint + "\nTab 다음 · Shift+Tab 이전 · F1 도움말 · Ctrl+Q 종료"))
+
+
+class HelpScreen(ModalScreen):
+    CSS = """
+    HelpScreen { align: center middle; background: $background 70%; }
+    #help-card { width: 76; max-width: 96%; height: 90%; border: round $accent; padding: 0 1; background: $surface; }
+    #help-reader { height: 1fr; }
+    #help-close { margin: 1 0; }
+    """
+    BINDINGS = [("escape,f1", "close", "닫기"), ("ctrl+q", "app.quit", "종료")]
+
+    def compose(self):
+        with Vertical(id="help-card"):
+            with VerticalScroll(id="help-reader"):
+                yield Markdown("""# TUI 사용법
+
+- **Tab / Shift+Tab**: 다음 / 이전 영역. 아래 힌트가 현재 영역에 맞게 바뀝니다.
+- **Enter / Space**: 주차·분류 선택 상자의 후보 목록을 펼칩니다. ↑↓로 고르고 Enter로 적용합니다. Esc는 목록만 닫습니다.
+- **↑↓ / Enter**: 메뉴·문서·양식 목록에서 선택하고 엽니다.
+- **↑↓ / PgUp / PgDn**: 본문에 포커스가 있을 때 스크롤합니다.
+- **Esc**: 이전 화면·문서로 돌아갑니다. 저장 창에서는 취소합니다.
+- **/**: 전체 검색으로 이동합니다. 검색창에는 `회의록 제출`, `중간보고서`처럼 입력합니다. Enter로 결과 목록으로 이동합니다.
+- **Ctrl+S**: 현재 본문·양식을 저장합니다. 첫 화면·주차 화면·가까운 제출 화면에서는 빈 회의록 양식을 저장합니다.
+- **Ctrl+Q**: 종료합니다.
+
+회의록 이외의 양식은 **전체 안내서 → 분류: 양식 저장**에서 선택하세요. 버튼은 Tab으로 이동한 뒤 Enter로 실행하고, 마우스로도 선택할 수 있습니다.
+
+**Esc 또는 F1로 닫으면 원래 작업하던 곳으로 돌아갑니다.**
+""", open_links=False)
+            yield Button("닫기 · Esc / F1", id="help-close")
+
+    @on(Button.Pressed, "#help-close")
+    def action_close(self):
+        self.dismiss(None)
+
+
 class StartScreen(Screen):
     BINDINGS = [("escape", "stay", "")]
     CSS = """
@@ -24,20 +97,23 @@ class StartScreen(Screen):
     #start { width: 64; max-width: 95%; height: auto; padding: 2 3; border: round $accent; }
     #start-title { height: auto; margin-bottom: 1; text-style: bold; }
     #start-options { height: auto; border: none; }
-    #start-hint { height: auto; margin-top: 1; color: $text-muted; }
     """
 
     def compose(self):
         with Vertical(id="start"):
             yield Label("OSS · 무엇이 필요하세요?", id="start-title")
             yield OptionList("주차별 할 일", "회의록 양식 저장", "검색", "전체 안내서", id="start-options")
-            yield Label("↑↓ 선택 · Enter 열기 · Ctrl+Q 종료", id="start-hint")
+            yield HelpHint("↑↓ 메뉴 선택 · Enter 열기", id="start-hint")
 
     def on_mount(self):
         self.query_one(OptionList).focus()
 
     def action_stay(self):
         pass
+
+    @on(OptionList.OptionHighlighted, "#start-options")
+    def highlight(self, event):
+        self.query_one(HelpHint).show_hint(START_HINTS[event.option_index] + " · ↑↓ / Enter")
 
     @on(OptionList.OptionSelected)
     async def choose(self, event):
@@ -85,6 +161,7 @@ class WeekScreen(Screen):
                 yield Button("개인 점검표", id="week-checklist")
                 yield Button("가까운 제출", id="week-deadline")
                 yield Button("처음으로", id="week-back")
+            yield HelpHint(CONTROL_HINTS["week-choice"])
 
     async def on_mount(self):
         await self.update_week()
@@ -137,6 +214,7 @@ class FocusScreen(Screen):
             with Horizontal(id="focus-buttons"):
                 yield Button("회의록 양식 저장", id="focus-save", variant="primary")
                 yield Button("뒤로", id="focus-back")
+            yield HelpHint(CONTROL_HINTS["focus-text"])
 
     @on(Button.Pressed, "#focus-save")
     def save(self):
@@ -155,12 +233,13 @@ class FocusScreen(Screen):
 class SaveScreen(ModalScreen):
     CSS = """
     SaveScreen { align: center middle; background: $background 70%; }
-    #save-dialog { width: 66; height: auto; border: thick $accent; background: $surface; padding: 1 2; }
+    #save-dialog { width: 66; max-width: 96%; height: auto; border: thick $accent; background: $surface; padding: 1 2; }
     #save-dialog Label { height: auto; margin-bottom: 1; }
     #save-error { height: auto; color: $error; }
     #save-buttons { height: 3; margin-top: 1; }
     """
-    BINDINGS = [("escape", "dismiss", "취소")]
+    BINDINGS = [("escape", "dismiss", "취소"), ("f1", "app.help", "도움말"),
+                ("ctrl+q", "app.quit", "종료")]
 
     def __init__(self, content, filename):
         super().__init__()
@@ -174,6 +253,7 @@ class SaveScreen(ModalScreen):
             with Horizontal(id="save-buttons"):
                 yield Button("저장", id="confirm-save", variant="primary")
                 yield Button("취소", id="cancel-save")
+            yield HelpHint(CONTROL_HINTS["destination"])
 
     def on_mount(self):
         self.query_one(Input).focus()
@@ -208,11 +288,12 @@ class GuideApp(App):
     #detail { width: 1fr; }
     #context { height: auto; max-height: 4; padding: 0 1; background: $panel; color: $text-muted; }
     #reader { height: 1fr; padding: 0 2; }
-    #status { height: auto; max-height: 3; padding: 0 1; background: $panel; }
+    #status { margin-top: 0; }
     """
     BINDINGS = [
         Binding("/", "search", "검색"), Binding("escape", "back", "뒤로"),
         Binding("ctrl+s", "save", "저장"), Binding("ctrl+q", "quit", "종료"),
+        Binding("f1", "help", "도움말"),
     ]
 
     def __init__(self):
@@ -224,6 +305,7 @@ class GuideApp(App):
         self.current_content = ""
         self.current_filename = "안내서.md"
         self.entries = []
+        self.search_summary = ""
 
     def compose(self) -> ComposeResult:
         yield Header()
@@ -237,7 +319,7 @@ class GuideApp(App):
                 yield Static("", id="context")
                 with VerticalScroll(id="reader"):
                     yield Markdown("", id="document", open_links=False)
-        yield Static("Tab 영역 이동 · ↑↓ 목록 선택 · Enter 본문 이동 · / 검색 · Ctrl+S 저장", id="status")
+        yield HelpHint(CONTROL_HINTS["results"], id="status")
         yield Footer()
 
     async def on_mount(self):
@@ -249,11 +331,12 @@ class GuideApp(App):
     def populate(self):
         query = self.query_one("#search", Input).value.strip()
         category = self.query_one("#category", Select).value
+        self.search_summary = ""
         if query:
             hits, count = self.catalog.search(query, limit=100)
             self.entries = [hit["selector"] for hit in hits]
             options = [Option(Text(f"{hit['title']}\n{hit['excerpt'][:100]}"), id=str(i)) for i, hit in enumerate(hits)]
-            self.query_one("#status", Static).update(f"검색 {count}개 · 표시 {len(hits)}개 · 검색어를 지우면 분류 목록으로 돌아갑니다")
+            self.search_summary = f"검색 {count}개 · 표시 {len(hits)}개"
         elif category == "양식 저장":
             self.entries = ["template:" + name for name in self.forms]
             options = [Option(Text(item["title"]), id=str(i)) for i, item in enumerate(self.forms.values())]
@@ -266,6 +349,35 @@ class GuideApp(App):
         listing.add_options(options)
         if options:
             listing.highlighted = 0
+        self.refresh_hint()
+
+    @on(events.DescendantFocus)
+    def focus_changed(self, event):
+        self.refresh_hint(event.widget)
+
+    def refresh_hint(self, widget=None):
+        if widget is not None and widget.screen is not self.screen:
+            return
+        hints = self.screen.query(HelpHint)
+        if not hints:
+            return
+        widget = widget or self.screen.focused
+        while widget is not None:
+            if widget.id in CONTROL_HINTS:
+                hint = CONTROL_HINTS[widget.id]
+                if isinstance(widget, Select) and widget.expanded:
+                    hint = "↑↓ 후보 선택 · Enter 적용 · Esc 목록 닫기"
+                elif widget.id == "start-options":
+                    hint = START_HINTS[widget.highlighted or 0] + " · ↑↓ / Enter"
+                elif widget.id in ("search", "results") and self.search_summary:
+                    hint = self.search_summary + " · " + hint
+                hints.first().show_hint(hint)
+                return
+            widget = widget.parent
+
+    def action_help(self):
+        if not isinstance(self.screen, HelpScreen):
+            self.push_screen(HelpScreen())
 
     @on(Input.Changed, "#search")
     def search_changed(self):

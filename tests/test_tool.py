@@ -9,7 +9,7 @@ from textual.widgets import Input, Markdown, OptionList, Select, Static
 from foss8.cli import main
 from foss8.guide import Catalog, display_markdown
 from foss8.templates import get, save
-from foss8.tui import GuideApp, StartScreen, WeekScreen
+from foss8.tui import GuideApp, HelpHint, HelpScreen, StartScreen, WeekScreen
 from foss8 import weeks, focus
 
 
@@ -141,6 +141,7 @@ async def test_simple_start_week_selection_and_direct_minutes_save(tmp_path):
     async with app.run_test(size=(80, 28)) as pilot:
         await pilot.pause()
         assert isinstance(app.screen, StartScreen)
+
         assert app.screen.query_one(OptionList).option_count == 4
         await pilot.press("enter")
         await pilot.pause()
@@ -169,3 +170,61 @@ async def test_simple_start_week_selection_and_direct_minutes_save(tmp_path):
         await pilot.pause()
         assert target.exists() and "활동 로그" in target.read_text()
         assert isinstance(app.screen, StartScreen)
+
+
+@pytest.mark.asyncio
+async def test_focus_hints_dropdown_help_and_input_restore():
+    app = GuideApp()
+    async with app.run_test(size=(80, 28)) as pilot:
+        await pilot.pause()
+        assert "주차별 할 일" in str(app.screen.query_one(HelpHint).render())
+        await pilot.press("down")
+        await pilot.pause()
+        assert "빈 양식" in str(app.screen.query_one(HelpHint).render())
+        await pilot.press("up", "enter")
+        await pilot.pause()
+        assert "목록 펼치기" in str(app.screen.query_one(HelpHint).render())
+        await pilot.press("enter")
+        await pilot.pause()
+        assert app.screen.query_one(Select).expanded
+        assert "Esc 목록 닫기" in str(app.screen.query_one(HelpHint).render())
+        await pilot.press("escape")
+        await pilot.pause()
+        assert isinstance(app.screen, WeekScreen)
+        assert not app.screen.query_one(Select).expanded
+        await pilot.press("tab")
+        await pilot.pause()
+        assert app.screen.focused.id == "week-reader"
+        assert "스크롤" in str(app.screen.query_one(HelpHint).render())
+        previous = app.screen.focused
+        await pilot.press("f1")
+        await pilot.pause()
+        assert isinstance(app.screen, HelpScreen)
+        await pilot.press("f1")
+        await pilot.pause()
+        assert isinstance(app.screen, WeekScreen)
+        assert app.screen.focused is previous
+        await pilot.press("/")
+        await pilot.pause()
+        assert "검색어 입력" in str(app.screen.query_one(HelpHint).render())
+        query = app.screen.query_one("#search", Input)
+        query.value = "회의록 제출"
+        await pilot.pause()
+        await pilot.press("f1", "escape")
+        await pilot.pause()
+        assert app.screen.focused is query and query.value == "회의록 제출"
+        await pilot.press("enter")
+        await pilot.pause()
+        assert "검색" in str(app.screen.query_one(HelpHint).render())
+        assert "Enter 본문 열기" in str(app.screen.query_one(HelpHint).render())
+        await pilot.press("ctrl+s")
+        await pilot.pause()
+        destination = app.screen.query_one("#destination", Input)
+        destination.value = "내 회의록.md"
+        await pilot.press("f1")
+        await pilot.pause()
+        assert isinstance(app.screen, HelpScreen)
+        await pilot.press("escape")
+        await pilot.pause()
+        assert app.screen.focused is destination and destination.value == "내 회의록.md"
+        assert "저장 경로" in str(app.screen.query_one(HelpHint).render())
