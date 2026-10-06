@@ -24,15 +24,16 @@
 
 ```bash
 pip install -r requirements.txt
-python main.py browse
+python main.py
 ```
 
 uv가 있다면 다음 명령으로 실행합니다.
 
 ```bash
-uv run oss browse
+uv run oss
+uv run oss week 6
 uv run oss guide search 회의록
 uv run oss format minutes --output 회의록.md
 ```
 
-현재 기능은 안내서 전체 탐색·검색·근거 조회와 양식 출력·저장입니다. 캘린더 계산과 평가 자동화는 후속 작업입니다.
+첫 화면에서 주차별 할 일·회의록 양식 저장·검색·전체 안내서를 선택합니다. 주차별 할 일에서는 원하는 주차를 골라 할 일·제출물·개인 점검표를 확인합니다. 안내서 전체와 양식은 설치에 포함되어 오프라인으로 사용할 수 있습니다. 완료 상태 저장과 평가 자동화는 후속 작업입니다.

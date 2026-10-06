@@ -1,6 +1,7 @@
 import ast
 import json
 from pathlib import Path
+from datetime import date
 
 import pytest
 from textual.widgets import Input, Markdown, OptionList, Select, Static
@@ -8,7 +9,8 @@ from textual.widgets import Input, Markdown, OptionList, Select, Static
 from foss8.cli import main
 from foss8.guide import Catalog, display_markdown
 from foss8.templates import get, save
-from foss8.tui import GuideApp
+from foss8.tui import GuideApp, StartScreen, WeekScreen
+from foss8 import weeks, focus
 
 
 def test_catalog_covers_source_pages_and_search_has_reproducible_location():
@@ -83,6 +85,7 @@ async def test_tui_search_navigation_link_back_and_template_save(tmp_path):
         await pilot.pause()
         assert app.current != "home"
         await pilot.press("escape")
+
         await pilot.pause()
         assert app.current == "home"
         await app.follow_link(Markdown.LinkClicked(app.query_one(Markdown), "12-minutes.md#section-12-1"))
@@ -108,3 +111,61 @@ async def test_tui_search_navigation_link_back_and_template_save(tmp_path):
         await pilot.pause()
         assert "이미 있습니다" in str(app.screen.query_one("#save-error", Static).render())
         await pilot.press("escape")
+
+
+def test_week_selection_handles_break_makeup_exam_and_next_deadlines(capsys):
+    catalog = Catalog()
+    items = weeks.listing(catalog)
+    assert len(items) == 15 and len({item['id'] for item in items}) == 15
+    assert weeks.default(catalog, date(2026, 10, 6)) == "week-06"
+    assert weeks.get(catalog, "4")["date"] == "2026-09-25"
+    assert weeks.get(catalog, "4", makeup=True)["date"] == "2026-12-11"
+    assert "없음" in weeks.get(catalog, "8")["submission"]
+    assert "목요일 18:00" not in weeks.markdown(weeks.get(catalog, "8"))
+    assert len(weeks.get(catalog, "6")["checklist"]) == 5
+    assert "10/15" in weeks.get(catalog, "6")["checklist"][-1]
+    for day, expected in [(date(2026,10,6), {'[WEEK6] 회의록'}),
+                          (date(2026,10,16), {'[WEEK9] 회의록'}),
+                          (date(2026,11,5), {'[WEEK10] 회의록','중간보고서'}),
+                          (date(2026,12,11), {'최종보고서'})]:
+        assert {item['title'] for item in focus.next_submissions(catalog, day)['next_submissions']} == expected
+    assert main(["week", "4", "--makeup", "--json"]) == 0
+    assert json.loads(capsys.readouterr().out)["data"]["id"] == "week-04-makeup"
+    assert main(["week", "1", "--json"]) == 2
+    assert not json.loads(capsys.readouterr().out)["ok"]
+
+
+@pytest.mark.asyncio
+async def test_simple_start_week_selection_and_direct_minutes_save(tmp_path):
+    app = GuideApp()
+    async with app.run_test(size=(80, 28)) as pilot:
+        await pilot.pause()
+        assert isinstance(app.screen, StartScreen)
+        assert app.screen.query_one(OptionList).option_count == 4
+        await pilot.press("enter")
+        await pilot.pause()
+        assert isinstance(app.screen, WeekScreen)
+        app.screen.query_one("#week-choice", Select).value = "week-06"
+        await pilot.pause()
+        app.screen.query_one("#week-choice", Select).focus()
+        await pilot.press("enter", "down", "enter")
+        await pilot.pause()
+        assert app.screen.selected["id"] == "week-07"
+        for key in ["week-06", "week-08", "week-04-makeup"]:
+            app.screen.query_one("#week-choice", Select).value = key
+            await pilot.pause()
+            assert app.screen.selected["id"] == key
+        await pilot.click("#week-checklist")
+        await pilot.pause()
+        assert app.screen.checklist
+        await pilot.press("escape")
+        await pilot.pause()
+        assert isinstance(app.screen, StartScreen)
+        await pilot.press("down", "enter")
+        await pilot.pause()
+        target = tmp_path / "간단회의록.md"
+        app.screen.query_one("#destination", Input).value = str(target)
+        await pilot.press("enter")
+        await pilot.pause()
+        assert target.exists() and "활동 로그" in target.read_text()
+        assert isinstance(app.screen, StartScreen)

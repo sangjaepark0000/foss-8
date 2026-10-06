@@ -2,10 +2,13 @@
 import argparse
 import json
 import sys
+from datetime import date
 
 from . import __version__
 from .guide import Catalog, display_markdown
 from . import templates
+from . import focus
+from . import weeks
 
 
 class Arguments(argparse.ArgumentParser):
@@ -18,6 +21,15 @@ def parser():
     root.add_argument("--version", action="version", version=__version__)
     commands = root.add_subparsers(dest="command")
     commands.add_parser("browse", help="키보드로 탐색하는 TUI 열기")
+    now = commands.add_parser("now", help="가장 가까운 제출만 확인")
+    now.add_argument("--date", type=date.fromisoformat, help="기준일 YYYY-MM-DD; 기본은 한국 날짜")
+    now.add_argument("--json", action="store_true")
+    week = commands.add_parser("week", help="주차를 선택해 할 일·제출·개인 점검표 조회")
+    week.add_argument("week", nargs="?", help="주차 숫자 또는 일정 ID; 생략하면 가장 가까운 일정")
+    week.add_argument("--makeup", action="store_true", help="4주차 12/11 보강 선택")
+    week.add_argument("--list", action="store_true")
+    week.add_argument("--json", action="store_true")
+    week.add_argument("--checklist", action="store_true", help="부록 A 개인 점검표 표시")
     guide = commands.add_parser("guide", help="안내서 목록·검색·본문 조회")
     actions = guide.add_subparsers(dest="action", required=True)
     listing = actions.add_parser("list", help="안정적인 문서 ID와 원문 위치 목록")
@@ -48,16 +60,32 @@ def main(argv=None):
     args = None
     try:
         args = parser().parse_args(argv)
-        if args.command is None:
-            print("OSS 팀프로젝트 도구\n\noss browse                 안내서 탐색\noss guide search 회의록     전체 검색\noss format minutes         빈 회의록 양식\noss --help                 명령 안내\n\n안내서: 2026-2 v1.3 · 48쪽 전체. 팀 결정은 team 문서에서 확인합니다.")
-            return 0
-        if args.command == "browse":
+        if args.command == "browse" or (args.command is None and sys.stdin.isatty() and sys.stdout.isatty()):
             if not sys.stdin.isatty() or not sys.stdout.isatty():
                 raise ValueError("TUI에는 터미널이 필요합니다. 자동화에서는 oss guide 명령을 사용하세요.")
             from .tui import GuideApp
             GuideApp().run()
             return 0
+        if args.command is None:
+            print("OSS 팀프로젝트 도구\n\noss                        터미널에서 첫 화면 열기\noss week 6                 6주차 할 일·제출물\noss now                    가까운 제출 마감\noss guide search 회의록     전체 검색\noss format minutes         빈 회의록 양식\noss --help                 명령 안내\n\n안내서: 2026-2 v1.3 · 48쪽 전체. 팀 결정은 team 문서에서 확인합니다.")
+            return 0
         catalog = Catalog()
+        if args.command == "now":
+            data = focus.next_submissions(catalog, args.date)
+            emit(data) if args.json else print(focus.markdown(data))
+            return 0
+        if args.command == "week":
+            if args.list:
+                data = weeks.listing(catalog)
+                if args.json:
+                    emit(data)
+                else:
+                    for item in data:
+                        print(f"{item['id']:20} {item['label']}")
+            else:
+                data = weeks.get(catalog, args.week or ("4" if args.makeup else weeks.default(catalog)), args.makeup)
+                emit(data) if args.json else print(weeks.markdown(data, args.checklist))
+            return 0
         if args.command == "guide":
             if args.action == "list":
                 data = catalog.listing()

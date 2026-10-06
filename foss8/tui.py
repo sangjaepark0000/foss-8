@@ -7,12 +7,149 @@ from textual import on
 from textual.app import App, ComposeResult
 from textual.binding import Binding
 from textual.containers import Horizontal, Vertical, VerticalScroll
-from textual.screen import ModalScreen
+from textual.screen import ModalScreen, Screen
 from textual.widgets import Button, Footer, Header, Input, Label, Markdown, OptionList, Select, Static
 from textual.widgets.option_list import Option
 
 from .guide import Catalog, CATEGORIES, display_markdown
 from . import templates
+from . import focus
+from . import weeks
+
+
+class StartScreen(Screen):
+    BINDINGS = [("escape", "stay", "")]
+    CSS = """
+    StartScreen { align: center middle; }
+    #start { width: 64; max-width: 95%; height: auto; padding: 2 3; border: round $accent; }
+    #start-title { height: auto; margin-bottom: 1; text-style: bold; }
+    #start-options { height: auto; border: none; }
+    #start-hint { height: auto; margin-top: 1; color: $text-muted; }
+    """
+
+    def compose(self):
+        with Vertical(id="start"):
+            yield Label("OSS · 무엇이 필요하세요?", id="start-title")
+            yield OptionList("주차별 할 일", "회의록 양식 저장", "검색", "전체 안내서", id="start-options")
+            yield Label("↑↓ 선택 · Enter 열기 · Ctrl+Q 종료", id="start-hint")
+
+    def on_mount(self):
+        self.query_one(OptionList).focus()
+
+    def action_stay(self):
+        pass
+
+    @on(OptionList.OptionSelected)
+    async def choose(self, event):
+        index = event.option_index
+        if index == 1:
+            self.app.save_minutes()
+            return
+        if index == 0:
+            self.app.push_screen(WeekScreen())
+            return
+        self.app.pop_screen()
+        if index == 2:
+            self.app.action_search()
+        else:
+            self.app.query_one("#category", Select).value = "전체 안내서"
+            self.app.query_one("#results", OptionList).focus()
+
+
+class WeekScreen(Screen):
+    CSS = """
+    WeekScreen { align: center middle; }
+    #week-card { width: 94; max-width: 98%; height: 96%; border: round $accent; padding: 0 2; }
+    #week-choice { margin: 1 0; }
+    #week-reader { height: 1fr; }
+    #week-content { padding: 0; }
+    #week-content MarkdownH1 { display: none; }
+    #week-content MarkdownH2 { margin: 1 0 0 0; }
+    #week-buttons { height: auto; }
+    #week-buttons Button { min-width: 10; margin-right: 1; }
+    """
+    BINDINGS = [("escape", "back", "뒤로")]
+
+    def __init__(self):
+        super().__init__()
+        self.selected = None
+        self.checklist = False
+
+    def compose(self):
+        items = weeks.listing(self.app.catalog)
+        with Vertical(id="week-card"):
+            yield Select([(item["label"], item["id"]) for item in items], value=weeks.default(self.app.catalog), allow_blank=False, id="week-choice")
+            with VerticalScroll(id="week-reader"):
+                yield Markdown("", open_links=False, id="week-content")
+            with Horizontal(id="week-buttons"):
+                yield Button("개인 점검표", id="week-checklist")
+                yield Button("가까운 제출", id="week-deadline")
+                yield Button("처음으로", id="week-back")
+
+    async def on_mount(self):
+        await self.update_week()
+
+    async def update_week(self):
+        self.selected = weeks.get(self.app.catalog, str(self.query_one("#week-choice", Select).value))
+        await self.query_one("#week-content", Markdown).update(weeks.markdown(self.selected, self.checklist))
+        self.query_one("#week-reader", VerticalScroll).scroll_home(animate=False)
+
+    @on(Select.Changed, "#week-choice")
+    async def selected_week(self):
+        self.checklist = False
+        self.query_one("#week-checklist", Button).label = "개인 점검표"
+        await self.update_week()
+
+    @on(Button.Pressed, "#week-checklist")
+    async def show_checklist(self):
+        self.checklist = not self.checklist
+        self.query_one("#week-checklist", Button).label = "할 일 보기" if self.checklist else "개인 점검표"
+        await self.update_week()
+
+    @on(Button.Pressed, "#week-deadline")
+    def deadline(self):
+        self.app.push_screen(FocusScreen())
+
+    @on(Button.Pressed, "#week-back")
+    def action_back(self):
+        self.app.pop_screen()
+
+    @on(Markdown.LinkClicked)
+    async def link(self, event):
+        self.app.open_browser()
+        await self.app.follow_link(event)
+
+
+class FocusScreen(Screen):
+    CSS = """
+    FocusScreen { align: center middle; }
+    #focus-card { width: 74; max-width: 98%; height: 90%; border: round $accent; padding: 1 2; }
+    #focus-text { height: 1fr; }
+    #focus-buttons { height: auto; }
+    #focus-buttons Button { margin-right: 1; }
+    """
+    BINDINGS = [("escape", "back", "뒤로")]
+
+    def compose(self):
+        with Vertical(id="focus-card"):
+            with VerticalScroll(id="focus-text"):
+                yield Markdown(focus.markdown(focus.next_submissions(self.app.catalog)), open_links=False)
+            with Horizontal(id="focus-buttons"):
+                yield Button("회의록 양식 저장", id="focus-save", variant="primary")
+                yield Button("뒤로", id="focus-back")
+
+    @on(Button.Pressed, "#focus-save")
+    def save(self):
+        self.app.save_minutes()
+
+    @on(Button.Pressed, "#focus-back")
+    def action_back(self):
+        self.app.pop_screen()
+
+    @on(Markdown.LinkClicked)
+    async def link(self, event):
+        self.app.open_browser()
+        await self.app.follow_link(event)
 
 
 class SaveScreen(ModalScreen):
@@ -107,6 +244,7 @@ class GuideApp(App):
         self.populate()
         await self.navigate("home")
         self.query_one("#results", OptionList).focus()
+        self.push_screen(StartScreen())
 
     def populate(self):
         query = self.query_one("#search", Input).value.strip()
@@ -201,15 +339,32 @@ class GuideApp(App):
             self.notify(str(error), severity="warning")
 
     def action_search(self):
+        self.open_browser()
         self.query_one("#search", Input).focus()
+
+    def open_browser(self):
+        while len(self.screen_stack) > 1:
+            self.pop_screen()
 
     async def action_back(self):
         if self.history:
             await self.navigate(self.history.pop(), remember=False)
+        elif self.current == "home":
+            self.push_screen(StartScreen())
+            return
         self.query_one("#results", OptionList).focus()
 
     def action_save(self):
+        if isinstance(self.screen, (StartScreen, WeekScreen, FocusScreen)):
+            self.save_minutes()
+            return
         def saved(path):
             if path:
                 self.notify(path, title="저장했습니다", timeout=8)
         self.push_screen(SaveScreen(self.current_content, self.current_filename), saved)
+
+    def save_minutes(self):
+        def saved(path):
+            if path:
+                self.notify(path, title="회의록 양식을 저장했습니다", timeout=8)
+        self.push_screen(SaveScreen(templates.get(self.catalog, "minutes")["content"], "회의록.md"), saved)
