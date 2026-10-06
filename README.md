@@ -20,8 +20,19 @@
 
 ## 실행 방법
 
-### 1. 저장소 클론
+[설치·명령·TUI 조작 방법](docs/tool.md)을 확인하세요.
 
 ```bash
-git clone https://github.com/sangjaepark0000/foss-8.git
-cd foss-8
+pip install -r requirements.txt
+python main.py browse
+```
+
+uv가 있다면 다음 명령으로 실행합니다.
+
+```bash
+uv run oss browse
+uv run oss guide search 회의록
+uv run oss format minutes --output 회의록.md
+```
+
+현재 기능은 안내서 전체 탐색·검색·근거 조회와 양식 출력·저장입니다. 캘린더 계산과 평가 자동화는 후속 작업입니다.

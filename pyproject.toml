@@ -1,0 +1,30 @@
+[build-system]
+requires = ["hatchling>=1.27,<2"]
+build-backend = "hatchling.build"
+
+[project]
+name = "foss-8"
+version = "0.1.0"
+description = "Offline OSS project handbook browser and template tool"
+readme = "docs/tool.md"
+requires-python = ">=3.12"
+license = "MIT"
+dependencies = ["textual>=6,<9"]
+
+[project.scripts]
+oss = "foss8.cli:main"
+
+[dependency-groups]
+dev = ["pytest>=8,<10", "pytest-asyncio>=1,<2"]
+
+[tool.hatch.build.targets.wheel]
+packages = ["foss8"]
+
+[tool.hatch.build.targets.wheel.force-include]
+"docs/guide" = "foss8/data/guide"
+
+[tool.hatch.build.targets.sdist]
+include = ["foss8", "docs/guide", "docs/tool.md", "pyproject.toml", "main.py", "requirements.txt", "tests", "LICENSE"]
+
+[tool.pytest.ini_options]
+asyncio_mode = "auto"
