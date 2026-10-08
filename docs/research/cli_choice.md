@@ -90,14 +90,7 @@ rich를 사용해 출력할 수 있는 것
 - 표준 라이브러리가 아니어서 설치가 필요하다.
 - 터미널 환경에 따라 다르게 출력될 수 있다.
 
-## 추천안
-
-gh 사용을 추천한다.
-
-이유:
-- 로컬 Git은 조회 범위가 좁음.
-- REST API보다 인증과 토큰 관리가 간단함
-- 개발 부담이 적음. REST API와 달리 HTTP 헤더나 토큰 전달 방식을 직접 구현하지 않아도 됨.
-- 명령어 결과를 JSON으로 받아 프로그램에서 처리하기 쉬움
-
 ## 공식 문서
+typer: https://typer.tiangolo.com/
+textual: https://textual.textualize.io/
+rich: https://rich.readthedocs.io/
