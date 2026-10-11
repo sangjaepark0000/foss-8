@@ -1,0 +1,492 @@
+{
+  "source_filename": "OSS_팀프로젝트_안내서_2026-2_공개용.pdf",
+  "sha256": "41cd32bf33db1af53a2ba07b699dd8cff166f66241987d037f5b2bc40d435fa5",
+  "version": "v1.3 · 2026년 9월",
+  "pages": 48,
+  "normalization": "Alphanumeric character multiset, excluding diagonal watermark, running header and page-number footer; whitespace and punctuation are visually checked.",
+  "page_map": [
+    {
+      "page": 1,
+      "alphanumeric_characters": 79,
+      "character_multiset_sha256": "f0a205f35ee539fa5d2cb192b09f98c42bd5ee94b0591f4c254c311cca134b45",
+      "blocks": {},
+      "inline_images": 0,
+      "file": "00-introduction.md"
+    },
+    {
+      "page": 2,
+      "alphanumeric_characters": 520,
+      "character_multiset_sha256": "e9f9256a3a3f418a246ff232b94b125e229c40ddbffa6a6853e836efb9ec4db7",
+      "blocks": {},
+      "inline_images": 0,
+      "file": "00-introduction.md"
+    },
+    {
+      "page": 3,
+      "alphanumeric_characters": 672,
+      "character_multiset_sha256": "e1de8fe11a9d57dbde476d93fe290273d195fa8683361d37f3aac135ba516cf6",
+      "blocks": {},
+      "inline_images": 0,
+      "file": "00-introduction.md"
+    },
+    {
+      "page": 4,
+      "alphanumeric_characters": 431,
+      "character_multiset_sha256": "a9f0af5fd1f6ea7ac40f28271a6afea02d2957ebf9c289e693e9b64bad24b650",
+      "blocks": {},
+      "inline_images": 0,
+      "file": "00-introduction.md"
+    },
+    {
+      "page": 5,
+      "alphanumeric_characters": 786,
+      "character_multiset_sha256": "0539b6eba2d480bd2b9cc022e45e35b66ed02996af59f13f066de819d5c9c4b7",
+      "blocks": {
+        "table": 2
+      },
+      "inline_images": 0,
+      "file": "00-introduction.md"
+    },
+    {
+      "page": 6,
+      "alphanumeric_characters": 514,
+      "character_multiset_sha256": "56ae7d2551e16f2f9322b8bf7511b9f7ec92d8a7e0910eb952ac7cc4d852fb43",
+      "blocks": {
+        "table": 1
+      },
+      "inline_images": 0,
+      "file": "00-introduction.md"
+    },
+    {
+      "page": 7,
+      "alphanumeric_characters": 765,
+      "character_multiset_sha256": "7438de104db8a1eb92baf5d37937f05bab67a772587a03ac2f9ce0af32ba7679",
+      "blocks": {
+        "callout": 1,
+        "table": 2
+      },
+      "inline_images": 0,
+      "file": "01-overview.md"
+    },
+    {
+      "page": 8,
+      "alphanumeric_characters": 447,
+      "character_multiset_sha256": "a13a58888ac7f9cf8d2eb7e9a66e59c6c53db1cc754c0ecac4f66a6f4d53ef64",
+      "blocks": {
+        "table": 2,
+        "callout": 1
+      },
+      "inline_images": 0,
+      "file": "01-overview.md"
+    },
+    {
+      "page": 9,
+      "alphanumeric_characters": 786,
+      "character_multiset_sha256": "fe6cf1f3db662ed125c3040cb5fea062fd4c300f97c8f5dc0d38092762cc3ae3",
+      "blocks": {
+        "table": 1
+      },
+      "inline_images": 0,
+      "file": "02-team.md"
+    },
+    {
+      "page": 10,
+      "alphanumeric_characters": 988,
+      "character_multiset_sha256": "6b91ccc935d17da291b6945c8eeb13d030cc9db960baafbe254293c1114380be",
+      "blocks": {
+        "table": 1
+      },
+      "inline_images": 0,
+      "file": "03-roadmap.md"
+    },
+    {
+      "page": 11,
+      "alphanumeric_characters": 940,
+      "character_multiset_sha256": "65ec10784715f95dfe0a35984ed3314a5f78c2c51e9e0c8f52d20f53094af9c0",
+      "blocks": {
+        "table": 2
+      },
+      "inline_images": 0,
+      "file": "03-roadmap.md"
+    },
+    {
+      "page": 12,
+      "alphanumeric_characters": 1097,
+      "character_multiset_sha256": "b81d95d2eaeb9cb5e8a193e927a201d2ef22fabf8954845eef00068bab1d9837",
+      "blocks": {},
+      "inline_images": 0,
+      "file": "03-roadmap.md"
+    },
+    {
+      "page": 13,
+      "alphanumeric_characters": 769,
+      "character_multiset_sha256": "0266186bab811c038313b19fc6fd81b0c1a5bee64bcd4fb1c096bc101feda715",
+      "blocks": {
+        "table": 3
+      },
+      "inline_images": 0,
+      "file": "04-topic.md"
+    },
+    {
+      "page": 14,
+      "alphanumeric_characters": 404,
+      "character_multiset_sha256": "68c195fb4413e57d7e369d05f7dbca85f2358a042f8684ff26ea8c1e2bdcc0ce",
+      "blocks": {
+        "table": 1
+      },
+      "inline_images": 0,
+      "file": "04-topic.md"
+    },
+    {
+      "page": 15,
+      "alphanumeric_characters": 521,
+      "character_multiset_sha256": "6e1b3f09833d2f71c463192277badec78447f89e453abae30e494f1ed7f61aec",
+      "blocks": {
+        "table": 2
+      },
+      "inline_images": 0,
+      "file": "05-proposal.md"
+    },
+    {
+      "page": 16,
+      "alphanumeric_characters": 984,
+      "character_multiset_sha256": "8680258d237b395e6b3a5bbb4f5d7f318cea91080e8a6b8afab5e197aac02934",
+      "blocks": {
+        "table": 1,
+        "callout": 1
+      },
+      "inline_images": 0,
+      "file": "06-tools.md"
+    },
+    {
+      "page": 17,
+      "alphanumeric_characters": 932,
+      "character_multiset_sha256": "5d42559ebba994df343b29719ff0901c35d552749ffb4b2a33e82f4af1cc5c01",
+      "blocks": {
+        "code": 1,
+        "callout": 2
+      },
+      "inline_images": 0,
+      "file": "06-tools.md"
+    },
+    {
+      "page": 18,
+      "alphanumeric_characters": 214,
+      "character_multiset_sha256": "09eb396c8d7bfe26dc94bcd49601ce16aed4c5da5894a3d0f902d1f2e014c703",
+      "blocks": {
+        "table": 1
+      },
+      "inline_images": 0,
+      "file": "06-tools.md"
+    },
+    {
+      "page": 19,
+      "alphanumeric_characters": 814,
+      "character_multiset_sha256": "f76e756cf26b14bca91001a4535e40c0b7ca60815bd7408a71b7e90f243081da",
+      "blocks": {
+        "callout": 2
+      },
+      "inline_images": 0,
+      "file": "07-repository.md"
+    },
+    {
+      "page": 20,
+      "alphanumeric_characters": 977,
+      "character_multiset_sha256": "0c1bcf285a72c764edb710554ae248ca473bccdae33e271c9f0c32a6ca6c5595",
+      "blocks": {
+        "code": 1,
+        "callout": 1
+      },
+      "inline_images": 0,
+      "file": "07-repository.md"
+    },
+    {
+      "page": 21,
+      "alphanumeric_characters": 360,
+      "character_multiset_sha256": "9898eaf4d74ed26d887df9de6ccc6522bf81e181b355c6013e5fc220fb72dfae",
+      "blocks": {
+        "table": 1
+      },
+      "inline_images": 0,
+      "file": "07-repository.md"
+    },
+    {
+      "page": 22,
+      "alphanumeric_characters": 1058,
+      "character_multiset_sha256": "9e1d83eed1b4876b23d91aafa1afc54c1ce0fde7533e8040077de9c2089151e0",
+      "blocks": {
+        "table": 2
+      },
+      "inline_images": 0,
+      "file": "08-collaboration.md"
+    },
+    {
+      "page": 23,
+      "alphanumeric_characters": 845,
+      "character_multiset_sha256": "81dae69b1404bc563cb19cd95ad400e3b7a3f2c17a24b9a815981fef520bc4b8",
+      "blocks": {
+        "callout": 1,
+        "table": 1
+      },
+      "inline_images": 0,
+      "file": "08-collaboration.md"
+    },
+    {
+      "page": 24,
+      "alphanumeric_characters": 945,
+      "character_multiset_sha256": "6fc3e8da399682909f3aba6bdf718a4ed5bde966dfe265c2cbc85895fed65350",
+      "blocks": {
+        "table": 1,
+        "callout": 1
+      },
+      "inline_images": 0,
+      "file": "08-collaboration.md"
+    },
+    {
+      "page": 25,
+      "alphanumeric_characters": 828,
+      "character_multiset_sha256": "4265244c5909e101d241f535cb1a2ea004513191e8f2bc176283611bb3bbf1a8",
+      "blocks": {
+        "table": 1
+      },
+      "inline_images": 0,
+      "file": "08-collaboration.md"
+    },
+    {
+      "page": 26,
+      "alphanumeric_characters": 732,
+      "character_multiset_sha256": "a68276673e27a519280c09f1eeee24b4a891d171aa9148ab9f7739368625465e",
+      "blocks": {
+        "code": 2,
+        "callout": 1
+      },
+      "inline_images": 0,
+      "file": "09-python.md"
+    },
+    {
+      "page": 27,
+      "alphanumeric_characters": 402,
+      "character_multiset_sha256": "4bee43c04db8bec55db79e66a8de6711cf31da4a174596123d9d5e10eeaf2700",
+      "blocks": {
+        "table": 1
+      },
+      "inline_images": 0,
+      "file": "09-python.md"
+    },
+    {
+      "page": 28,
+      "alphanumeric_characters": 918,
+      "character_multiset_sha256": "6dca09abe99eec4c0c7941d772f3e1db4c51d355a3006349c90033fca34dce30",
+      "blocks": {
+        "table": 2,
+        "callout": 1
+      },
+      "inline_images": 0,
+      "file": "10-activity.md"
+    },
+    {
+      "page": 29,
+      "alphanumeric_characters": 776,
+      "character_multiset_sha256": "f7b113d016f6334d08057781a48c79dbf5d9f1298a3725f1672ed2b5163bf089",
+      "blocks": {
+        "table": 2
+      },
+      "inline_images": 0,
+      "file": "10-activity.md"
+    },
+    {
+      "page": 30,
+      "alphanumeric_characters": 1036,
+      "character_multiset_sha256": "1ec97c02295943b69311e2dbd0e30abc3b831e3e522897cac614741a27a5ae22",
+      "blocks": {
+        "callout": 1
+      },
+      "inline_images": 0,
+      "file": "11-contributions.md"
+    },
+    {
+      "page": 31,
+      "alphanumeric_characters": 596,
+      "character_multiset_sha256": "35830728d76992a868e8509b9f4b9fce2a4054e26d6ceef7e0cfb7ec0332c031",
+      "blocks": {
+        "table": 1
+      },
+      "inline_images": 0,
+      "file": "11-contributions.md"
+    },
+    {
+      "page": 32,
+      "alphanumeric_characters": 807,
+      "character_multiset_sha256": "0c21954ef2e64d808a2c248ce257bf2897499ddf34d0bffdac9d6555378c09d7",
+      "blocks": {
+        "table": 2,
+        "callout": 1
+      },
+      "inline_images": 0,
+      "file": "12-minutes.md"
+    },
+    {
+      "page": 33,
+      "alphanumeric_characters": 724,
+      "character_multiset_sha256": "727be0c39cff9ced8f48af6d5ee74e4c69e026de80bd1c4eadd7d16bc0368ba4",
+      "blocks": {
+        "table": 3,
+        "callout": 1
+      },
+      "inline_images": 0,
+      "file": "13-midterm.md"
+    },
+    {
+      "page": 34,
+      "alphanumeric_characters": 901,
+      "character_multiset_sha256": "e4bb3e2d9babed4df219de73c1acde614d6ec7781f6ebaa5531f5361a6b6bb62",
+      "blocks": {
+        "callout": 1,
+        "table": 2
+      },
+      "inline_images": 0,
+      "file": "14-release-final.md"
+    },
+    {
+      "page": 35,
+      "alphanumeric_characters": 584,
+      "character_multiset_sha256": "cd70c74156b00d16365788869914669bbb0db1f29af70ed7683c6b5d79481a5b",
+      "blocks": {
+        "table": 2
+      },
+      "inline_images": 0,
+      "file": "14-release-final.md"
+    },
+    {
+      "page": 36,
+      "alphanumeric_characters": 591,
+      "character_multiset_sha256": "54a59f3b953d275efd1699531de032856d27d6a76001a3c16e3055cba44cee6b",
+      "blocks": {
+        "table": 3
+      },
+      "inline_images": 0,
+      "file": "15-evaluation.md"
+    },
+    {
+      "page": 37,
+      "alphanumeric_characters": 583,
+      "character_multiset_sha256": "53c29bd388a391cb3fcbca8147a47ad8c274f1c00ab7eea6555ad607aaa8a1dd",
+      "blocks": {
+        "table": 3
+      },
+      "inline_images": 0,
+      "file": "15-evaluation.md"
+    },
+    {
+      "page": 38,
+      "alphanumeric_characters": 943,
+      "character_multiset_sha256": "ffe7677d223e2976d8620ef446c30c4c47576611ac82af0033a7f1cf86775c76",
+      "blocks": {
+        "code": 1,
+        "table": 1
+      },
+      "inline_images": 0,
+      "file": "16-help.md"
+    },
+    {
+      "page": 39,
+      "alphanumeric_characters": 740,
+      "character_multiset_sha256": "5e356b6e6c119d27f40846974b5abd2a5c028d1ecedb9dbbc3464fa5dec3d0ab",
+      "blocks": {
+        "table": 1
+      },
+      "inline_images": 0,
+      "file": "appendix-a-checklist.md"
+    },
+    {
+      "page": 40,
+      "alphanumeric_characters": 432,
+      "character_multiset_sha256": "7ffab90809a11e10ecad77b091deee0066a78322d54d2e9a7f38ed1d6111c6fe",
+      "blocks": {
+        "code": 1
+      },
+      "inline_images": 0,
+      "file": "appendix-b-minutes-template.md"
+    },
+    {
+      "page": 41,
+      "alphanumeric_characters": 536,
+      "character_multiset_sha256": "df5e9f62d85f298b494c76afed688ac59af628134816e70c08c89efcf858188e",
+      "blocks": {
+        "code": 1
+      },
+      "inline_images": 0,
+      "file": "appendix-c-templates.md"
+    },
+    {
+      "page": 42,
+      "alphanumeric_characters": 716,
+      "character_multiset_sha256": "2b56fee7fabafbe0f800e6d8b0b0b20c0019c61072ed4fa7f35274347cdf2a46",
+      "blocks": {
+        "code": 2
+      },
+      "inline_images": 0,
+      "file": "appendix-c-templates.md"
+    },
+    {
+      "page": 43,
+      "alphanumeric_characters": 595,
+      "character_multiset_sha256": "fcc2c59f5f7aedc7b8384cd81615007f5b88a401f2cf976a45746a16b09e55fe",
+      "blocks": {
+        "code": 3
+      },
+      "inline_images": 0,
+      "file": "appendix-c-templates.md"
+    },
+    {
+      "page": 44,
+      "alphanumeric_characters": 226,
+      "character_multiset_sha256": "9347a1876a5e68785fd2adcc1975bd722fcab4f93aa8fabcec17b80395c76c56",
+      "blocks": {
+        "code": 2
+      },
+      "inline_images": 0,
+      "file": "appendix-c-templates.md"
+    },
+    {
+      "page": 45,
+      "alphanumeric_characters": 949,
+      "character_multiset_sha256": "524eb61c68d8982d263341cc0eba67338dd6f8ac7136b38f51e0ffbc3224c4b4",
+      "blocks": {
+        "table": 1,
+        "callout": 1
+      },
+      "inline_images": 0,
+      "file": "appendix-d-git-drill.md"
+    },
+    {
+      "page": 46,
+      "alphanumeric_characters": 248,
+      "character_multiset_sha256": "1b4a68f2ecf12eada83dd55a271061c474e5626bbf5c9eb301ad7a7d562ac281",
+      "blocks": {},
+      "inline_images": 0,
+      "file": "appendix-d-git-drill.md"
+    },
+    {
+      "page": 47,
+      "alphanumeric_characters": 1288,
+      "character_multiset_sha256": "cd6f1ec6db0f749a63e4137df37ebc39767d252af23cbcad04332c3cd936b8f9",
+      "blocks": {
+        "table": 1
+      },
+      "inline_images": 0,
+      "file": "appendix-e-faq.md"
+    },
+    {
+      "page": 48,
+      "alphanumeric_characters": 356,
+      "character_multiset_sha256": "005fa5bee0567a1a98508f517a21a1dc5d423fba75efe3572ca98a8c7aca2dca",
+      "blocks": {
+        "code": 1
+      },
+      "inline_images": 0,
+      "file": "appendix-f-team-template.md"
+    }
+  ],
+  "source_path": "source/OSS_팀프로젝트_안내서_2026-2_공개용.pdf"
+}
