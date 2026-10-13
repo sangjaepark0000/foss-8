@@ -61,10 +61,10 @@ def visible(markdown):
 
 
 def main():
-    manifest = json.loads((GUIDE / "source-map.json").read_text())
+    manifest = json.loads((GUIDE / "source-map.json").read_text(encoding="utf-8"))
     source = GUIDE / manifest["source_path"]
     assert sha256(source.read_bytes()).hexdigest() == manifest["sha256"], "Source PDF changed"
-    files = {path: path.read_text() for path in GUIDE.glob("*.md")}
+    files = {path: path.read_text(encoding="utf-8") for path in GUIDE.glob("*.md")}
     pages = {}
     for path, markdown in files.items():
         for number, content in BLOCK.findall(markdown):
@@ -100,7 +100,7 @@ def main():
                 dest = (path.parent / unquote(parsed.path)).resolve() if parsed.path else path
                 assert dest.exists(), f"Broken file link: {path.name} -> {target}"
                 if parsed.fragment and dest.suffix == ".md":
-                    other = dest.read_text()
+                    other = dest.read_text(encoding="utf-8")
                     assert f'id="{unquote(parsed.fragment)}"' in other, f"Broken anchor: {path.name} -> {target}"
                 links += 1
     print(f"PASS: {manifest['pages']}/{manifest['pages']} source pages, {total:,} source letters/digits,")
