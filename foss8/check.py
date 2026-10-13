@@ -31,3 +31,25 @@ def load_result_items():
         raise ValueError("결과물 평가 항목은 4개, 배점 합계는 30점이어야 합니다. 원문 표를 확인하세요.")
 
     return items
+
+
+def format_result_items(items):
+    # 평가 항목 리스트를 화면에 표시할 문자열로 변환
+    lines = ["[결과물 평가 기준]", ""]
+
+    for item in items:
+        source = item["source"]
+        lines.extend([
+            f"{item['name']} | 최대 {item['points']}점",
+            f"기준: {item['criterion']}",
+            f"부분 점수 예: {item['partial_credit']}",
+            "확인 안내: 기준 충족 여부는 직접 확인 필요 (자동 점검 미구현)",
+            "상태: 미확인",
+            f"근거: {source['document']}#{source['anchor']}",
+            "",
+        ])
+
+    # 항목별 배점을 더하고 각 줄을 줄바꿈으로 연결
+    total_points = sum(item["points"] for item in items)
+    lines.append(f"총 배점: {total_points}점")
+    return "\n".join(lines)
