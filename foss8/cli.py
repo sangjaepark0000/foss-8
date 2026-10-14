@@ -52,7 +52,9 @@ def main(argv=None):
             print("기능 준비중")
             return 0
         if args.command == "check":
-            print("기능 준비중")
+            items = check.load_result_items()
+            text = check.format_result_items(items)
+            print(text)
             return 0
         if args.command == "week":
             print("기능 준비중")
