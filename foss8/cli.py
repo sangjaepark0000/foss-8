@@ -29,7 +29,9 @@ def parser():
     root.add_argument("--version", action="version", version=__version__)
     commands = root.add_subparsers(dest="command")
     commands.add_parser("help", help="CLI 전체 명령·사용 예시 보기")
-    form = commands.add_parser("format", help="양식 출력·UTF-8 파일 저장")
+    form = commands.add_parser("format", help="회의록·보고서 빈 양식 출력")
+    form.add_argument("name", nargs="?", choices=tuple(templates.TITLES),
+                      help="minutes: 회의록, proposal: 제안서, midterm: 중간보고서, final: 최종보고서")
     check = commands.add_parser("check", help="완성 기준 배점표 불러오기, 저장소 상태와 비교" )
     week = commands.add_parser("week", help="주차를 선택해 할 일 조회")
     return root
@@ -49,7 +51,14 @@ def main(argv=None):
             command_parser.print_help()
             return 0
         if args.command == "format":
-            print("기능 준비중")
+            if args.name is None:
+                print("쓸 수 있는 양식:")
+                for name, title in templates.TITLES.items():
+                    print(f"  {name:12} {title}")
+                print("\n예: python main.py format minutes")
+            else:
+                item = templates.get(Catalog(), args.name)
+                print(item["content"], end="")
             return 0
         if args.command == "check":
             print("기능 준비중")
