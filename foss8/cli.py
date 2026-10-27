@@ -32,7 +32,9 @@ def parser():
     form = commands.add_parser("format", help="양식 출력·UTF-8 파일 저장")
     check = commands.add_parser("check", help="완성 기준 배점표 불러오기, 저장소 상태와 비교" )
     week = commands.add_parser("week", help="주차를 선택해 할 일 조회")
-    week.add_argument("week", nargs="?", help="주차 숫자 입력; 생략하면 이번 주 일정 출력")
+    week.add_argument("week", nargs="?", help="주차 숫자 혹은 ID(week-숫자) 입력; 생략하면 이번 주 일정 출력")
+    week.add_argument("--list", action="store_true", help="주차 목록 확인")
+    week.add_argument("--makeup", action="store_true", help="보강 일정 확인")
     return root
 
 
@@ -57,7 +59,12 @@ def main(argv=None):
             return 0
         if args.command == "week":
             catalog = Catalog()
-            data = weeks.get_weekly_item(catalog, args.week or weeks.get_this_week(catalog))
+            if args.list:
+                data = weeks.roadmap(catalog)
+                for item in data:
+                    print(f"{item['id']:20} {item['label']}")
+                return 0
+            data = weeks.get_weekly_item(catalog, args.week or weeks.get_this_week(catalog), True if args.makeup else False)
             print(weeks.result_line(data))
             return 0
         if args.command is None:
