@@ -1,5 +1,29 @@
 from .guide import Catalog, plain
 
+# 평가 항목별 확인 방식과 안내
+CHECK_METHODS = {
+    "기능 동작(기준 2)": {
+        "method": "수동",
+        "auto_help": "없음",
+        "manual_help": "각 기능을 실행하고 완료 조건과 시연 결과를 확인하세요.",
+    },
+    "실행 재현(기준 1)": {
+        "method": "혼합",
+        "auto_help": "v1.0.0 태그 존재 여부",
+        "manual_help": "새 폴더에서 README대로 설치하고 실행해 보세요.",
+    },
+    "문서(기준 3)": {
+        "method": "혼합",
+        "auto_help": "README·LICENSE·CONTRIBUTING·CODE_OF_CONDUCT 파일 존재 여부",
+        "manual_help": "각 문서의 내용과 README 필수 항목을 직접 확인하세요.",
+    },
+    "협업 절차(기준 4·5)": {
+        "method": "혼합",
+        "auto_help": "PR·리뷰·병합 기록",
+        "manual_help": "모든 기능이 해당 절차를 거쳤는지와 타 팀 이슈 해결 내용을 확인하세요.",
+    },
+}
+
 def load_result_items():
     # 15.5절의 결과물 평가 항목을 리스트로 반환
     catalog = Catalog()
@@ -17,13 +41,25 @@ def load_result_items():
         if len(cells) != 4 or not cells[1].isdigit():
             continue  # 표 제목과 구분선은 제외한다.
 
+        name = cells[0]
+
+        # 안내서에 새로운 항목이 생겼는데 확인 방식이 없으면 알려준다.
+        if name not in CHECK_METHODS:
+            raise ValueError(f"확인 방식이 정의되지 않은 평가 항목입니다: {name}")
+
+        policy = CHECK_METHODS[name]
+        
         # 데이터를 딕셔너리로 저장
         items.append({
-            "name": cells[0],
+            "name": name,
             "points": int(cells[1]),
             "criterion": cells[2],
             "partial_credit": cells[3],
             "source": document["source"],
+            "method": policy["method"],
+            "auto_help": policy["auto_help"],
+            "manual_help": policy["manual_help"],
+            "status": "미확인",
         })
 
     # 누락 시 오류 메시지 발생
@@ -43,8 +79,10 @@ def format_result_items(items):
             f"{item['name']} | 최대 {item['points']}점",
             f"기준: {item['criterion']}",
             f"부분 점수 예: {item['partial_credit']}",
-            "확인 안내: 기준 충족 여부는 직접 확인 필요 (자동 점검 미구현)",
-            "상태: 미확인",
+            f"확인 방식: {item['method']}",
+            f"자동 확인 대상: {item['auto_help']}",
+            f"수동 확인: {item['manual_help']}",
+            f"상태: {item['status']}",
             f"근거: {source['document']}#{source['anchor']}",
             "",
         ])
