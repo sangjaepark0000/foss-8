@@ -25,3 +25,31 @@
 ```bash
 git clone https://github.com/sangjaepark0000/foss-8.git
 cd foss-8
+```
+
+### 2. 서식 조회
+
+Python 3.12 이상에서 실행합니다. 서식 조회에는 외부 라이브러리가 필요하지 않습니다.
+
+```bash
+python main.py format             # 지원 양식 목록
+python main.py format minutes     # 빈 회의록
+python main.py format proposal    # 제안서
+python main.py format midterm     # 중간보고서
+python main.py format final       # 최종보고서
+python main.py format --help
+```
+
+회의록은 안내서 부록 B의 제목·표 열을 유지하고 예시 이름·날짜·진행 상황·완료 표시를 비운 양식입니다.
+보고서는 안내서의 제안서 7항목·중간보고서 6항목·최종보고서 8항목과 부록을 읽어
+표지·목차·작성란·필수 내용·분량·제출 기준·원문 링크를 제공합니다.
+
+출력된 Markdown에 내용을 작성한 후 PDF로 변환해 제출합니다.
+팀명·팀원·주차·활동 로그 자동 채움과 파일 저장은 후속 작업입니다.
+
+### 검증
+
+```bash
+python -m unittest discover -s tests -v
+python scripts/check_guide.py
+```
