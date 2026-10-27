@@ -1,3 +1,4 @@
+from pathlib import Path
 from .guide import Catalog, plain
 
 # 평가 항목별 확인 방식과 안내
@@ -23,6 +24,16 @@ CHECK_METHODS = {
         "manual_help": "모든 기능이 해당 절차를 거쳤는지와 타 팀 이슈 해결 내용을 확인하세요.",
     },
 }
+
+# 저장소 루트에서 확인할 기본 파일
+REQUIRED_FILES = (
+    "README.md",
+    "LICENSE",
+    "CONTRIBUTING.md",
+    "CODE_OF_CONDUCT.md",
+    "requirements.txt",
+    "main.py",
+)
 
 def load_result_items():
     # 15.5절의 결과물 평가 항목을 리스트로 반환
@@ -90,4 +101,45 @@ def format_result_items(items):
     # 항목별 배점을 더하고 각 줄을 줄바꿈으로 연결
     total_points = sum(item["points"] for item in items)
     lines.append(f"총 배점: {total_points}점")
+    return "\n".join(lines)
+
+def check_required_files(repository_path):
+    # 입력받은 경로를 절대 경로로 변환
+    root = Path(repository_path).expanduser().resolve()
+
+    # 잘못된 폴더를 검사해 모든 파일을 '누락'으로 표시하지 않도록 확인
+    if not root.is_dir():
+        raise ValueError(f"검사할 폴더가 존재하지 않습니다: {root}")
+
+    results = []
+
+    for filename in REQUIRED_FILES:
+        file_path = root / filename
+
+        try:
+            file_path.stat()
+        except FileNotFoundError:
+            status = "누락"
+        except OSError:
+            status = "확인 불가"
+        else:
+            status = "존재" if file_path.is_file() else "파일 아님"
+
+        results.append({
+            "name": filename,
+            "path": str(file_path),
+            "status": status,
+        })
+
+    return results
+
+def format_file_results(results):
+    lines = []
+
+    for item in results:
+        lines.append(f"[{item['status']}] {item['name']}")
+
+    lines.append("")
+    lines.append("문서 내용은 직접 확인해 주세요.")
+
     return "\n".join(lines)

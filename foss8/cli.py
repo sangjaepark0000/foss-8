@@ -7,6 +7,7 @@ from .guide import ALIASES, Catalog, display_markdown
 from . import templates
 from . import check
 from . import weeks
+from pathlib import Path
 
 class RequestError(ValueError):
     def __init__(self, message, help_text):
@@ -52,9 +53,20 @@ def main(argv=None):
             print("기능 준비중")
             return 0
         if args.command == "check":
+            # 기존 평가 기준 출력
             items = check.load_result_items()
-            text = check.format_result_items(items)
-            print(text)
+            print(check.format_result_items(items))
+
+            # 현재 폴더의 기본 파일 검사
+            repository_path = Path.cwd()
+            results = check.check_required_files(repository_path)
+
+            print()
+            print("[기본 파일 검사]")
+            print(f"검사 대상: {repository_path}")
+            print()
+            print(check.format_file_results(results))
+
             return 0
         if args.command == "week":
             print("기능 준비중")
