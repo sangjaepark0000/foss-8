@@ -32,6 +32,7 @@ def parser():
     form = commands.add_parser("format", help="양식 출력·UTF-8 파일 저장")
     check = commands.add_parser("check", help="완성 기준 배점표 불러오기, 저장소 상태와 비교" )
     week = commands.add_parser("week", help="주차를 선택해 할 일 조회")
+    week.add_argument("week", nargs="?", help="주차 숫자 입력; 생략하면 이번 주 일정 출력")
     return root
 
 
@@ -55,7 +56,9 @@ def main(argv=None):
             print("기능 준비중")
             return 0
         if args.command == "week":
-            print("기능 준비중")
+            catalog = Catalog()
+            data = weeks.get_weekly_item(catalog, args.week or weeks.get_this_week(catalog))
+            print(weeks.result_line(data))
             return 0
         if args.command is None:
             print("OSS 팀프로젝트 도구")
