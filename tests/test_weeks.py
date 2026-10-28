@@ -81,6 +81,14 @@ class WeekTests(unittest.TestCase):
         deadline = next(t for t in nine["tasks"] if t.get("recording_start"))
         self.assertNotIn("after_class", deadline)
 
+    def test_moved_reference_rules_appear_once_without_losing_content(self):
+        nine, ten = weeks.select(self.periods, "9"), weeks.select(self.periods, "10")
+        expected = next(r for r in nine["references"] if r["title"] == "학기 활동 기준")
+        actual = [r for r in ten["references"] if r["title"] == "학기 활동 기준"]
+        self.assertEqual(len(actual), 1)
+        for key in ("children", "details", "evaluation", "evaluation_source"):
+            self.assertEqual(actual[0][key], expected[key])
+
     def test_overview_puts_week_and_title_before_dates_and_hides_details(self):
         output = self.cli("9")
         self.assertEqual(output.returncode, 0, output.stderr)

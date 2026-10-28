@@ -186,6 +186,13 @@ class TuiTests(unittest.TestCase):
         self.app.handle(" ")
         self.assertFalse(self.path.with_name("progress.json").exists())
 
+    def test_semester_rules_are_listed_once_in_both_views(self):
+        self.app.period_index = self.app.periods.index(weeks.select(self.app.periods, "10"))
+        for tab in (0, 1):
+            self.app.tab = tab
+            rules = [r for r in self.app.items() if r["title"] == "학기 활동 기준"]
+            self.assertEqual(len(rules), 1)
+
     def test_weekly_assessment_stays_visible_and_editable_in_tasks(self):
         self.assertEqual(self.app.items()[0]["kind"], "assessment_criterion")
         screen = Screen(width=80, height=24)

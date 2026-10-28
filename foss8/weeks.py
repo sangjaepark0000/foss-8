@@ -13,7 +13,12 @@ def load(team_config=None):
     data = json.loads(files("foss8").joinpath("data/weeks.json").read_text(encoding="utf-8"))
     periods = apply(data["periods"], team_config)
     for period in periods:
-        period["references"] = [t for t in period["tasks"] if t.get("kind") == "reference"]
+        references = {}
+        for task in period["tasks"]:
+            if task.get("kind") == "reference":
+                content = {key: value for key, value in task.items() if key not in ("id", "progress_period")}
+                references.setdefault(json.dumps(content, ensure_ascii=False, sort_keys=True), task)
+        period["references"] = list(references.values())
         period["tasks"] = [t for t in period["tasks"] if t.get("kind") != "reference"]
         period["carryovers"] = []
     for source, following in zip(periods, periods[1:]):
