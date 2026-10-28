@@ -3,6 +3,7 @@ import os
 import re
 import subprocess
 import sys
+import tempfile
 import unittest
 from dataclasses import replace
 from pathlib import Path
@@ -17,9 +18,12 @@ ROOT = Path(__file__).resolve().parents[1]
 class FormsTests(unittest.TestCase):
     def setUp(self):
         self.catalog = Catalog()
+        self.tmp = tempfile.TemporaryDirectory()
+        self.addCleanup(self.tmp.cleanup)
+        (Path(self.tmp.name) / ".git").mkdir()
 
     def cli(self, *args):
-        return subprocess.run([sys.executable, "main.py", *args], cwd=ROOT,
+        return subprocess.run([sys.executable, str(ROOT / "main.py"), *args], cwd=self.tmp.name,
                               capture_output=True, text=True, encoding="utf-8",
                               env={**os.environ, "PYTHONIOENCODING": "utf-8"})
 

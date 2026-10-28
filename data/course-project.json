@@ -1,0 +1,1830 @@
+{
+  "schema_version": 1,
+  "timezone": "Asia/Seoul",
+  "scope": "2026-2 foss-8 수업 프로젝트",
+  "as_of": "2026-10-27",
+  "record_policy": {
+    "planned_is_not_observed": true,
+    "unknown_is_not_incomplete": true,
+    "sources_relative_to": "repository root",
+    "activity_cycle": "수업 실제 종료부터 다음 수업 실제 시작까지. 정확한 시각 미확인 시 경계 확정 금지.",
+    "evaluation_window": "활동 기간·회의록 기록 기간과 독립. 주간 집계 경계는 미확정.",
+    "completion": "실행 기록과 증거로 판단. 날짜 경과로 완료 추정 금지."
+  },
+  "actors": [
+    {
+      "id": "team",
+      "type": "team",
+      "name": "foss-8",
+      "members": [
+        "park",
+        "yang",
+        "baek"
+      ],
+      "source": "docs/guide/team-context.md"
+    },
+    {
+      "id": "park",
+      "type": "person",
+      "name": "박상재",
+      "roles": [
+        "team_lead"
+      ],
+      "feature": "서식 불러오기",
+      "source": "docs/guide/team-context.md"
+    },
+    {
+      "id": "yang",
+      "type": "person",
+      "name": "양하윤",
+      "roles": [
+        "development_lead"
+      ],
+      "feature": "캘린더·공통",
+      "source": "docs/guide/team-context.md"
+    },
+    {
+      "id": "baek",
+      "type": "person",
+      "name": "백지훈",
+      "roles": [
+        "documentation"
+      ],
+      "feature": "평가표",
+      "source": "docs/guide/team-context.md"
+    },
+    {
+      "id": "peer_team",
+      "type": "team",
+      "name": null,
+      "status": "매칭 미확인",
+      "source": "docs/guide/11-contributions.md"
+    }
+  ],
+  "project": {
+    "id": "foss-8",
+    "team_id": "team",
+    "repository": "https://github.com/sangjaepark0000/foss-8",
+    "features": [
+      {
+        "name": "서식",
+        "owner": "park"
+      },
+      {
+        "name": "캘린더·공통",
+        "owner": "yang"
+      },
+      {
+        "name": "평가표",
+        "owner": "baek"
+      }
+    ],
+    "approved_feature_count": 3,
+    "source": "docs/guide/team-context.md",
+    "actual_progress": "unknown"
+  },
+  "events": [
+    {
+      "id": "class-09-11",
+      "type": "class",
+      "course_week": 2,
+      "planned_date": "2026-09-11",
+      "planned_start": null,
+      "planned_end": null,
+      "topic": "OSS 기초",
+      "actual_start": null,
+      "actual_end": null,
+      "source": "docs/guide/03-roadmap.md"
+    },
+    {
+      "id": "class-09-18",
+      "type": "class",
+      "course_week": 3,
+      "planned_date": "2026-09-18",
+      "planned_start": null,
+      "planned_end": null,
+      "topic": "Git 기초",
+      "actual_start": null,
+      "actual_end": null,
+      "source": "docs/guide/03-roadmap.md"
+    },
+    {
+      "id": "class-09-25",
+      "type": "cancelled_class",
+      "course_week": 4,
+      "planned_date": "2026-09-25",
+      "planned_start": null,
+      "planned_end": null,
+      "topic": "추석 휴강",
+      "actual_start": null,
+      "actual_end": null,
+      "source": "docs/guide/03-roadmap.md"
+    },
+    {
+      "id": "class-10-02",
+      "type": "class",
+      "course_week": 5,
+      "planned_date": "2026-10-02",
+      "planned_start": null,
+      "planned_end": null,
+      "topic": "제안서 발표",
+      "actual_start": null,
+      "actual_end": null,
+      "source": "docs/guide/03-roadmap.md"
+    },
+    {
+      "id": "class-10-09",
+      "type": "class",
+      "course_week": 6,
+      "planned_date": "2026-10-09",
+      "planned_start": null,
+      "planned_end": null,
+      "topic": "온라인: 소스트리·클론·커밋",
+      "actual_start": null,
+      "actual_end": null,
+      "source": "docs/guide/03-roadmap.md"
+    },
+    {
+      "id": "class-10-16",
+      "type": "class",
+      "course_week": 7,
+      "planned_date": "2026-10-16",
+      "planned_start": null,
+      "planned_end": null,
+      "topic": "브랜치",
+      "actual_start": null,
+      "actual_end": null,
+      "source": "docs/guide/03-roadmap.md"
+    },
+    {
+      "id": "class-10-23",
+      "type": "exam",
+      "course_week": 8,
+      "planned_date": "2026-10-23",
+      "planned_start": null,
+      "planned_end": null,
+      "topic": "중간고사",
+      "actual_start": null,
+      "actual_end": null,
+      "source": "docs/guide/03-roadmap.md"
+    },
+    {
+      "id": "class-10-30",
+      "type": "class",
+      "course_week": 9,
+      "planned_date": "2026-10-30",
+      "planned_start": null,
+      "planned_end": null,
+      "topic": "PR·리뷰·충돌·태그",
+      "actual_start": null,
+      "actual_end": null,
+      "source": "docs/guide/03-roadmap.md"
+    },
+    {
+      "id": "class-11-06",
+      "type": "class",
+      "course_week": 10,
+      "planned_date": "2026-11-06",
+      "planned_start": null,
+      "planned_end": null,
+      "topic": "중간발표",
+      "actual_start": null,
+      "actual_end": null,
+      "source": "docs/guide/03-roadmap.md"
+    },
+    {
+      "id": "class-11-13",
+      "type": "class",
+      "course_week": 11,
+      "planned_date": "2026-11-13",
+      "planned_start": null,
+      "planned_end": null,
+      "topic": "Fork·외부 PR",
+      "actual_start": null,
+      "actual_end": null,
+      "source": "docs/guide/03-roadmap.md"
+    },
+    {
+      "id": "class-11-20",
+      "type": "class",
+      "course_week": 12,
+      "planned_date": "2026-11-20",
+      "planned_start": null,
+      "planned_end": null,
+      "topic": "Git 실무",
+      "actual_start": null,
+      "actual_end": null,
+      "source": "docs/guide/03-roadmap.md"
+    },
+    {
+      "id": "class-11-27",
+      "type": "class",
+      "course_week": 13,
+      "planned_date": "2026-11-27",
+      "planned_start": null,
+      "planned_end": null,
+      "topic": "공개 문서·브랜치 보호",
+      "actual_start": null,
+      "actual_end": null,
+      "source": "docs/guide/03-roadmap.md"
+    },
+    {
+      "id": "class-12-04",
+      "type": "class",
+      "course_week": 14,
+      "planned_date": "2026-12-04",
+      "planned_start": null,
+      "planned_end": null,
+      "topic": "Git Bash",
+      "actual_start": null,
+      "actual_end": null,
+      "source": "docs/guide/03-roadmap.md"
+    },
+    {
+      "id": "class-12-11",
+      "type": "class",
+      "course_week": 4,
+      "planned_date": "2026-12-11",
+      "planned_start": null,
+      "planned_end": null,
+      "topic": "4주차 보강·최종발표 준비",
+      "actual_start": null,
+      "actual_end": null,
+      "source": "docs/guide/03-roadmap.md"
+    },
+    {
+      "id": "class-12-18",
+      "type": "class",
+      "course_week": 15,
+      "planned_date": "2026-12-18",
+      "planned_start": null,
+      "planned_end": null,
+      "topic": "최종발표",
+      "actual_start": null,
+      "actual_end": null,
+      "source": "docs/guide/03-roadmap.md"
+    },
+    {
+      "id": "due-minutes-01",
+      "type": "submission_deadline",
+      "at": "2026-10-01T18:00:00+09:00",
+      "source": "docs/guide/12-minutes.md#section-12-1"
+    },
+    {
+      "id": "due-minutes-02",
+      "type": "submission_deadline",
+      "at": "2026-10-08T18:00:00+09:00",
+      "source": "docs/guide/12-minutes.md#section-12-1"
+    },
+    {
+      "id": "due-minutes-03",
+      "type": "submission_deadline",
+      "at": "2026-10-15T18:00:00+09:00",
+      "source": "docs/guide/12-minutes.md#section-12-1"
+    },
+    {
+      "id": "due-minutes-04",
+      "type": "submission_deadline",
+      "at": "2026-10-29T18:00:00+09:00",
+      "source": "docs/guide/12-minutes.md#section-12-1"
+    },
+    {
+      "id": "due-minutes-05",
+      "type": "submission_deadline",
+      "at": "2026-11-05T18:00:00+09:00",
+      "source": "docs/guide/12-minutes.md#section-12-1"
+    },
+    {
+      "id": "due-minutes-06",
+      "type": "submission_deadline",
+      "at": "2026-11-12T18:00:00+09:00",
+      "source": "docs/guide/12-minutes.md#section-12-1"
+    },
+    {
+      "id": "due-minutes-07",
+      "type": "submission_deadline",
+      "at": "2026-11-19T18:00:00+09:00",
+      "source": "docs/guide/12-minutes.md#section-12-1"
+    },
+    {
+      "id": "due-minutes-08",
+      "type": "submission_deadline",
+      "at": "2026-11-26T18:00:00+09:00",
+      "source": "docs/guide/12-minutes.md#section-12-1"
+    },
+    {
+      "id": "due-minutes-09",
+      "type": "submission_deadline",
+      "at": "2026-12-03T18:00:00+09:00",
+      "source": "docs/guide/12-minutes.md#section-12-1"
+    },
+    {
+      "id": "due-minutes-10",
+      "type": "submission_deadline",
+      "at": "2026-12-10T18:00:00+09:00",
+      "source": "docs/guide/12-minutes.md#section-12-1"
+    },
+    {
+      "id": "due-proposal",
+      "type": "submission_deadline",
+      "at": "2026-10-01T18:00:00+09:00",
+      "source": "docs/guide/05-proposal.md"
+    },
+    {
+      "id": "due-midterm",
+      "type": "submission_deadline",
+      "at": "2026-11-05T18:00:00+09:00",
+      "source": "docs/guide/13-midterm.md"
+    },
+    {
+      "id": "due-final",
+      "type": "submission_deadline",
+      "at": "2026-12-17T18:00:00+09:00",
+      "source": "docs/guide/14-release-final.md"
+    },
+    {
+      "id": "presentation-proposal",
+      "type": "presentation",
+      "planned_date": "2026-10-02",
+      "class_event": "class-10-02",
+      "duration_minutes": 10,
+      "qa_minutes": 5,
+      "all_members_speak": true,
+      "actual_end": null,
+      "source": "docs/guide/05-proposal.md"
+    },
+    {
+      "id": "due-slides-proposal",
+      "type": "submission_deadline",
+      "after_event": "presentation-proposal",
+      "same_local_date": true,
+      "exact_cutoff": null,
+      "source": "docs/guide/05-proposal.md"
+    },
+    {
+      "id": "presentation-midterm",
+      "type": "presentation",
+      "planned_date": "2026-11-06",
+      "class_event": "class-11-06",
+      "duration_minutes": 10,
+      "qa_minutes": 5,
+      "all_members_speak": true,
+      "actual_end": null,
+      "source": "docs/guide/13-midterm.md"
+    },
+    {
+      "id": "due-slides-midterm",
+      "type": "submission_deadline",
+      "after_event": "presentation-midterm",
+      "same_local_date": true,
+      "exact_cutoff": null,
+      "source": "docs/guide/13-midterm.md"
+    },
+    {
+      "id": "presentation-final",
+      "type": "presentation",
+      "planned_date": "2026-12-18",
+      "class_event": "class-12-18",
+      "duration_minutes": 15,
+      "qa_minutes": 5,
+      "all_members_speak": true,
+      "actual_end": null,
+      "source": "docs/guide/14-release-final.md"
+    },
+    {
+      "id": "due-slides-final",
+      "type": "submission_deadline",
+      "after_event": "presentation-final",
+      "same_local_date": true,
+      "exact_cutoff": null,
+      "source": "docs/guide/14-release-final.md"
+    }
+  ],
+  "cycles": [
+    {
+      "id": "cycle-09-11",
+      "start_event": "class-09-11",
+      "end_event": "class-09-18",
+      "boundary": "actual_end → actual_start",
+      "status": "planned",
+      "label": "09-11 수업 후 ~ 09-18 수업 전"
+    },
+    {
+      "id": "cycle-09-18",
+      "start_event": "class-09-18",
+      "end_event": "class-09-25",
+      "boundary": "actual_end → actual_start",
+      "status": "planned",
+      "label": "09-18 수업 후 ~ 09-25 수업 전"
+    },
+    {
+      "id": "cycle-10-02",
+      "start_event": "class-10-02",
+      "end_event": "class-10-09",
+      "boundary": "actual_end → actual_start",
+      "status": "planned",
+      "label": "10-02 수업 후 ~ 10-09 수업 전"
+    },
+    {
+      "id": "cycle-10-09",
+      "start_event": "class-10-09",
+      "end_event": "class-10-16",
+      "boundary": "actual_end → actual_start",
+      "status": "planned",
+      "label": "10-09 수업 후 ~ 10-16 수업 전"
+    },
+    {
+      "id": "cycle-10-16",
+      "start_event": "class-10-16",
+      "end_event": "class-10-23",
+      "boundary": "actual_end → actual_start",
+      "status": "planned",
+      "label": "10-16 수업 후 ~ 10-23 수업 전"
+    },
+    {
+      "id": "cycle-10-23",
+      "start_event": "class-10-23",
+      "end_event": "class-10-30",
+      "boundary": "actual_end → actual_start",
+      "status": "planned",
+      "label": "10-23 수업 후 ~ 10-30 수업 전"
+    },
+    {
+      "id": "cycle-10-30",
+      "start_event": "class-10-30",
+      "end_event": "class-11-06",
+      "boundary": "actual_end → actual_start",
+      "status": "planned",
+      "label": "10-30 수업 후 ~ 11-06 수업 전"
+    },
+    {
+      "id": "cycle-11-06",
+      "start_event": "class-11-06",
+      "end_event": "class-11-13",
+      "boundary": "actual_end → actual_start",
+      "status": "planned",
+      "label": "11-06 수업 후 ~ 11-13 수업 전"
+    },
+    {
+      "id": "cycle-11-13",
+      "start_event": "class-11-13",
+      "end_event": "class-11-20",
+      "boundary": "actual_end → actual_start",
+      "status": "planned",
+      "label": "11-13 수업 후 ~ 11-20 수업 전"
+    },
+    {
+      "id": "cycle-11-20",
+      "start_event": "class-11-20",
+      "end_event": "class-11-27",
+      "boundary": "actual_end → actual_start",
+      "status": "planned",
+      "label": "11-20 수업 후 ~ 11-27 수업 전"
+    },
+    {
+      "id": "cycle-11-27",
+      "start_event": "class-11-27",
+      "end_event": "class-12-04",
+      "boundary": "actual_end → actual_start",
+      "status": "planned",
+      "label": "11-27 수업 후 ~ 12-04 수업 전"
+    },
+    {
+      "id": "cycle-12-04",
+      "start_event": "class-12-04",
+      "end_event": "class-12-11",
+      "boundary": "actual_end → actual_start",
+      "status": "planned",
+      "label": "12-04 수업 후 ~ 12-11 수업 전"
+    },
+    {
+      "id": "cycle-12-11",
+      "start_event": "class-12-11",
+      "end_event": "class-12-18",
+      "boundary": "actual_end → actual_start",
+      "status": "planned",
+      "label": "12-11 수업 후 ~ 12-18 수업 전"
+    }
+  ],
+  "exceptions": [
+    {
+      "id": "exam-exemption",
+      "start_date": "2026-10-19",
+      "end_date_inclusive": "2026-10-25",
+      "effects": [
+        "개인 주간 활동 최소 기준 면제",
+        "중간고사 주 회의록 없음"
+      ],
+      "source": "docs/guide/10-activity.md"
+    }
+  ],
+  "deliverables": [
+    {
+      "id": "minutes-01",
+      "kind": "minutes",
+      "sequence": 1,
+      "submission_week_label": 5,
+      "deadline_event": "due-minutes-01",
+      "coverage": {
+        "start_date": "2026-09-11",
+        "end_date_inclusive": "2026-09-30"
+      },
+      "workflow": "meeting-minutes",
+      "artifact_rule": "minutes",
+      "responsibility": {
+        "write": "baek",
+        "confirm": "all_members",
+        "submit_lms": "park",
+        "upload_github": null
+      },
+      "execution_status": "unknown",
+      "evidence": [],
+      "source": "docs/guide/12-minutes.md#section-12-1"
+    },
+    {
+      "id": "minutes-02",
+      "kind": "minutes",
+      "sequence": 2,
+      "submission_week_label": 6,
+      "deadline_event": "due-minutes-02",
+      "coverage": {
+        "start_date": "2026-10-01",
+        "end_date_inclusive": "2026-10-07"
+      },
+      "workflow": "meeting-minutes",
+      "artifact_rule": "minutes",
+      "responsibility": {
+        "write": "baek",
+        "confirm": "all_members",
+        "submit_lms": "park",
+        "upload_github": null
+      },
+      "execution_status": "unknown",
+      "evidence": [],
+      "source": "docs/guide/12-minutes.md#section-12-1"
+    },
+    {
+      "id": "minutes-03",
+      "kind": "minutes",
+      "sequence": 3,
+      "submission_week_label": 7,
+      "deadline_event": "due-minutes-03",
+      "coverage": {
+        "start_date": "2026-10-08",
+        "end_date_inclusive": "2026-10-14"
+      },
+      "workflow": "meeting-minutes",
+      "artifact_rule": "minutes",
+      "responsibility": {
+        "write": "baek",
+        "confirm": "all_members",
+        "submit_lms": "park",
+        "upload_github": null
+      },
+      "execution_status": "unknown",
+      "evidence": [],
+      "source": "docs/guide/12-minutes.md#section-12-1"
+    },
+    {
+      "id": "minutes-04",
+      "kind": "minutes",
+      "sequence": 4,
+      "submission_week_label": 9,
+      "deadline_event": "due-minutes-04",
+      "coverage": {
+        "start_date": "2026-10-15",
+        "end_date_inclusive": "2026-10-28"
+      },
+      "workflow": "meeting-minutes",
+      "artifact_rule": "minutes",
+      "responsibility": {
+        "write": "baek",
+        "confirm": "all_members",
+        "submit_lms": "park",
+        "upload_github": null
+      },
+      "execution_status": "unknown",
+      "evidence": [],
+      "source": "docs/guide/12-minutes.md#section-12-1"
+    },
+    {
+      "id": "minutes-05",
+      "kind": "minutes",
+      "sequence": 5,
+      "submission_week_label": 10,
+      "deadline_event": "due-minutes-05",
+      "coverage": {
+        "start_date": "2026-10-29",
+        "end_date_inclusive": "2026-11-04"
+      },
+      "workflow": "meeting-minutes",
+      "artifact_rule": "minutes",
+      "responsibility": {
+        "write": "baek",
+        "confirm": "all_members",
+        "submit_lms": "park",
+        "upload_github": null
+      },
+      "execution_status": "unknown",
+      "evidence": [],
+      "source": "docs/guide/12-minutes.md#section-12-1"
+    },
+    {
+      "id": "minutes-06",
+      "kind": "minutes",
+      "sequence": 6,
+      "submission_week_label": 11,
+      "deadline_event": "due-minutes-06",
+      "coverage": {
+        "start_date": "2026-11-05",
+        "end_date_inclusive": "2026-11-11"
+      },
+      "workflow": "meeting-minutes",
+      "artifact_rule": "minutes",
+      "responsibility": {
+        "write": "baek",
+        "confirm": "all_members",
+        "submit_lms": "park",
+        "upload_github": null
+      },
+      "execution_status": "unknown",
+      "evidence": [],
+      "source": "docs/guide/12-minutes.md#section-12-1"
+    },
+    {
+      "id": "minutes-07",
+      "kind": "minutes",
+      "sequence": 7,
+      "submission_week_label": 12,
+      "deadline_event": "due-minutes-07",
+      "coverage": {
+        "start_date": "2026-11-12",
+        "end_date_inclusive": "2026-11-18"
+      },
+      "workflow": "meeting-minutes",
+      "artifact_rule": "minutes",
+      "responsibility": {
+        "write": "baek",
+        "confirm": "all_members",
+        "submit_lms": "park",
+        "upload_github": null
+      },
+      "execution_status": "unknown",
+      "evidence": [],
+      "source": "docs/guide/12-minutes.md#section-12-1"
+    },
+    {
+      "id": "minutes-08",
+      "kind": "minutes",
+      "sequence": 8,
+      "submission_week_label": 13,
+      "deadline_event": "due-minutes-08",
+      "coverage": {
+        "start_date": "2026-11-19",
+        "end_date_inclusive": "2026-11-25"
+      },
+      "workflow": "meeting-minutes",
+      "artifact_rule": "minutes",
+      "responsibility": {
+        "write": "baek",
+        "confirm": "all_members",
+        "submit_lms": "park",
+        "upload_github": null
+      },
+      "execution_status": "unknown",
+      "evidence": [],
+      "source": "docs/guide/12-minutes.md#section-12-1"
+    },
+    {
+      "id": "minutes-09",
+      "kind": "minutes",
+      "sequence": 9,
+      "submission_week_label": 14,
+      "deadline_event": "due-minutes-09",
+      "coverage": {
+        "start_date": "2026-11-26",
+        "end_date_inclusive": "2026-12-02"
+      },
+      "workflow": "meeting-minutes",
+      "artifact_rule": "minutes",
+      "responsibility": {
+        "write": "baek",
+        "confirm": "all_members",
+        "submit_lms": "park",
+        "upload_github": null
+      },
+      "execution_status": "unknown",
+      "evidence": [],
+      "source": "docs/guide/12-minutes.md#section-12-1"
+    },
+    {
+      "id": "minutes-10",
+      "kind": "minutes",
+      "sequence": 10,
+      "submission_week_label": 4,
+      "deadline_event": "due-minutes-10",
+      "coverage": {
+        "start_date": "2026-12-03",
+        "end_date_inclusive": "2026-12-09"
+      },
+      "workflow": "meeting-minutes",
+      "artifact_rule": "minutes",
+      "responsibility": {
+        "write": "baek",
+        "confirm": "all_members",
+        "submit_lms": "park",
+        "upload_github": null
+      },
+      "execution_status": "unknown",
+      "evidence": [],
+      "source": "docs/guide/12-minutes.md#section-12-1"
+    },
+    {
+      "id": "proposal",
+      "kind": "report",
+      "deadline_event": "due-proposal",
+      "artifact_rule": "proposal",
+      "workflow": "report-presentation",
+      "responsibility": {
+        "accountable": "team",
+        "submit": null
+      },
+      "execution_status": "unknown",
+      "evidence": [],
+      "source": "docs/guide/05-proposal.md"
+    },
+    {
+      "id": "midterm",
+      "kind": "report",
+      "deadline_event": "due-midterm",
+      "artifact_rule": "midterm",
+      "workflow": "report-presentation",
+      "responsibility": {
+        "accountable": "team",
+        "submit": null
+      },
+      "execution_status": "unknown",
+      "evidence": [],
+      "source": "docs/guide/13-midterm.md"
+    },
+    {
+      "id": "final",
+      "kind": "report",
+      "deadline_event": "due-final",
+      "artifact_rule": "final",
+      "workflow": "report-presentation",
+      "responsibility": {
+        "accountable": "team",
+        "submit": null
+      },
+      "execution_status": "unknown",
+      "evidence": [],
+      "source": "docs/guide/14-release-final.md"
+    },
+    {
+      "id": "slides-proposal",
+      "kind": "slides",
+      "deadline_event": "due-slides-proposal",
+      "artifact_rule": "slides",
+      "submission_subject": "[OSS 제안서] foss-8",
+      "responsibility": {
+        "accountable": "team",
+        "submit": null
+      },
+      "execution_status": "unknown",
+      "evidence": [],
+      "source": "docs/guide/05-proposal.md"
+    },
+    {
+      "id": "slides-midterm",
+      "kind": "slides",
+      "deadline_event": "due-slides-midterm",
+      "artifact_rule": "slides",
+      "submission_subject": "[OSS 중간] foss-8",
+      "responsibility": {
+        "accountable": "team",
+        "submit": null
+      },
+      "execution_status": "unknown",
+      "evidence": [],
+      "source": "docs/guide/13-midterm.md"
+    },
+    {
+      "id": "slides-final",
+      "kind": "slides",
+      "deadline_event": "due-slides-final",
+      "artifact_rule": "slides",
+      "submission_subject": "[OSS 최종] foss-8",
+      "responsibility": {
+        "accountable": "team",
+        "submit": null
+      },
+      "execution_status": "unknown",
+      "evidence": [],
+      "source": "docs/guide/14-release-final.md"
+    }
+  ],
+  "artifact_rules": [
+    {
+      "id": "minutes",
+      "source": "docs/guide/12-minutes.md",
+      "variants": [
+        {
+          "destination": "github",
+          "format": "Markdown",
+          "path_template": "docs/meetings/{meeting_date:YYYY-MM-DD}.md",
+          "filename_date_means": "회의 실시일",
+          "completion_evidence": [
+            "commit_or_pr_url"
+          ],
+          "note": "PR 업로드는 활동 실적. 작성 완료와 업로드 완료를 분리."
+        },
+        {
+          "destination": "lms",
+          "format": "PDF",
+          "filename_template": "[WEEK{course_week}] 회의록_foss-8.pdf",
+          "location": "LMS 과제 탭",
+          "completion_evidence": [
+            "submission_receipt_or_manual_confirmation"
+          ],
+          "derivation": "확인된 동일 회의록 원본을 PDF로 변환"
+        }
+      ]
+    },
+    {
+      "id": "proposal",
+      "source": "docs/guide/05-proposal.md",
+      "variants": [
+        {
+          "destination": "lms",
+          "format": "PDF",
+          "filename_template": "[제안서] foss-8.pdf",
+          "pages": null,
+          "location": "LMS 과제 탭",
+          "completion_evidence": [
+            "submission_receipt_or_manual_confirmation"
+          ]
+        }
+      ],
+      "github_rule": null,
+      "required_contents_source": "docs/guide/05-proposal.md"
+    },
+    {
+      "id": "midterm",
+      "source": "docs/guide/13-midterm.md",
+      "variants": [
+        {
+          "destination": "lms",
+          "format": "PDF",
+          "filename_template": "[중간보고서] foss-8.pdf",
+          "pages": [
+            5,
+            10
+          ],
+          "location": "LMS 과제 탭",
+          "completion_evidence": [
+            "submission_receipt_or_manual_confirmation"
+          ]
+        }
+      ],
+      "github_rule": null,
+      "required_contents_source": "docs/guide/13-midterm.md"
+    },
+    {
+      "id": "final",
+      "source": "docs/guide/14-release-final.md",
+      "variants": [
+        {
+          "destination": "lms",
+          "format": "PDF",
+          "filename_template": "[최종보고서] foss-8.pdf",
+          "pages": [
+            10,
+            20
+          ],
+          "location": "LMS 과제 탭",
+          "completion_evidence": [
+            "submission_receipt_or_manual_confirmation"
+          ]
+        }
+      ],
+      "github_rule": null,
+      "required_contents_source": "docs/guide/14-release-final.md"
+    },
+    {
+      "id": "slides",
+      "source": [
+        "docs/guide/05-proposal.md",
+        "docs/guide/13-midterm.md",
+        "docs/guide/14-release-final.md"
+      ],
+      "variants": [
+        {
+          "destination": "email",
+          "recipient": "shoh0320@pknu.ac.kr",
+          "format_by_stage": {
+            "proposal": "PPT 준비; 이메일 첨부 확장자 별도 명시 없음",
+            "midterm": [
+              "PPT",
+              "PDF"
+            ],
+            "final": [
+              "PPT",
+              "PDF"
+            ]
+          },
+          "filename_template": null,
+          "completion_evidence": [
+            "sent_message_record"
+          ]
+        }
+      ]
+    }
+  ],
+  "workflows": [
+    {
+      "id": "meeting-minutes",
+      "source": [
+        "docs/guide/12-minutes.md",
+        "docs/team-agreement.md",
+        "docs/guide/team-context.md"
+      ],
+      "steps": [
+        {
+          "id": "prepare",
+          "actor": "all_members",
+          "inputs": [
+            "이전 회의 결정·미완료 작업",
+            "기간 내 개인별 커밋·이슈·PR·리뷰·충돌 해결 기록",
+            "막힌 점",
+            "다가오는 마감·평가기준"
+          ],
+          "outputs": [
+            "회의 안건·진행 현황"
+          ],
+          "after": [],
+          "rule_origin": "운영 제안: 원문 필수 항목을 준비 입력으로 구성"
+        },
+        {
+          "id": "meet",
+          "actor": "all_members",
+          "inputs": [
+            "회의 안건·진행 현황"
+          ],
+          "outputs": [
+            "참석 정보",
+            "진행 상황",
+            "결정과 이유",
+            "다음 작업별 담당·마감·이슈"
+          ],
+          "after": [
+            "prepare"
+          ]
+        },
+        {
+          "id": "write",
+          "actor": "baek",
+          "inputs": [
+            "회의 결과",
+            "활동 로그",
+            "docs/guide/appendix-b-minutes-template.md"
+          ],
+          "outputs": [
+            "회의록 원본"
+          ],
+          "after": [
+            "meet"
+          ],
+          "note": "실제로는 회의 중 실시간 작성; meet→write는 최종본 확정의 의존성"
+        },
+        {
+          "id": "confirm",
+          "actor": "all_members",
+          "inputs": [
+            "회의록 원본"
+          ],
+          "outputs": [
+            "확인된 회의록 버전"
+          ],
+          "after": [
+            "write"
+          ]
+        },
+        {
+          "id": "upload-github",
+          "actor": null,
+          "inputs": [
+            "확인된 회의록 버전",
+            "GitHub 파일 규칙"
+          ],
+          "outputs": [
+            "Markdown URL·commit/PR"
+          ],
+          "after": [
+            "confirm"
+          ]
+        },
+        {
+          "id": "export-pdf",
+          "actor": null,
+          "inputs": [
+            "GitHub 회의록 Markdown"
+          ],
+          "outputs": [
+            "PDF"
+          ],
+          "after": [
+            "upload-github"
+          ],
+          "method": "GitHub 파일 열기 → 브라우저 인쇄 → PDF 저장"
+        },
+        {
+          "id": "submit-lms",
+          "actor": "park",
+          "inputs": [
+            "PDF",
+            "LMS 파일명 규칙",
+            "제출 대상 회차"
+          ],
+          "outputs": [
+            "제출 증거"
+          ],
+          "after": [
+            "export-pdf"
+          ]
+        }
+      ],
+      "completion_requires": [
+        "upload-github",
+        "submit-lms"
+      ],
+      "required_sections": [
+        "기본 정보",
+        "지난 결정 점검",
+        "팀원별 진행 상황·막힘",
+        "논의·결정·이유",
+        "다음 작업 담당·기한·이슈",
+        "개인별 활동 로그·점검표"
+      ]
+    },
+    {
+      "id": "feature-pr",
+      "source": "docs/guide/08-collaboration.md",
+      "steps": [
+        {
+          "id": "issue",
+          "actor": "feature_owner",
+          "inputs": [
+            "문제·범위·완료 조건"
+          ],
+          "outputs": [
+            "이슈"
+          ],
+          "after": []
+        },
+        {
+          "id": "branch",
+          "actor": "feature_owner",
+          "inputs": [
+            "최신 main",
+            "이슈"
+          ],
+          "outputs": [
+            "feature 브랜치"
+          ],
+          "after": [
+            "issue"
+          ]
+        },
+        {
+          "id": "implement",
+          "actor": "feature_owner",
+          "inputs": [
+            "브랜치",
+            "완료 조건"
+          ],
+          "outputs": [
+            "동작 코드·검증 기록·커밋·Push"
+          ],
+          "after": [
+            "branch"
+          ]
+        },
+        {
+          "id": "open-pr",
+          "actor": "feature_owner",
+          "inputs": [
+            "구현·검증 기록",
+            "이슈 링크"
+          ],
+          "outputs": [
+            "PR·리뷰 요청"
+          ],
+          "after": [
+            "implement"
+          ],
+          "planned_learning_event": "class-10-30"
+        },
+        {
+          "id": "review",
+          "actor": "other_member",
+          "inputs": [
+            "PR 변경·실행 방법"
+          ],
+          "outputs": [
+            "승인 또는 수정 요청"
+          ],
+          "after": [
+            "open-pr"
+          ]
+        },
+        {
+          "id": "revise",
+          "actor": "feature_owner",
+          "inputs": [
+            "수정 요청"
+          ],
+          "outputs": [
+            "수정 커밋·재검토 요청"
+          ],
+          "after": [
+            "review"
+          ],
+          "conditional": "변경 요청 시 review로 반복"
+        },
+        {
+          "id": "merge",
+          "actor": "feature_owner",
+          "inputs": [
+            "현재 변경에 대한 타인 승인"
+          ],
+          "outputs": [
+            "병합 기록"
+          ],
+          "after": [
+            "review"
+          ],
+          "guard": "수정 요청 해결·승인 확인"
+        },
+        {
+          "id": "sync",
+          "actor": "feature_owner",
+          "inputs": [
+            "병합 기록"
+          ],
+          "outputs": [
+            "로컬 main 갱신·브랜치 정리"
+          ],
+          "after": [
+            "merge"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "report-presentation",
+      "source": [
+        "docs/guide/05-proposal.md",
+        "docs/guide/13-midterm.md",
+        "docs/guide/14-release-final.md"
+      ],
+      "steps": [
+        {
+          "id": "collect",
+          "actor": "team",
+          "inputs": [
+            "기능 상태·PR 링크",
+            "실행 캡처·통계",
+            "문제·계획·평가기준"
+          ],
+          "outputs": [
+            "보고서 근거"
+          ],
+          "after": []
+        },
+        {
+          "id": "write-report",
+          "actor": "team",
+          "inputs": [
+            "보고서 근거",
+            "보고서별 항목·분량"
+          ],
+          "outputs": [
+            "보고서 원본"
+          ],
+          "after": [
+            "collect"
+          ]
+        },
+        {
+          "id": "submit-report",
+          "actor": null,
+          "inputs": [
+            "확인된 보고서 PDF",
+            "파일 규칙"
+          ],
+          "outputs": [
+            "LMS 제출 기록"
+          ],
+          "after": [
+            "write-report"
+          ]
+        },
+        {
+          "id": "prepare-demo",
+          "actor": "all_members",
+          "inputs": [
+            "실행 가능한 코드",
+            "설치 방법",
+            "발표자료"
+          ],
+          "outputs": [
+            "시연·백업 녹화·발언 분담"
+          ],
+          "after": [
+            "collect"
+          ]
+        },
+        {
+          "id": "present",
+          "actor": "all_members",
+          "inputs": [
+            "발표자료·시연"
+          ],
+          "outputs": [
+            "발표·질의응답 기록"
+          ],
+          "after": [
+            "prepare-demo"
+          ]
+        },
+        {
+          "id": "email-slides",
+          "actor": null,
+          "inputs": [
+            "사용한 발표자료",
+            "단계별 이메일 제목"
+          ],
+          "outputs": [
+            "당일 발송 기록"
+          ],
+          "after": [
+            "present"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "cross-team",
+      "source": "docs/guide/11-contributions.md",
+      "steps": [
+        {
+          "id": "prepare-incoming",
+          "actor": "baek",
+          "inputs": [
+            "우리 저장소 작업 후보·CONTRIBUTING"
+          ],
+          "outputs": [
+            "good first issue 2개 이상"
+          ],
+          "after": [],
+          "due_condition": "11/13 수업 전"
+        },
+        {
+          "id": "request-assignment",
+          "actor": "team",
+          "inputs": [
+            "상대 팀 이슈·기여 규칙"
+          ],
+          "outputs": [
+            "배정 확인"
+          ],
+          "after": []
+        },
+        {
+          "id": "fork",
+          "actor": "park",
+          "inputs": [
+            "배정된 이슈"
+          ],
+          "outputs": [
+            "fork·팀원 접근 권한"
+          ],
+          "after": [
+            "request-assignment"
+          ]
+        },
+        {
+          "id": "implement-external",
+          "actor": "team",
+          "inputs": [
+            "fork·역할 분담"
+          ],
+          "outputs": [
+            "브랜치 구현·실행 확인"
+          ],
+          "after": [
+            "fork"
+          ]
+        },
+        {
+          "id": "external-pr",
+          "actor": "team",
+          "inputs": [
+            "구현·검증·이슈"
+          ],
+          "outputs": [
+            "상대 원본 대상 PR"
+          ],
+          "after": [
+            "implement-external"
+          ],
+          "due_date": "2026-11-26"
+        },
+        {
+          "id": "external-merge",
+          "actor": "team",
+          "inputs": [
+            "상대 리뷰·수정 커밋"
+          ],
+          "outputs": [
+            "병합 확인·회의록 링크"
+          ],
+          "after": [
+            "external-pr"
+          ],
+          "due_date": "2026-12-03"
+        },
+        {
+          "id": "review-incoming",
+          "actor": "team",
+          "inputs": [
+            "받은 PR"
+          ],
+          "outputs": [
+            "48시간 내 리뷰·수정 확인·병합"
+          ],
+          "after": [],
+          "trigger": "상대 팀 PR 수신"
+        }
+      ]
+    },
+    {
+      "id": "release",
+      "source": "docs/guide/14-release-final.md",
+      "steps": [
+        {
+          "id": "freeze",
+          "actor": "team",
+          "inputs": [
+            "기능 진행 상태"
+          ],
+          "outputs": [
+            "새 기능 중단·버그·문서 작업"
+          ],
+          "after": [],
+          "planned_date": "2026-11-27"
+        },
+        {
+          "id": "check-release",
+          "actor": "team",
+          "inputs": [
+            "완성 기준·README·병합 코드"
+          ],
+          "outputs": [
+            "완성 기준 점검 결과"
+          ],
+          "after": [
+            "freeze"
+          ]
+        },
+        {
+          "id": "tag",
+          "actor": "team",
+          "inputs": [
+            "점검된 main"
+          ],
+          "outputs": [
+            "v1.0.0 태그·Push"
+          ],
+          "after": [
+            "check-release"
+          ],
+          "planned_date": "2026-12-04"
+        },
+        {
+          "id": "release-notes",
+          "actor": "team",
+          "inputs": [
+            "태그·기능 요약·설치 방법·캡처"
+          ],
+          "outputs": [
+            "GitHub Release"
+          ],
+          "after": [
+            "tag"
+          ],
+          "requirement": "권장; 태그 zip도 원문상 인정"
+        },
+        {
+          "id": "clean-install",
+          "actor": "team",
+          "inputs": [
+            "새 폴더·README·태그"
+          ],
+          "outputs": [
+            "실행 검증·회의록 #10 기록·필요 시 v1.0.1"
+          ],
+          "after": [
+            "tag"
+          ],
+          "planned_date_range": [
+            "2026-12-07",
+            "2026-12-11"
+          ]
+        }
+      ]
+    }
+  ],
+  "criteria": [
+    {
+      "id": "activity-commit",
+      "category": "activity",
+      "scope": "person",
+      "requirement": "주 2회 이상",
+      "planned_start_event": "class-10-09",
+      "minimum_total_as_written": 16,
+      "points": 3,
+      "evidence": "커밋 기록",
+      "source": "docs/guide/10-activity.md#section-10-1",
+      "weekly_window": null,
+      "score_status": "not_evaluated"
+    },
+    {
+      "id": "activity-pr",
+      "category": "activity",
+      "scope": "person",
+      "requirement": "주 1회 이상 생성·병합",
+      "planned_start_event": "class-10-30",
+      "minimum_total_as_written": 7,
+      "points": 3,
+      "evidence": "병합 PR",
+      "source": "docs/guide/10-activity.md#section-10-1",
+      "weekly_window": null,
+      "score_status": "not_evaluated"
+    },
+    {
+      "id": "activity-review",
+      "category": "activity",
+      "scope": "team",
+      "requirement": "PR마다 다른 팀원 1명 이상 승인 후 병합",
+      "planned_start_event": "class-10-30",
+      "minimum_total_as_written": null,
+      "points": 3,
+      "evidence": "리뷰 기록",
+      "source": "docs/guide/10-activity.md#section-10-1",
+      "weekly_window": null,
+      "score_status": "not_evaluated"
+    },
+    {
+      "id": "activity-repositories",
+      "category": "activity",
+      "scope": "person",
+      "requirement": "실습·팀·타 팀 저장소 등 3개 이상",
+      "planned_start_event": "class-09-18",
+      "minimum_total_as_written": 3,
+      "points": 3,
+      "evidence": "프로필·저장소 활동",
+      "source": "docs/guide/10-activity.md#section-10-1",
+      "weekly_window": null,
+      "score_status": "not_evaluated"
+    },
+    {
+      "id": "activity-external-pr",
+      "category": "activity",
+      "scope": "team",
+      "requirement": "타 팀 이슈 1개 PR 해결·병합",
+      "planned_start_event": "class-11-13",
+      "minimum_total_as_written": 1,
+      "points": 3,
+      "evidence": "외부 병합 PR",
+      "source": "docs/guide/10-activity.md#section-10-1",
+      "weekly_window": null,
+      "score_status": "not_evaluated"
+    },
+    {
+      "id": "activity-issue",
+      "category": "activity",
+      "scope": "person",
+      "requirement": "주 1회 이상 작업 전에 등록",
+      "planned_start_event": "class-10-09",
+      "minimum_total_as_written": 8,
+      "points": 3,
+      "evidence": "이슈",
+      "source": "docs/guide/10-activity.md#section-10-1",
+      "weekly_window": null,
+      "score_status": "not_evaluated"
+    },
+    {
+      "id": "activity-branch",
+      "category": "activity",
+      "scope": "team",
+      "requirement": "feature 브랜치; 9주부터 main 직접 커밋 금지",
+      "planned_start_event": "class-10-16",
+      "minimum_total_as_written": null,
+      "points": 3,
+      "evidence": "브랜치·보호·병합 기록",
+      "source": "docs/guide/10-activity.md#section-10-1",
+      "weekly_window": null,
+      "score_status": "not_evaluated"
+    },
+    {
+      "id": "activity-conflict",
+      "category": "activity",
+      "scope": "person",
+      "requirement": "각자 1회 이상 해결·회의록 기록",
+      "planned_start_event": "class-10-30",
+      "minimum_total_as_written": 1,
+      "points": 3,
+      "evidence": "충돌 해결 기록·회의록",
+      "source": "docs/guide/10-activity.md#section-10-1",
+      "weekly_window": null,
+      "score_status": "not_evaluated"
+    },
+    {
+      "id": "activity-documentation",
+      "category": "activity",
+      "scope": "team",
+      "requirement": "README·CONTRIBUTING·LICENSE·행동 수칙",
+      "planned_start_event": null,
+      "minimum_total_as_written": null,
+      "points": 3,
+      "evidence": "저장소 문서",
+      "source": "docs/guide/10-activity.md#section-10-1",
+      "weekly_window": null,
+      "score_status": "not_evaluated"
+    },
+    {
+      "id": "activity-minutes",
+      "category": "activity",
+      "scope": "team",
+      "requirement": "정해진 10회 LMS 제출",
+      "planned_start_event": "class-10-02",
+      "minimum_total_as_written": 10,
+      "points": 3,
+      "evidence": "LMS 제출 기록",
+      "source": "docs/guide/10-activity.md#section-10-1",
+      "weekly_window": null,
+      "score_status": "not_evaluated"
+    },
+    {
+      "id": "rubric-proposal",
+      "category": "rubric",
+      "scope": "team",
+      "stage": "proposal",
+      "points": 15,
+      "items": [
+        {
+          "name": "문제 정의·목표",
+          "points": 2
+        },
+        {
+          "name": "기능 설계",
+          "points": 3
+        },
+        {
+          "name": "일정·역할",
+          "points": 2
+        },
+        {
+          "name": "협업 계획",
+          "points": 2
+        },
+        {
+          "name": "문서 완성도",
+          "points": 1
+        },
+        {
+          "name": "발표",
+          "points": 5
+        }
+      ],
+      "source": "docs/guide/15-evaluation.md",
+      "score_status": "not_evaluated",
+      "adjustment_for_three_person_team": "미확정; 원문 4기능 배점을 자동 환산하지 않음"
+    },
+    {
+      "id": "rubric-midterm",
+      "category": "rubric",
+      "scope": "team",
+      "stage": "midterm",
+      "points": 10,
+      "items": [
+        {
+          "name": "진행 요약·계획 조정",
+          "points": 1
+        },
+        {
+          "name": "MVP",
+          "points": 2
+        },
+        {
+          "name": "협업 기록",
+          "points": 1
+        },
+        {
+          "name": "타 팀 기여·문제 대응",
+          "points": 1
+        },
+        {
+          "name": "발표",
+          "points": 5
+        }
+      ],
+      "source": "docs/guide/15-evaluation.md",
+      "score_status": "not_evaluated",
+      "adjustment_for_three_person_team": "미확정; 원문 4기능 배점을 자동 환산하지 않음"
+    },
+    {
+      "id": "rubric-final",
+      "category": "rubric",
+      "scope": "team",
+      "stage": "final",
+      "points": 15,
+      "items": [
+        {
+          "name": "기능·구조 설명",
+          "points": 3
+        },
+        {
+          "name": "협업 기록",
+          "points": 3
+        },
+        {
+          "name": "개인별·타 팀 기여",
+          "points": 2
+        },
+        {
+          "name": "문제 해결·회고",
+          "points": 1
+        },
+        {
+          "name": "형식",
+          "points": 1
+        },
+        {
+          "name": "발표",
+          "points": 5
+        }
+      ],
+      "source": "docs/guide/15-evaluation.md",
+      "score_status": "not_evaluated",
+      "adjustment_for_three_person_team": "미확정; 원문 4기능 배점을 자동 환산하지 않음"
+    },
+    {
+      "id": "rubric-product",
+      "category": "rubric",
+      "scope": "project",
+      "stage": "product",
+      "points": 30,
+      "items": [
+        {
+          "name": "기능 동작",
+          "points": 12
+        },
+        {
+          "name": "실행 재현",
+          "points": 6
+        },
+        {
+          "name": "문서",
+          "points": 6
+        },
+        {
+          "name": "협업 절차",
+          "points": 6
+        }
+      ],
+      "source": "docs/guide/15-evaluation.md",
+      "score_status": "not_evaluated",
+      "adjustment_for_three_person_team": "미확정; 원문 4기능 배점을 자동 환산하지 않음"
+    }
+  ],
+  "open_questions": [
+    {
+      "id": "weekly-boundary",
+      "issue": "주간 활동 집계가 달력 주인지 수업 후 활동 기간인지 명시 불충분",
+      "effect": "주별 충족·미충족과 자동 점수 판정 보류",
+      "sources": [
+        "docs/guide/10-activity.md",
+        "docs/guide/03-roadmap.md"
+      ]
+    },
+    {
+      "id": "actual-classes",
+      "issue": "실제 수업 종료 시각·진도 미확인",
+      "effect": "예정 학습 시점만 표시. 실행 가능 확정에는 실제 정보 또는 선행 지식 확인 필요",
+      "sources": [
+        "docs/guide/03-roadmap.md"
+      ]
+    },
+    {
+      "id": "team-scoring",
+      "issue": "3인·3기능 승인에 따른 4기능 배점 조정 미확인",
+      "effect": "원문 배점과 팀 승인 범위 병기",
+      "sources": [
+        "docs/guide/team-context.md",
+        "docs/guide/15-evaluation.md"
+      ]
+    },
+    {
+      "id": "midterm-external",
+      "issue": "11/5 중간보고서에 타 팀 이슈 배정 상태 요구, 기여 시작은 11/13 예정",
+      "effect": "미착수·미배정 사실과 계획을 기록. 배정 완료로 추정하지 않음",
+      "sources": [
+        "docs/guide/13-midterm.md",
+        "docs/guide/11-contributions.md"
+      ]
+    },
+    {
+      "id": "meeting-timing",
+      "issue": "금요일 정기회의와 다음 목요일 제출·수요일 기록 마감의 관계",
+      "effect": "회의 실시일·기록 대상 기간·제출 주차를 독립 저장",
+      "sources": [
+        "docs/team-agreement.md",
+        "docs/guide/12-minutes.md"
+      ]
+    },
+    {
+      "id": "stale-relative-text",
+      "issue": "team-context의 이번 회의록 WEEK6·현재 우선 작업은 10월 초 기록",
+      "effect": "과거 결정으로 보존, 현재 상태로 간주하지 않음",
+      "sources": [
+        "docs/guide/team-context.md"
+      ]
+    },
+    {
+      "id": "unassigned-steps",
+      "issue": "GitHub 업로드·PDF 변환·보고서 제출·이메일 발송 담당 일부 미명시",
+      "effect": "담당 null 유지. 회의록 LMS 제출만 팀장 확정",
+      "sources": [
+        "docs/guide/team-context.md",
+        "docs/guide/12-minutes.md",
+        "docs/guide/13-midterm.md"
+      ]
+    }
+  ],
+  "executions": [],
+  "views": {
+    "overview": {
+      "inputs": [
+        "현재 시각",
+        "사용자",
+        "실제 실행·증거"
+      ],
+      "sections": [
+        "지금 실행 가능",
+        "선행 조건 미확인·막힘",
+        "기한 임박",
+        "기한 초과·이월",
+        "수업 후 예정"
+      ],
+      "fields": [
+        "액션",
+        "담당",
+        "기한",
+        "다음 행동",
+        "부족한 입력",
+        "근거",
+        "상태 신뢰도"
+      ]
+    },
+    "deliverable": {
+      "fields": [
+        "기록 대상 기간",
+        "마감",
+        "원본 버전",
+        "목적지별 형식·파일명·위치",
+        "각 단계 담당·진행·증거"
+      ]
+    },
+    "evaluation": {
+      "fields": [
+        "대상 개인·팀·프로젝트",
+        "적용 기간",
+        "요구 조건",
+        "관측 증거",
+        "충족 여부 unknown 포함",
+        "미확정 해석"
+      ]
+    },
+    "display_rules": [
+      "예정 시각 경과로 실제 수업 완료 추정 금지",
+      "미관측은 미완료와 구분",
+      "이월 작업은 원래 기한 유지",
+      "파일명 WEEK는 제출표의 수업 회차, 파일 날짜는 회의일",
+      "이메일 발표 후 당일을 임의의 정확한 시각으로 변환 금지",
+      "진도 변경으로 고정 제출 마감 자동 이동 금지"
+    ]
+  }
+}

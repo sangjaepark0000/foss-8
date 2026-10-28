@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "name": "team-example",
+  "repository": "owner/project",
+  "members": [
+    {
+      "name": "가람",
+      "github": "garam",
+      "roles": ["team_lead", "development_lead"],
+      "features": ["입력 처리"]
+    },
+    {
+      "name": "나래",
+      "github": "narae",
+      "roles": ["documentation", "quality"],
+      "features": ["결과 출력"]
+    }
+  ],
+  "me": "garam",
+  "task_owners": {
+    "minutes_submitter": "narae"
+  },
+  "agreements": {
+    "meeting": "매주 금요일 09:00~10:00",
+    "chat_hours": 24,
+    "review_hours": 48
+  },
+  "approved_changes": []
+}

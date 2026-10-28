@@ -1,0 +1,5584 @@
+{
+  "schema_version": 1,
+  "timezone": "Asia/Seoul",
+  "source": "docs/guide/sources.md",
+  "periods": [
+    {
+      "id": "2",
+      "weeks": [
+        2
+      ],
+      "label": "2주차",
+      "title": "팀 구성",
+      "start": "2026-09-08",
+      "end": "2026-09-15",
+      "tasks": [
+        {
+          "title": "팀 구성",
+          "children": [
+            {
+              "title": "팀 이름 공유",
+              "details": [
+                {
+                  "title": "영문 소문자·숫자·하이픈 사용"
+                },
+                {
+                  "title": "저장소 이름·제출 파일의 팀명에 사용"
+                }
+              ]
+            },
+            {
+              "title": "GitHub ID 공유"
+            },
+            {
+              "title": "담당 기능 정하기",
+              "details": [
+                {
+                  "title": "기능별 담당자 지정"
+                },
+                {
+                  "title": "기능별 내용·완료 조건 명시"
+                },
+                {
+                  "title": "{{team.features}}"
+                }
+              ]
+            },
+            {
+              "title": "담당 역할 정하기",
+              "details": [
+                {
+                  "title": "역할은 '조금 더 챙기는 사람'을 정하는 것입니다. 코딩·풀 리퀘스트·리뷰·이슈 작성은 4명 모두 같은 기준으로 평가되 며, 역할만 맡고 코드를 쓰지 않는 경우는 인정되지 않습니다. 수업 3주차의 오픈소스 역할 구조로 보면 팀장이 리더· 메인테이너, 나머지 팀원이 커미터에 해당합니다."
+                },
+                {
+                  "title": "팀장",
+                  "children": [
+                    {
+                      "title": "챙기는 일 — 저장소 소유·설정, 회의 진행, 일정·이슈 정리, 교수와의 소통, 회의록·보고서 LMS 제출 확인"
+                    },
+                    {
+                      "title": "담당 기능 — 기능 1개"
+                    }
+                  ]
+                },
+                {
+                  "title": "개발 리드",
+                  "children": [
+                    {
+                      "title": "챙기는 일 — 프로그램 구조(파일·모듈·데이터 형식) 결정, 공통 코드, 병합 시 기술적 판단"
+                    },
+                    {
+                      "title": "담당 기능 — 기능 1개 + 공통 / 코드"
+                    }
+                  ]
+                },
+                {
+                  "title": "문서 담당",
+                  "children": [
+                    {
+                      "title": "챙기는 일 — README·CONTRIBUTING·행동 수칙 관리, 회의록 작성, 타 팀 기여 창구"
+                    },
+                    {
+                      "title": "담당 기능 — 기능 1개"
+                    }
+                  ]
+                },
+                {
+                  "title": "리뷰·품질 담당",
+                  "children": [
+                    {
+                      "title": "챙기는 일 — 풀 리퀘스트 리뷰가 48시간 안에 되도록 챙김, 버그 이슈 정리, 릴리스 전 실행 확인"
+                    },
+                    {
+                      "title": "담당 기능 — 기능 1개"
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "id": "task-689e9ccd6567",
+          "progress_period": "2"
+        },
+        {
+          "title": "협업 약속",
+          "children": [
+            {
+              "title": "연락 채널 만들기"
+            },
+            {
+              "title": "정기회의 시간 정하기",
+              "details": [
+                {
+                  "title": "주 1회 60분"
+                },
+                {
+                  "title": "첫 5분: 해당 기간 할 일 확인"
+                },
+                {
+                  "title": "마지막 10분: 다음 작업·담당·마감 확정"
+                }
+              ]
+            },
+            {
+              "title": "채팅 응답 기한: 24시간"
+            },
+            {
+              "title": "PR 리뷰 기한: 48시간"
+            },
+            {
+              "title": "작업 전 이슈 등록"
+            },
+            {
+              "title": "하루 작업 끝에 Push"
+            },
+            {
+              "title": "팀 약속 저장",
+              "children": [
+                {
+                  "title": "경로: `docs/team-agreement.md`"
+                }
+              ],
+              "details": [
+                {
+                  "title": "양식",
+                  "children": [
+                    {
+                      "title": "docs/team-agreement.md로 저장하고 2주차 회의에서 4명이 확인합니다."
+                    },
+                    {
+                      "title": "코드·양식 · markdown",
+                      "children": [
+                        {
+                          "title": "# 팀 약속 — 팀명\n\n작성일: 2026-09-11 / 확인: 홍길동, 김철수, 이영희, 박민수\n\n## 1. 팀원과 역할\n| 이름 | 역할 | GitHub | 담당 기능 |\n|---|---|---|---|\n| 홍길동 | 팀장 | @hong-id | add |\n| 김철수 | 개발 리드 | @kim-id | summary + 공통 코드 |\n| 이영희 | 문서 담당 | @lee-id | budget |\n| 박민수 | 리뷰·품질 담당 | @park-id | chart |\n\n## 2. 소통\n- 채널: 디스코드 서버 '팀명'\n- 정기 회의: 매주 화요일 20:00~21:00, 온라인. 불참 시 전날까지 알림\n- 응답: 채팅 24시간, 풀 리퀘스트 리뷰 48시간\n\n## 3. 작업 규칙\n- 작업 전 이슈 등록, 하루 작업 끝에 Push\n- 브랜치·커밋·풀 리퀘스트 규칙은 안내서 8장\n- main.py·공통 파일을 고칠 때는 이슈 댓글로 먼저 알림\n\n## 4. 의사결정\n- 회의에서 다수결, 동률이면 개발 리드 결정. 결정과 이유는 회의록에 기록\n\n## 5. 문제 대응\n- 1주 무응답 → 팀장 연락 / 2주 → 회의록 기록 + 교수 상담",
+                          "kind": "code"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "id": "task-bdd77b1d91b9",
+          "progress_period": "2"
+        },
+        {
+          "title": "공개 저장소 만들기 ({{task.repository_admin}})",
+          "children": [
+            {
+              "title": "Public 선택"
+            },
+            {
+              "title": "README 생성"
+            },
+            {
+              "title": "Python .gitignore 추가"
+            },
+            {
+              "title": "MIT LICENSE 추가"
+            }
+          ],
+          "details": [
+            {
+              "title": "GitHub → 오른쪽 위 + → New repository"
+            },
+            {
+              "title": "Owner: 팀장 계정 / Repository name: 프로젝트 이름 (영문 소문자·숫자, 예: moneylog, busanair)"
+            },
+            {
+              "title": "Description: 한 줄 소개 (한글 가능)"
+            },
+            {
+              "title": "Public 선택"
+            },
+            {
+              "title": "Add a README file 체크 / .gitignore template → Python / Choose a license → MIT License"
+            },
+            {
+              "title": "Create repository"
+            },
+            {
+              "title": "> [왜?] Public이어야 하는 이유: 타 팀이 Fork해서 기여하려면 볼 수 있어야 하고, 공개 저장소의 활동만 프로필의 Contribution 그래프에 표시되며, 브랜치 보호 규칙도 무료 계정에서는 공개 저장소에만 제공됩니다. 비공개 저장 소는 인정되지 않습니다."
+            },
+            {
+              "title": "> [참고] 라이선스는 수업 2주차에서 배운 방임형 라이선스 MIT를 기본으로 합니다. 다른 OSI 승인 라이선스를 고 르면 제안서에 이유를 한 줄 적으세요. 라이선스 파일이 없으면 오픈소스가 아닙니다(수업 3주차)."
+            }
+          ],
+          "id": "task-398da2ae8745",
+          "progress_period": "2"
+        },
+        {
+          "title": "협력자 등록",
+          "children": [
+            {
+              "title": "팀원 초대 ({{task.repository_admin}})",
+              "details": [
+                {
+                  "title": "저장소 → Settings → Collaborators → Add people"
+                },
+                {
+                  "title": "팀원 GitHub ID 입력 → Add"
+                }
+              ]
+            },
+            {
+              "title": "초대 당일 수락",
+              "details": [
+                {
+                  "title": "GitHub 알림 또는 초대 이메일 → Accept invitation"
+                },
+                {
+                  "title": "초대는 7일 뒤 만료"
+                }
+              ]
+            },
+            {
+              "title": "등록 여부 확인",
+              "details": [
+                {
+                  "title": "Settings → Collaborators에서 팀원 확인"
+                }
+              ]
+            }
+          ],
+          "id": "task-80d7311005d6",
+          "progress_period": "2"
+        }
+      ],
+      "status": "unknown",
+      "activity_start": "2026-09-11",
+      "activity_end": "2026-09-18"
+    },
+    {
+      "id": "3",
+      "weeks": [
+        3
+      ],
+      "label": "3주차",
+      "title": "개발 준비와 주제 선정",
+      "start": "2026-09-15",
+      "end": "2026-09-22",
+      "tasks": [
+        {
+          "title": "개발 준비",
+          "children": [
+            {
+              "title": "GitHub 계정 준비",
+              "details": [
+                {
+                  "title": "github.com → Sign up"
+                },
+                {
+                  "title": "이메일·비밀번호·ID 입력"
+                },
+                {
+                  "title": "이메일 인증 코드 확인"
+                }
+              ]
+            },
+            {
+              "title": "Git 설치",
+              "details": [
+                {
+                  "title": "Windows: git-scm.com/downloads → Download for Windows → 설치 파일 실행 → 계속 Next → Finish. 시작 메뉴에서 Git Bash 실행"
+                },
+                {
+                  "title": "macOS: 터미널(Spotlight에서 'terminal')에서 git --version 입력 → 설치 안내 창이 뜨면 설치 (Xcode Command Line Tools) Git Bash(또는 macOS 터미널)에서 내 정보를 등록합니다. 수업 3주차 '첫 번째 커밋 만들기'와 같은 명령입니다."
+                },
+                {
+                  "title": "코드·양식 · bash",
+                  "children": [
+                    {
+                      "title": "git config --global user.name \"홍길동\"\ngit config --global user.email \"GitHub에 등록한 이메일\"\ngit config --global core.editor \"code --wait\" # 커밋·병합 메시지 편집기를 VS Code로 (수업 14주차 권장)\ngit --version # git version 2.4x 가 나오면 성공",
+                      "kind": "code"
+                    }
+                  ]
+                },
+                {
+                  "title": "> [TIP] Git Bash에서 처음 git push를 하면 GitHub 로그인 창이 뜹니다. 브라우저로 로그인하거나, 비밀번호 칸 에 6.2절 (https://github.com/sangjaepark0000/foss-8/blob/main/docs/guide/06-tools.md#section-6-2)의 토큰을 붙여 넣으면 됩니다. 한 번 로그인하면 Windows가 기억합니다."
+                }
+              ]
+            },
+            {
+              "title": "Git 이름 설정",
+              "details": [
+                {
+                  "title": "`git config --global user.name \"내 이름\"`"
+                }
+              ]
+            },
+            {
+              "title": "Git 이메일 설정",
+              "details": [
+                {
+                  "title": "`git config --global user.email \"GitHub 등록 이메일\"`"
+                },
+                {
+                  "title": "GitHub Settings → Emails에서 등록 이메일 확인"
+                }
+              ]
+            },
+            {
+              "title": "GitHub 등록 이메일과 일치 확인",
+              "details": [
+                {
+                  "title": "GitHub Settings → Emails"
+                },
+                {
+                  "title": "Git·소스트리 이메일과 비교"
+                },
+                {
+                  "title": "GitHub noreply 주소 사용 가능"
+                }
+              ]
+            },
+            {
+              "title": "수업 실습 저장소에 커밋·Push"
+            }
+          ],
+          "id": "task-23fa79c27768",
+          "progress_period": "3"
+        },
+        {
+          "title": "프로젝트 주제 정하기",
+          "children": [
+            {
+              "title": "해결할 문제 정하기"
+            },
+            {
+              "title": "대상 사용자 정하기"
+            },
+            {
+              "title": "핵심 기능 정하기"
+            },
+            {
+              "title": "기능별 담당자 정하기"
+            },
+            {
+              "title": "기능별 완료 조건 정하기"
+            }
+          ],
+          "details": [
+            {
+              "title": "4명이 기능 4개로 나눌 수 있는가?",
+              "children": [
+                {
+                  "title": "이유 — 1인 1기능이어야 각자 브랜치·풀 리퀘스트·커밋 기록이 고르게 남음"
+                }
+              ]
+            },
+            {
+              "title": "첫 동작을 1~2주 안에 볼 수 있는가?",
+              "children": [
+                {
+                  "title": "이유 — 7주차에 브랜치를 만들자마자 '뭔가 되는' 코드를 올릴 수 있어야 함"
+                }
+              ]
+            },
+            {
+              "title": "API 키·외부 서버·큰 데이터 없이도 시작할 수 있는 / 가?",
+              "children": [
+                {
+                  "title": "이유 — 샘플 데이터 파일 하나로 시작하고, 외부 연동은 나중에 붙이는 것이 안전"
+                }
+              ]
+            },
+            {
+              "title": "원문은 4인·4기능 예시. 팀별 조정은 승인 기록 확인"
+            }
+          ],
+          "id": "task-b764781d380c",
+          "progress_period": "3"
+        },
+        {
+          "title": "수업 · 9/18",
+          "children": [
+            {
+              "title": "GitHub·인증·Git 기초"
+            }
+          ],
+          "id": "task-4cd887374dde",
+          "progress_period": "2"
+        }
+      ],
+      "status": "unknown",
+      "activity_start": "2026-09-18",
+      "activity_end": "2026-09-25"
+    },
+    {
+      "id": "4",
+      "weeks": [
+        4
+      ],
+      "label": "4주차",
+      "title": "제안서 완성과 첫 정기 회의",
+      "start": "2026-09-22",
+      "end": "2026-09-29",
+      "tasks": [
+        {
+          "title": "제안서 완성",
+          "children": [
+            {
+              "title": "작성 내용",
+              "children": [
+                {
+                  "title": "팀 소개",
+                  "details": [
+                    {
+                      "title": "들어갈 내용 — 팀명, 팀원 이름·역할, 팀원별 GitHub 아이디, 저장소 주소"
+                    },
+                    {
+                      "title": "분량 — 1쪽"
+                    }
+                  ]
+                },
+                {
+                  "title": "주제·개요"
+                },
+                {
+                  "title": "기능 설계",
+                  "details": [
+                    {
+                      "title": "들어갈 내용 — 기능 4개 + 공통(4.4 표 형식: 담당·내용·완료 조건), 기능별 브랜치 이름 예시 / (feature/…)"
+                    },
+                    {
+                      "title": "분량 — 1~2쪽"
+                    }
+                  ]
+                },
+                {
+                  "title": "개발 일정·역할",
+                  "details": [
+                    {
+                      "title": "들어갈 내용 — 주차별 표(6~15주차). MVP(10주차 중간발표), 타 팀 기여(11~13주차), 기능 동결 / (13주차), v1.0.0(14주차) 표시"
+                    },
+                    {
+                      "title": "분량 — 1쪽"
+                    }
+                  ]
+                },
+                {
+                  "title": "GitHub 협업 계획",
+                  "details": [
+                    {
+                      "title": "들어갈 내용 — 브랜치 전략(8.1), 커밋 메시지 규칙, 풀 리퀘스트·리뷰 규칙, 이슈 등록 방식, 회의록 / ·문서 위치, 라이선스와 행동 수칙"
+                    },
+                    {
+                      "title": "분량 — 1쪽"
+                    }
+                  ]
+                },
+                {
+                  "title": "예상 결과물",
+                  "details": [
+                    {
+                      "title": "들어갈 내용 — 최종 형태(CLI/웹/봇 등), 이후 개선 또는 외부 기여 계획"
+                    },
+                    {
+                      "title": "분량 — 1쪽"
+                    }
+                  ]
+                },
+                {
+                  "title": "기대 효과"
+                }
+              ]
+            },
+            {
+              "title": "제출: 10/1 18:00 · 5주차 할 일에서 확인"
+            }
+          ],
+          "details": [
+            {
+              "title": "1",
+              "children": [
+                {
+                  "title": "항목 — 팀 소개"
+                },
+                {
+                  "title": "들어갈 내용 — 팀명, 팀원 이름·역할, 팀원별 GitHub 아이디, 저장소 주소"
+                },
+                {
+                  "title": "분량 — 1쪽"
+                }
+              ]
+            },
+            {
+              "title": "2",
+              "children": [
+                {
+                  "title": "항목 — 프로젝트 주제 및 개요"
+                },
+                {
+                  "title": "들어갈 내용 — 프로젝트 이름, 해결하고자 하는 문제, 간단한 기능 개요 또는 핵심 아이디어"
+                },
+                {
+                  "title": "분량 — 1쪽"
+                }
+              ]
+            },
+            {
+              "title": "3",
+              "children": [
+                {
+                  "title": "항목 — 주요 기능 설계"
+                },
+                {
+                  "title": "들어갈 내용 — 기능 4개 + 공통(4.4 표 형식: 담당·내용·완료 조건), 기능별 브랜치 이름 예시 / (feature/…)"
+                },
+                {
+                  "title": "분량 — 1~2쪽"
+                }
+              ]
+            },
+            {
+              "title": "4",
+              "children": [
+                {
+                  "title": "항목 — 개발 및 협업 일정 계획"
+                },
+                {
+                  "title": "들어갈 내용 — 주차별 표(6~15주차). MVP(10주차 중간발표), 타 팀 기여(11~13주차), 기능 동결 / (13주차), v1.0.0(14주차) 표시"
+                },
+                {
+                  "title": "분량 — 1쪽"
+                }
+              ]
+            },
+            {
+              "title": "5",
+              "children": [
+                {
+                  "title": "항목 — GitHub 협업 계획"
+                },
+                {
+                  "title": "들어갈 내용 — 브랜치 전략(8.1), 커밋 메시지 규칙, 풀 리퀘스트·리뷰 규칙, 이슈 등록 방식, 회의록 / ·문서 위치, 라이선스와 행동 수칙"
+                },
+                {
+                  "title": "분량 — 1쪽"
+                }
+              ]
+            },
+            {
+              "title": "6",
+              "children": [
+                {
+                  "title": "항목 — 예상 결과물"
+                },
+                {
+                  "title": "들어갈 내용 — 최종 형태(CLI/웹/봇 등), 이후 개선 또는 외부 기여 계획"
+                },
+                {
+                  "title": "분량 — 1쪽"
+                }
+              ]
+            },
+            {
+              "title": "7",
+              "children": [
+                {
+                  "title": "항목 — 기대 효과 및 목표"
+                },
+                {
+                  "title": "들어갈 내용 — 협업 경험·GitHub 활용 능력 향상, OSS/코딩 역량 인증제 대비, 팀워크·문서화 경 / 험 — 팀의 목표를 자기 말로"
+                },
+                {
+                  "title": "분량 — 0.5쪽"
+                }
+              ]
+            },
+            {
+              "title": "+",
+              "children": [
+                {
+                  "title": "항목 — 기타"
+                },
+                {
+                  "title": "들어갈 내용 — 참고문헌(해당 시), 기타 필요한 사항"
+                },
+                {
+                  "title": "분량 — —"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "팀",
+            "제안서 10점",
+            "문제 2 / 기능 설계 3 / 일정·역할 2 / 협업 계획 2 / 형식 1"
+          ],
+          "evaluation_source": "docs/guide/15-evaluation.md",
+          "id": "task-prepare-proposal-4",
+          "progress_period": "4"
+        },
+        {
+          "title": "첫 정기 회의와 회의록 작성",
+          "children": [
+            {
+              "title": "기록 기간: 9/11~9/30"
+            },
+            {
+              "title": "회의 준비",
+              "children": [
+                {
+                  "title": "이전 결정 확인"
+                },
+                {
+                  "title": "개인별 진행 상황 확인"
+                },
+                {
+                  "title": "막힌 점 모으기"
+                },
+                {
+                  "title": "커밋·이슈·PR·리뷰 기록 모으기"
+                }
+              ]
+            },
+            {
+              "title": "회의록 작성 ({{task.minutes_writer}})",
+              "children": [
+                {
+                  "title": "회의 일시·참석자 기록"
+                },
+                {
+                  "title": "이전 결정 이행 여부 기록"
+                },
+                {
+                  "title": "개인별 진행 상황 기록"
+                },
+                {
+                  "title": "결정과 이유 기록"
+                },
+                {
+                  "title": "다음 작업의 담당자·기한·이슈 기록"
+                },
+                {
+                  "title": "개인별 활동 횟수 기록"
+                }
+              ]
+            },
+            {
+              "title": "팀원 확인 받기"
+            },
+            {
+              "title": "GitHub에 원본 올리기",
+              "children": [
+                {
+                  "title": "형식: Markdown"
+                },
+                {
+                  "title": "경로: `docs/meetings/YYYY-MM-DD.md`"
+                },
+                {
+                  "title": "파일 날짜: 실제 회의일"
+                }
+              ],
+              "details": [
+                {
+                  "title": "저장 경로: `docs/meetings/YYYY-MM-DD.md`"
+                },
+                {
+                  "title": "날짜: 실제 회의일"
+                },
+                {
+                  "title": "PR로 올리면 활동 실적"
+                },
+                {
+                  "title": "본문 양식",
+                  "children": [
+                    {
+                      "title": "docs/meetings/YYYY-MM-DD.md로 저장하고 PDF로 변환해 LMS에 제출합니다(12장). 아래를 양식을 사용하 여 내용을 채웁니다."
+                    },
+                    {
+                      "title": "코드·양식 · markdown",
+                      "children": [
+                        {
+                          "title": "# [WEEK#] 회의록 — 팀명\n\n- 일시: 2026-10-13 (화) 20:00 ~ 21:00\n- 방식: 온라인(디스코드) / 대면(도서관 스터디룸)\n- 참석: 홍길동, 김철수, 이영희, 박민수 / 불참: 없음\n- 서기: 박민수\n\n## 1. 지난주 결정 사항 점검\n| 결정 사항 | 담당 | 완료 | 비고 |\n|---|---|---|---|\n| 저장 형식 CSV 확정 | 김철수 | O | storage.py 올림 |\n| 샘플 데이터 준비 | 이영희 | X | 이번 주 |\n\n## 2. 팀원별 진행 상황\n| 팀원 | 한 일 (이슈/풀 리퀘스트 번호) | 막힌 점 |\n|---|---|---|\n| 홍길동 | #3 입력 검증 이슈 등록 | 날짜 형식 검사 방법 |\n| 김철수 | #8 storage.py 커밋 | 없음 |\n\n## 3. 논의 내용과 결정 사항 (이유 포함)\n- 예산 저장은 별도 파일(budget.json)로 — 거래 CSV와 섞으면 통계가 복잡해져서\n\n## 4. 다음 주 할 일\n| 할 일 | 담당 | 마감 | 이슈 |\n|---|---|---|---|\n| add 기능 첫 동작 | 홍길동 | 10/21 | #3 |\n\n## 5. 활동 로그 (이번 주)\n| 팀원 | 커밋 | 풀 리퀘스트(생성/병합) | 리뷰 | 이슈 | 충돌 해결 | 특이사항 |\n|---|---|---|---|---|---|---|\n| 홍길동 | 3 | 0/0 | 0 | 2 | 0 | - |\n| 김철수 | 4 | 0/0 | 0 | 1 | 0 | - |\n\n## 6. 이번 주 점검표 (부록 A 6주차)\n- [x] 소스트리 설치 - [x] 클론 - [x] 자기소개 파일 커밋·Push - [x] 회의록 #3",
+                          "kind": "code"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "LMS 제출: 10/1 18:00 · 5주차 할 일에서 확인"
+            }
+          ],
+          "evaluation": [
+            "팀",
+            "정해진 회의록 총 10회 LMS 제출",
+            "회의록 항목 전체 3점 (회차별 3점 아님)",
+            "증거: LMS 제출 기록"
+          ],
+          "evaluation_source": "docs/guide/10-activity.md",
+          "id": "task-prepare-minutes-4",
+          "progress_period": "4"
+        },
+        {
+          "title": "보고서·발표 평가 기준",
+          "children": [
+            {
+              "title": "제안서: 10점"
+            },
+            {
+              "title": "발표: 5점"
+            },
+            {
+              "title": "승인 기록: {{team.approved_changes}}"
+            },
+            {
+              "title": "팀별 배점 조정: 승인 근거 확인 필요"
+            }
+          ],
+          "id": "task-15adb8a390b9",
+          "kind": "reference",
+          "progress_period": "3"
+        }
+      ],
+      "status": "unknown",
+      "activity_start": "2026-09-25",
+      "activity_end": "2026-10-02"
+    },
+    {
+      "id": "5",
+      "weeks": [
+        5
+      ],
+      "label": "5주차",
+      "title": "제안 발표와 저장소 준비",
+      "start": "2026-09-29",
+      "end": "2026-10-06",
+      "tasks": [
+        {
+          "title": "기본 파일 준비 ({{task.repository_admin}})",
+          "children": [
+            {
+              "title": "README 수정",
+              "details": [
+                {
+                  "title": "예시 양식 — 프로젝트에 맞게 수정",
+                  "children": [
+                    {
+                      "title": "# moneylog\n\n터미널에서 쓰는 가계부 — 거래 입력, 월별 통계, 예산 경고, 그래프 저장\n\n## 스크린샷\n![실행 화면](docs/images/demo.png)\n\n## 주요 기능\n| 기능 | 설명 | 담당 |\n|------|------|------|\n| add | 거래 입력·검증 | 홍길동 |\n| summary | 월별·분류별 통계 | 김철수 |\n| budget | 예산 설정·초과 경고 | 이영희 |\n| chart | 그래프 PNG 저장 | 박민수 |\n\n## 설치와 실행 (Python 3.12 이상, 3.13에서 테스트)\n```\ngit clone https://github.com/<팀장아이디>/moneylog.git\ncd moneylog\npip install -r requirements.txt\npython main.py\n```\n\n## 사용법\n1. 메뉴에서 `1`을 누르면 거래 입력 — 예: `2026-10-13, 12000, 식비, 점심`\n2. `2`를 누르면 이번 달 합계와 분류별 합계 출력\n3. `4`를 누르면 `docs/images/` 폴더에 그래프 PNG 저장\n\n## 팀원\n| 이름 | 역할 | GitHub |\n|------|------|--------|\n| 홍길동 | 팀장 | @hong-id |\n\n기여 방법은 [CONTRIBUTING.md](CONTRIBUTING.md), 행동 수칙은 [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md)\n를 참고하세요.\n\n## 라이선스\nMIT License — see [LICENSE](LICENSE)",
+                      "kind": "code"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "CONTRIBUTING.md 추가",
+              "details": [
+                {
+                  "title": "예시 양식 — 프로젝트에 맞게 수정",
+                  "children": [
+                    {
+                      "title": "# 기여 가이드\n\n## 준비\n1. Python 3.12 이상 설치 → 저장소 클론 → `pip install -r requirements.txt`\n2. 실행: `python main.py`\n\n## 작업 흐름 (팀원)\n1. 작업 전에 이슈를 먼저 만들거나 기존 이슈에 댓글로 배정 요청\n2. `main`에서 `feature/기능이름` 브랜치를 만들어 작업 (main에 직접 커밋하지 않음)\n3. 커밋 메시지: `기능 설명 (#이슈번호)` — 예: `거래 입력 기능 추가 (#12)`\n4. 올리기 전에 프로그램을 실행해 확인\n5. 풀 리퀘스트 설명에 무엇을/왜(`Closes #이슈`)/어떻게 확인했나 3줄, 리뷰어 1명 지정\n6. 승인 1개 뒤 작성자가 `Merge pull request`\n\n## 타 팀·외부 기여자\n1. `good first issue` 라벨 이슈에 댓글로 배정을 요청하고, 담당자로 지정된 뒤 시작\n2. 이 저장소를 `Fork` → 소스트리로 클론 → 브랜치를 만들어 작업\n3. 수정 → 커밋 → Push → fork 페이지의 `Contribute` → `Open pull request` (base는 이 저장소의 `main`)\n4. 리뷰·질문 응답은 48시간 이내\n\n## 행동 수칙\n- 모든 참여자는 CODE_OF_CONDUCT.md 를 따릅니다\n\n## 코드 규칙\n- PEP 8 스타일, 기능마다 파일 1개, 파일 입출력은 `encoding=\"utf-8\"`\n- 새 라이브러리는 requirements.txt 에 추가\n- 토큰·비밀번호·개인정보는 절대 올리지 않음\n\n## AI 도구\n- 사용 가능. 직접 실행해 확인한 코드만 올리고, 풀 리퀘스트 설명에 사용 여부를 적음",
+                      "kind": "code"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "CODE_OF_CONDUCT.md 추가",
+              "details": [
+                {
+                  "title": "예시 양식 — 프로젝트에 맞게 수정",
+                  "children": [
+                    {
+                      "title": "# 행동 수칙\n\n이 프로젝트의 모든 참여자(팀원, 타 팀 기여자, 사용자)는 서로를 존중하며 다음을 지킵니다.",
+                      "kind": "code"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "requirements.txt 추가",
+              "details": [
+                {
+                  "title": "예시 양식 — 프로젝트에 맞게 수정",
+                  "children": [
+                    {
+                      "title": "# 사용하는 라이브러리를 한 줄에 하나씩. 표준 라이브러리(csv, json 등)는 적지 않음.\nmatplotlib",
+                      "kind": "code"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "main.py 추가",
+              "details": [
+                {
+                  "title": "예시 양식 — 프로젝트에 맞게 수정",
+                  "children": [
+                    {
+                      "title": "\"\"\"moneylog — 터미널 가계부. 메뉴를 보여 주고 각 기능을 호출한다.\"\"\"\n\ndef main():\n    while True:\n        print(\"\\n=== moneylog ===\")\n        print(\"1. 거래 입력 2. 월별 통계 3. 예산 관리 4. 그래프 저장 0. 종료\")\n        choice = input(\"선택: \").strip()\n        if choice == \"0\":\n            break\n        elif choice == \"1\":\n            print(\"준비 중 (담당: 홍길동, #3)\") # 기능이 완성되면 add.run() 으로 교체\n        elif choice == \"2\":\n            print(\"준비 중 (담당: 김철수, #4)\")\n        elif choice == \"3\":\n            print(\"준비 중 (담당: 이영희, #5)\")\n        elif choice == \"4\":\n            print(\"준비 중 (담당: 박민수, #6)\")\n        else:\n            print(\"0~4 중에서 선택하세요.\")\n\nif __name__ == \"__main__\":\n    main()",
+                      "kind": "code"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "docs/meetings/README.md 추가",
+              "details": [
+                {
+                  "title": "GitHub → Add file → Create new file"
+                },
+                {
+                  "title": "파일명: `docs/meetings/README.md`"
+                },
+                {
+                  "title": "내용: 회의록 저장 폴더"
+                },
+                {
+                  "title": "Commit changes"
+                }
+              ]
+            },
+            {
+              "title": "docs/team-agreement.md 추가",
+              "details": [
+                {
+                  "title": "GitHub → Add file → Create new file"
+                },
+                {
+                  "title": "파일명: `docs/team-agreement.md`"
+                },
+                {
+                  "title": "팀에서 정한 회의·응답·작업·의사결정 규칙 작성"
+                },
+                {
+                  "title": "Commit changes"
+                }
+              ]
+            }
+          ],
+          "id": "task-dc39b00ede4c",
+          "progress_period": "5"
+        },
+        {
+          "title": "담당 기능 이슈 등록",
+          "children": [
+            {
+              "title": "기능을 작은 작업으로 나누기",
+              "details": [
+                {
+                  "title": "이슈 하나에 1~3일 작업 분량"
+                },
+                {
+                  "title": "담당 기능을 이슈 3~5개로 분리"
+                }
+              ]
+            },
+            {
+              "title": "이슈 3개 이상 등록",
+              "details": [
+                {
+                  "title": "GitHub → Issues → New issue"
+                },
+                {
+                  "title": "목적·할 일·완료 조건 작성"
+                },
+                {
+                  "title": "Assignees·Labels 지정"
+                },
+                {
+                  "title": "기능을 이슈 3~5개로 분리"
+                },
+                {
+                  "title": "이슈 하나는 1~3일 작업 분량"
+                }
+              ],
+              "evaluation": [
+                "개인",
+                "6주차부터 작업 전 이슈·주 1개 이상·총 8개",
+                "10/19~25 시험 주 제외",
+                "활동 항목 전체 3점"
+              ],
+              "evaluation_source": "docs/guide/10-activity.md"
+            },
+            {
+              "title": "이슈에 적을 내용",
+              "children": [
+                {
+                  "title": "목적"
+                },
+                {
+                  "title": "할 일"
+                },
+                {
+                  "title": "완료 조건"
+                }
+              ]
+            },
+            {
+              "title": "담당자 지정",
+              "details": [
+                {
+                  "title": "이슈 오른쪽 Assignees → 담당 팀원 선택"
+                }
+              ]
+            },
+            {
+              "title": "라벨 지정",
+              "details": [
+                {
+                  "title": "이슈 오른쪽 Labels"
+                },
+                {
+                  "title": "enhancement / bug / documentation / question 중 선택"
+                }
+              ]
+            }
+          ],
+          "id": "task-c806fef92607",
+          "progress_period": "5"
+        },
+        {
+          "title": "제안서 제출 · 10/1 18:00",
+          "children": [
+            {
+              "title": "작성 내용",
+              "children": [
+                {
+                  "title": "팀 소개",
+                  "details": [
+                    {
+                      "title": "들어갈 내용 — 팀명, 팀원 이름·역할, 팀원별 GitHub 아이디, 저장소 주소"
+                    },
+                    {
+                      "title": "분량 — 1쪽"
+                    }
+                  ]
+                },
+                {
+                  "title": "주제·개요"
+                },
+                {
+                  "title": "기능 설계",
+                  "details": [
+                    {
+                      "title": "들어갈 내용 — 기능 4개 + 공통(4.4 표 형식: 담당·내용·완료 조건), 기능별 브랜치 이름 예시 / (feature/…)"
+                    },
+                    {
+                      "title": "분량 — 1~2쪽"
+                    }
+                  ]
+                },
+                {
+                  "title": "개발 일정·역할",
+                  "details": [
+                    {
+                      "title": "들어갈 내용 — 주차별 표(6~15주차). MVP(10주차 중간발표), 타 팀 기여(11~13주차), 기능 동결 / (13주차), v1.0.0(14주차) 표시"
+                    },
+                    {
+                      "title": "분량 — 1쪽"
+                    }
+                  ]
+                },
+                {
+                  "title": "GitHub 협업 계획",
+                  "details": [
+                    {
+                      "title": "들어갈 내용 — 브랜치 전략(8.1), 커밋 메시지 규칙, 풀 리퀘스트·리뷰 규칙, 이슈 등록 방식, 회의록 / ·문서 위치, 라이선스와 행동 수칙"
+                    },
+                    {
+                      "title": "분량 — 1쪽"
+                    }
+                  ]
+                },
+                {
+                  "title": "예상 결과물",
+                  "details": [
+                    {
+                      "title": "들어갈 내용 — 최종 형태(CLI/웹/봇 등), 이후 개선 또는 외부 기여 계획"
+                    },
+                    {
+                      "title": "분량 — 1쪽"
+                    }
+                  ]
+                },
+                {
+                  "title": "기대 효과"
+                }
+              ]
+            },
+            {
+              "title": "제출 규칙",
+              "children": [
+                {
+                  "title": "형식: PDF"
+                },
+                {
+                  "title": "파일명: `[제안서] {{team.name}}.pdf`"
+                },
+                {
+                  "title": "제출처: LMS 과제 탭"
+                }
+              ]
+            }
+          ],
+          "details": [
+            {
+              "title": "1",
+              "children": [
+                {
+                  "title": "항목 — 팀 소개"
+                },
+                {
+                  "title": "들어갈 내용 — 팀명, 팀원 이름·역할, 팀원별 GitHub 아이디, 저장소 주소"
+                },
+                {
+                  "title": "분량 — 1쪽"
+                }
+              ]
+            },
+            {
+              "title": "2",
+              "children": [
+                {
+                  "title": "항목 — 프로젝트 주제 및 개요"
+                },
+                {
+                  "title": "들어갈 내용 — 프로젝트 이름, 해결하고자 하는 문제, 간단한 기능 개요 또는 핵심 아이디어"
+                },
+                {
+                  "title": "분량 — 1쪽"
+                }
+              ]
+            },
+            {
+              "title": "3",
+              "children": [
+                {
+                  "title": "항목 — 주요 기능 설계"
+                },
+                {
+                  "title": "들어갈 내용 — 기능 4개 + 공통(4.4 표 형식: 담당·내용·완료 조건), 기능별 브랜치 이름 예시 / (feature/…)"
+                },
+                {
+                  "title": "분량 — 1~2쪽"
+                }
+              ]
+            },
+            {
+              "title": "4",
+              "children": [
+                {
+                  "title": "항목 — 개발 및 협업 일정 계획"
+                },
+                {
+                  "title": "들어갈 내용 — 주차별 표(6~15주차). MVP(10주차 중간발표), 타 팀 기여(11~13주차), 기능 동결 / (13주차), v1.0.0(14주차) 표시"
+                },
+                {
+                  "title": "분량 — 1쪽"
+                }
+              ]
+            },
+            {
+              "title": "5",
+              "children": [
+                {
+                  "title": "항목 — GitHub 협업 계획"
+                },
+                {
+                  "title": "들어갈 내용 — 브랜치 전략(8.1), 커밋 메시지 규칙, 풀 리퀘스트·리뷰 규칙, 이슈 등록 방식, 회의록 / ·문서 위치, 라이선스와 행동 수칙"
+                },
+                {
+                  "title": "분량 — 1쪽"
+                }
+              ]
+            },
+            {
+              "title": "6",
+              "children": [
+                {
+                  "title": "항목 — 예상 결과물"
+                },
+                {
+                  "title": "들어갈 내용 — 최종 형태(CLI/웹/봇 등), 이후 개선 또는 외부 기여 계획"
+                },
+                {
+                  "title": "분량 — 1쪽"
+                }
+              ]
+            },
+            {
+              "title": "7",
+              "children": [
+                {
+                  "title": "항목 — 기대 효과 및 목표"
+                },
+                {
+                  "title": "들어갈 내용 — 협업 경험·GitHub 활용 능력 향상, OSS/코딩 역량 인증제 대비, 팀워크·문서화 경 / 험 — 팀의 목표를 자기 말로"
+                },
+                {
+                  "title": "분량 — 0.5쪽"
+                }
+              ]
+            },
+            {
+              "title": "+",
+              "children": [
+                {
+                  "title": "항목 — 기타"
+                },
+                {
+                  "title": "들어갈 내용 — 참고문헌(해당 시), 기타 필요한 사항"
+                },
+                {
+                  "title": "분량 — —"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "팀",
+            "제안서 10점",
+            "문제 2 / 기능 설계 3 / 일정·역할 2 / 협업 계획 2 / 형식 1"
+          ],
+          "evaluation_source": "docs/guide/15-evaluation.md",
+          "id": "task-dab3f268b6e2",
+          "progress_period": "3"
+        },
+        {
+          "title": "회의록 #1 제출 · 10/1 18:00",
+          "children": [
+            {
+              "title": "기록 기간: 9/11~9/30"
+            },
+            {
+              "title": "회의 준비",
+              "children": [
+                {
+                  "title": "이전 결정 확인"
+                },
+                {
+                  "title": "개인별 진행 상황 확인"
+                },
+                {
+                  "title": "막힌 점 모으기"
+                },
+                {
+                  "title": "커밋·이슈·PR·리뷰 기록 모으기"
+                }
+              ]
+            },
+            {
+              "title": "회의록 작성 ({{task.minutes_writer}})",
+              "children": [
+                {
+                  "title": "회의 일시·참석자 기록"
+                },
+                {
+                  "title": "이전 결정 이행 여부 기록"
+                },
+                {
+                  "title": "개인별 진행 상황 기록"
+                },
+                {
+                  "title": "결정과 이유 기록"
+                },
+                {
+                  "title": "다음 작업의 담당자·기한·이슈 기록"
+                },
+                {
+                  "title": "개인별 활동 횟수 기록"
+                }
+              ]
+            },
+            {
+              "title": "팀원 확인 받기"
+            },
+            {
+              "title": "GitHub에 원본 올리기",
+              "children": [
+                {
+                  "title": "형식: Markdown"
+                },
+                {
+                  "title": "경로: `docs/meetings/YYYY-MM-DD.md`"
+                },
+                {
+                  "title": "파일 날짜: 실제 회의일"
+                }
+              ],
+              "details": [
+                {
+                  "title": "저장 경로: `docs/meetings/YYYY-MM-DD.md`"
+                },
+                {
+                  "title": "날짜: 실제 회의일"
+                },
+                {
+                  "title": "PR로 올리면 활동 실적"
+                },
+                {
+                  "title": "본문 양식",
+                  "children": [
+                    {
+                      "title": "docs/meetings/YYYY-MM-DD.md로 저장하고 PDF로 변환해 LMS에 제출합니다(12장). 아래를 양식을 사용하 여 내용을 채웁니다."
+                    },
+                    {
+                      "title": "코드·양식 · markdown",
+                      "children": [
+                        {
+                          "title": "# [WEEK#] 회의록 — 팀명\n\n- 일시: 2026-10-13 (화) 20:00 ~ 21:00\n- 방식: 온라인(디스코드) / 대면(도서관 스터디룸)\n- 참석: 홍길동, 김철수, 이영희, 박민수 / 불참: 없음\n- 서기: 박민수\n\n## 1. 지난주 결정 사항 점검\n| 결정 사항 | 담당 | 완료 | 비고 |\n|---|---|---|---|\n| 저장 형식 CSV 확정 | 김철수 | O | storage.py 올림 |\n| 샘플 데이터 준비 | 이영희 | X | 이번 주 |\n\n## 2. 팀원별 진행 상황\n| 팀원 | 한 일 (이슈/풀 리퀘스트 번호) | 막힌 점 |\n|---|---|---|\n| 홍길동 | #3 입력 검증 이슈 등록 | 날짜 형식 검사 방법 |\n| 김철수 | #8 storage.py 커밋 | 없음 |\n\n## 3. 논의 내용과 결정 사항 (이유 포함)\n- 예산 저장은 별도 파일(budget.json)로 — 거래 CSV와 섞으면 통계가 복잡해져서\n\n## 4. 다음 주 할 일\n| 할 일 | 담당 | 마감 | 이슈 |\n|---|---|---|---|\n| add 기능 첫 동작 | 홍길동 | 10/21 | #3 |\n\n## 5. 활동 로그 (이번 주)\n| 팀원 | 커밋 | 풀 리퀘스트(생성/병합) | 리뷰 | 이슈 | 충돌 해결 | 특이사항 |\n|---|---|---|---|---|---|---|\n| 홍길동 | 3 | 0/0 | 0 | 2 | 0 | - |\n| 김철수 | 4 | 0/0 | 0 | 1 | 0 | - |\n\n## 6. 이번 주 점검표 (부록 A 6주차)\n- [x] 소스트리 설치 - [x] 클론 - [x] 자기소개 파일 커밋·Push - [x] 회의록 #3",
+                          "kind": "code"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "LMS에 PDF 제출 ({{task.minutes_submitter}})",
+              "children": [
+                {
+                  "title": "원본을 PDF로 변환",
+                  "details": [
+                    {
+                      "title": "GitHub에서 회의록 .md 파일 열기"
+                    },
+                    {
+                      "title": "브라우저 인쇄: Ctrl+P"
+                    },
+                    {
+                      "title": "대상: PDF로 저장"
+                    },
+                    {
+                      "title": "파일명 변경 → 저장"
+                    },
+                    {
+                      "title": "페이지·표·잘림 확인"
+                    }
+                  ]
+                },
+                {
+                  "title": "파일명: `[WEEK5] 회의록_{{team.name}}.pdf`"
+                },
+                {
+                  "title": "제출처: LMS 과제 탭"
+                },
+                {
+                  "title": "제출 완료 확인"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "팀",
+            "정해진 회의록 총 10회 LMS 제출",
+            "회의록 항목 전체 3점 (회차별 3점 아님)",
+            "증거: LMS 제출 기록"
+          ],
+          "evaluation_source": "docs/guide/10-activity.md",
+          "id": "task-30384f5c95f8",
+          "progress_period": "3",
+          "recording_start": "2026-09-11",
+          "recording_end": "2026-09-30",
+          "due_at": "2026-10-01T18:00:00+09:00"
+        },
+        {
+          "title": "제안 발표 · 10/2",
+          "children": [
+            {
+              "title": "발표: 10분"
+            },
+            {
+              "title": "질의응답: 5분"
+            },
+            {
+              "title": "발언 분담"
+            },
+            {
+              "title": "리허설"
+            },
+            {
+              "title": "발표자료 이메일 제출",
+              "children": [
+                {
+                  "title": "기한: 발표 후 당일"
+                },
+                {
+                  "title": "받는 사람: shoh0320@pknu.ac.kr"
+                },
+                {
+                  "title": "제목: `[OSS 제안서] {{team.name}}`"
+                },
+                {
+                  "title": "사용한 발표자료 첨부"
+                },
+                {
+                  "title": "발송 완료 확인"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "팀",
+            "발표 5점",
+            "내용·시간 2 / 전원 발언·전달 2 / 질의응답 1"
+          ],
+          "evaluation_source": "docs/guide/15-evaluation.md",
+          "id": "task-f505d9ca0388",
+          "progress_period": "3"
+        }
+      ],
+      "status": "unknown",
+      "activity_start": "2026-10-02",
+      "activity_end": "2026-10-09"
+    },
+    {
+      "id": "6",
+      "weeks": [
+        6
+      ],
+      "label": "6주차",
+      "title": "개발 환경과 첫 커밋",
+      "start": "2026-10-06",
+      "end": "2026-10-13",
+      "tasks": [
+        {
+          "title": "개발 환경 준비",
+          "children": [
+            {
+              "title": "소스트리 설치",
+              "details": [
+                {
+                  "title": "sourcetreeapp.com → 운영체제에 맞는 설치 파일"
+                },
+                {
+                  "title": "Bitbucket 로그인 건너뛰기"
+                },
+                {
+                  "title": "Mercurial 체크 해제"
+                },
+                {
+                  "title": "GitHub과 같은 이름·이메일 입력"
+                },
+                {
+                  "title": "SSH 키 생성: 아니오"
+                }
+              ]
+            },
+            {
+              "title": "소스트리에 GitHub 연결",
+              "details": [
+                {
+                  "title": "소스트리 → Remote → 계정 추가"
+                },
+                {
+                  "title": "호스팅 서비스: GitHub"
+                },
+                {
+                  "title": "OAuth 토큰 새로고침 → 브라우저 로그인"
+                },
+                {
+                  "title": "원격 저장소 목록 확인"
+                }
+              ]
+            },
+            {
+              "title": "VS Code 설치",
+              "details": [
+                {
+                  "title": "code.visualstudio.com → 다운로드·설치"
+                },
+                {
+                  "title": "확장: Korean Language Pack"
+                },
+                {
+                  "title": "확장: Python (Microsoft)"
+                }
+              ]
+            },
+            {
+              "title": "Python 확장 설치",
+              "details": [
+                {
+                  "title": "VS Code → 확장 → Python 검색"
+                },
+                {
+                  "title": "Microsoft Python 확장 설치"
+                }
+              ]
+            },
+            {
+              "title": "Python 3.12 이상 실행 확인",
+              "details": [
+                {
+                  "title": "`python --version`"
+                },
+                {
+                  "title": "`pip --version`"
+                },
+                {
+                  "title": "Windows 설치 시 Add python.exe to PATH 체크"
+                }
+              ]
+            },
+            {
+              "title": "팀 Python 버전 통일"
+            }
+          ],
+          "id": "task-cd22aa8bcff2",
+          "progress_period": "6"
+        },
+        {
+          "title": "팀 저장소 클론",
+          "children": [
+            {
+              "title": "GitHub HTTPS 주소 복사",
+              "details": [
+                {
+                  "title": "팀 저장소 → Code → HTTPS"
+                },
+                {
+                  "title": "주소 오른쪽 복사 버튼"
+                }
+              ]
+            },
+            {
+              "title": "소스트리 Clone",
+              "details": [
+                {
+                  "title": "소스트리 → Clone"
+                },
+                {
+                  "title": "첫 칸: 복사한 HTTPS 주소"
+                },
+                {
+                  "title": "둘째 칸: 내 PC의 저장 위치"
+                },
+                {
+                  "title": "클론 → History의 커밋 확인"
+                }
+              ]
+            },
+            {
+              "title": "VS Code에서 폴더 열기",
+              "details": [
+                {
+                  "title": "VS Code → 파일 → 폴더 열기"
+                },
+                {
+                  "title": "클론한 폴더 선택"
+                }
+              ]
+            }
+          ],
+          "id": "task-77fd1af70740",
+          "progress_period": "6"
+        },
+        {
+          "title": "첫 커밋 올리기",
+          "children": [
+            {
+              "title": "`docs/members/<이름>.md` 생성"
+            },
+            {
+              "title": "자기소개 3줄 작성"
+            },
+            {
+              "title": "커밋",
+              "details": [
+                {
+                  "title": "소스트리 → 커밋"
+                },
+                {
+                  "title": "변경 파일 옆 +로 스테이지"
+                },
+                {
+                  "title": "무엇을 바꿨는지 메시지 작성"
+                },
+                {
+                  "title": "예: 자기소개 추가 / 기능 설명 (#이슈번호)"
+                },
+                {
+                  "title": "커밋 실행"
+                }
+              ],
+              "evaluation": [
+                "개인",
+                "6주차부터 주 2회 이상·총 16회",
+                "10/19~25 시험 주 제외",
+                "활동 항목 전체 3점"
+              ],
+              "evaluation_source": "docs/guide/10-activity.md"
+            },
+            {
+              "title": "Push",
+              "details": [
+                {
+                  "title": "소스트리 → Push"
+                },
+                {
+                  "title": "내 브랜치 선택 → Push"
+                },
+                {
+                  "title": "거부되면 Pull → 충돌 해결 → 다시 Push"
+                }
+              ]
+            },
+            {
+              "title": "GitHub 반영 확인"
+            }
+          ],
+          "id": "task-7b690181177f",
+          "progress_period": "6"
+        },
+        {
+          "title": "공통 코드 준비 ({{task.development_lead}})",
+          "children": [
+            {
+              "title": "main.py 시작 뼈대 작성"
+            },
+            {
+              "title": "파일·모듈 구조 정하기"
+            },
+            {
+              "title": "공통 데이터 형식 정하기"
+            },
+            {
+              "title": "라이브러리를 requirements.txt에 기록"
+            },
+            {
+              "title": "설치·실행 방법을 README에 기록"
+            }
+          ],
+          "id": "task-6ca8ea5d413c",
+          "progress_period": "6"
+        },
+        {
+          "title": "학기 활동 기준",
+          "children": [
+            {
+              "title": "커밋 주 2회 이상"
+            },
+            {
+              "title": "이슈 주 1개 이상"
+            },
+            {
+              "title": "앱 집계: 선택한 수업 주차"
+            }
+          ],
+          "details": [
+            {
+              "title": "내 풀 리퀘스트",
+              "children": [
+                {
+                  "title": "방법 — 저장소 Pull requests 탭 검색창에 is:pr author:@me (병합된 것만: is:pr is:merged / author:@me)"
+                }
+              ]
+            },
+            {
+              "title": "내가 리뷰한 풀 리퀘스트",
+              "children": [
+                {
+                  "title": "방법 — is:pr reviewed-by:@me"
+                }
+              ]
+            },
+            {
+              "title": "내 이슈",
+              "children": [
+                {
+                  "title": "방법 — Issues 탭 검색창에 is:issue author:@me"
+                }
+              ]
+            },
+            {
+              "title": "내 커밋 수",
+              "children": [
+                {
+                  "title": "방법 — 저장소 Insights → Contributors (기간을 드래그로 조절)"
+                }
+              ]
+            },
+            {
+              "title": "팀 전체",
+              "children": [
+                {
+                  "title": "방법 — Insights → Pulse (최근 1주 요약)"
+                }
+              ]
+            },
+            {
+              "title": "주간 기록",
+              "children": [
+                {
+                  "title": "방법 — 회의록 '활동 로그' 표에 각자 숫자 기입 → 팀장 확인"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "항목별 개인·팀 구분",
+            "활동 항목당 충족 3 / 70% 이상 1.5 / 미충족 0",
+            "앱 집계: 선택한 수업 주차"
+          ],
+          "evaluation_source": "docs/guide/10-activity.md",
+          "id": "task-2b2c3803156f",
+          "kind": "reference",
+          "progress_period": "6"
+        },
+        {
+          "title": "회의록 #2 제출 · 10/8 18:00",
+          "children": [
+            {
+              "title": "기록 기간: 10/1~10/7"
+            },
+            {
+              "title": "회의 준비",
+              "children": [
+                {
+                  "title": "이전 결정 확인"
+                },
+                {
+                  "title": "개인별 진행 상황 확인"
+                },
+                {
+                  "title": "막힌 점 모으기"
+                },
+                {
+                  "title": "커밋·이슈·PR·리뷰 기록 모으기"
+                }
+              ]
+            },
+            {
+              "title": "회의록 작성 ({{task.minutes_writer}})",
+              "children": [
+                {
+                  "title": "회의 일시·참석자 기록"
+                },
+                {
+                  "title": "이전 결정 이행 여부 기록"
+                },
+                {
+                  "title": "개인별 진행 상황 기록"
+                },
+                {
+                  "title": "결정과 이유 기록"
+                },
+                {
+                  "title": "다음 작업의 담당자·기한·이슈 기록"
+                },
+                {
+                  "title": "개인별 활동 횟수 기록"
+                }
+              ]
+            },
+            {
+              "title": "팀원 확인 받기"
+            },
+            {
+              "title": "GitHub에 원본 올리기",
+              "children": [
+                {
+                  "title": "형식: Markdown"
+                },
+                {
+                  "title": "경로: `docs/meetings/YYYY-MM-DD.md`"
+                },
+                {
+                  "title": "파일 날짜: 실제 회의일"
+                }
+              ],
+              "details": [
+                {
+                  "title": "저장 경로: `docs/meetings/YYYY-MM-DD.md`"
+                },
+                {
+                  "title": "날짜: 실제 회의일"
+                },
+                {
+                  "title": "PR로 올리면 활동 실적"
+                },
+                {
+                  "title": "본문 양식",
+                  "children": [
+                    {
+                      "title": "docs/meetings/YYYY-MM-DD.md로 저장하고 PDF로 변환해 LMS에 제출합니다(12장). 아래를 양식을 사용하 여 내용을 채웁니다."
+                    },
+                    {
+                      "title": "코드·양식 · markdown",
+                      "children": [
+                        {
+                          "title": "# [WEEK#] 회의록 — 팀명\n\n- 일시: 2026-10-13 (화) 20:00 ~ 21:00\n- 방식: 온라인(디스코드) / 대면(도서관 스터디룸)\n- 참석: 홍길동, 김철수, 이영희, 박민수 / 불참: 없음\n- 서기: 박민수\n\n## 1. 지난주 결정 사항 점검\n| 결정 사항 | 담당 | 완료 | 비고 |\n|---|---|---|---|\n| 저장 형식 CSV 확정 | 김철수 | O | storage.py 올림 |\n| 샘플 데이터 준비 | 이영희 | X | 이번 주 |\n\n## 2. 팀원별 진행 상황\n| 팀원 | 한 일 (이슈/풀 리퀘스트 번호) | 막힌 점 |\n|---|---|---|\n| 홍길동 | #3 입력 검증 이슈 등록 | 날짜 형식 검사 방법 |\n| 김철수 | #8 storage.py 커밋 | 없음 |\n\n## 3. 논의 내용과 결정 사항 (이유 포함)\n- 예산 저장은 별도 파일(budget.json)로 — 거래 CSV와 섞으면 통계가 복잡해져서\n\n## 4. 다음 주 할 일\n| 할 일 | 담당 | 마감 | 이슈 |\n|---|---|---|---|\n| add 기능 첫 동작 | 홍길동 | 10/21 | #3 |\n\n## 5. 활동 로그 (이번 주)\n| 팀원 | 커밋 | 풀 리퀘스트(생성/병합) | 리뷰 | 이슈 | 충돌 해결 | 특이사항 |\n|---|---|---|---|---|---|---|\n| 홍길동 | 3 | 0/0 | 0 | 2 | 0 | - |\n| 김철수 | 4 | 0/0 | 0 | 1 | 0 | - |\n\n## 6. 이번 주 점검표 (부록 A 6주차)\n- [x] 소스트리 설치 - [x] 클론 - [x] 자기소개 파일 커밋·Push - [x] 회의록 #3",
+                          "kind": "code"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "LMS에 PDF 제출 ({{task.minutes_submitter}})",
+              "children": [
+                {
+                  "title": "원본을 PDF로 변환",
+                  "details": [
+                    {
+                      "title": "GitHub에서 회의록 .md 파일 열기"
+                    },
+                    {
+                      "title": "브라우저 인쇄: Ctrl+P"
+                    },
+                    {
+                      "title": "대상: PDF로 저장"
+                    },
+                    {
+                      "title": "파일명 변경 → 저장"
+                    },
+                    {
+                      "title": "페이지·표·잘림 확인"
+                    }
+                  ]
+                },
+                {
+                  "title": "파일명: `[WEEK6] 회의록_{{team.name}}.pdf`"
+                },
+                {
+                  "title": "제출처: LMS 과제 탭"
+                },
+                {
+                  "title": "제출 완료 확인"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "팀",
+            "정해진 회의록 총 10회 LMS 제출",
+            "회의록 항목 전체 3점 (회차별 3점 아님)",
+            "증거: LMS 제출 기록"
+          ],
+          "evaluation_source": "docs/guide/10-activity.md",
+          "id": "task-7104fbd824b8",
+          "progress_period": "5",
+          "recording_start": "2026-10-01",
+          "recording_end": "2026-10-07",
+          "due_at": "2026-10-08T18:00:00+09:00"
+        },
+        {
+          "title": "온라인 수업 · 10/9",
+          "children": [
+            {
+              "title": "소스트리"
+            },
+            {
+              "title": "VS Code"
+            },
+            {
+              "title": "저장소 클론"
+            },
+            {
+              "title": "커밋·Push",
+              "details": [
+                {
+                  "title": "변경 파일 스테이지 → 메시지 작성 → 커밋"
+                },
+                {
+                  "title": "내 브랜치 Push"
+                },
+                {
+                  "title": "GitHub 반영 확인"
+                }
+              ],
+              "evaluation": [
+                "개인",
+                "6주차부터 주 2회 이상·총 16회",
+                "10/19~25 시험 주 제외",
+                "활동 항목 전체 3점"
+              ],
+              "evaluation_source": "docs/guide/10-activity.md"
+            }
+          ],
+          "id": "task-b876c069f4c0",
+          "progress_period": "5"
+        }
+      ],
+      "status": "unknown",
+      "activity_start": "2026-10-09",
+      "activity_end": "2026-10-16"
+    },
+    {
+      "id": "7",
+      "weeks": [
+        7
+      ],
+      "label": "7주차",
+      "title": "브랜치 개발",
+      "start": "2026-10-13",
+      "end": "2026-10-20",
+      "tasks": [
+        {
+          "title": "담당 기능 개발",
+          "children": [
+            {
+              "title": "main 최신화",
+              "details": [
+                {
+                  "title": "소스트리에서 main 체크아웃"
+                },
+                {
+                  "title": "상단 Pull → Pull"
+                }
+              ]
+            },
+            {
+              "title": "`feature/기능이름` 브랜치 생성",
+              "details": [
+                {
+                  "title": "main 체크아웃 → 최신화"
+                },
+                {
+                  "title": "소스트리 → 브랜치"
+                },
+                {
+                  "title": "이름: `feature/기능이름`"
+                },
+                {
+                  "title": "새 브랜치 체크아웃 선택 → 생성"
+                }
+              ]
+            },
+            {
+              "title": "첫 동작 구현"
+            },
+            {
+              "title": "실행 확인"
+            },
+            {
+              "title": "커밋·Push",
+              "details": [
+                {
+                  "title": "변경 파일 스테이지 → 메시지 작성 → 커밋"
+                },
+                {
+                  "title": "내 브랜치 Push"
+                },
+                {
+                  "title": "GitHub 반영 확인"
+                }
+              ],
+              "evaluation": [
+                "개인",
+                "6주차부터 주 2회 이상·총 16회",
+                "10/19~25 시험 주 제외",
+                "활동 항목 전체 3점"
+              ],
+              "evaluation_source": "docs/guide/10-activity.md"
+            },
+            {
+              "title": "한 브랜치에는 한 명만 커밋"
+            }
+          ],
+          "evaluation": [
+            "프로젝트 결과물",
+            "기능 12 / 실행 재현 6 / 문서 6 / 협업 절차 6",
+            "팀 인원·기능 수 변경으로 배점을 자동 환산하지 않음"
+          ],
+          "evaluation_source": "docs/guide/15-evaluation.md",
+          "id": "task-e7869cfab08b",
+          "progress_period": "7"
+        },
+        {
+          "title": "학기 활동 기준",
+          "children": [
+            {
+              "title": "커밋 주 2회 이상"
+            },
+            {
+              "title": "이슈 주 1개 이상"
+            },
+            {
+              "title": "앱 집계: 선택한 수업 주차"
+            }
+          ],
+          "details": [
+            {
+              "title": "내 풀 리퀘스트",
+              "children": [
+                {
+                  "title": "방법 — 저장소 Pull requests 탭 검색창에 is:pr author:@me (병합된 것만: is:pr is:merged / author:@me)"
+                }
+              ]
+            },
+            {
+              "title": "내가 리뷰한 풀 리퀘스트",
+              "children": [
+                {
+                  "title": "방법 — is:pr reviewed-by:@me"
+                }
+              ]
+            },
+            {
+              "title": "내 이슈",
+              "children": [
+                {
+                  "title": "방법 — Issues 탭 검색창에 is:issue author:@me"
+                }
+              ]
+            },
+            {
+              "title": "내 커밋 수",
+              "children": [
+                {
+                  "title": "방법 — 저장소 Insights → Contributors (기간을 드래그로 조절)"
+                }
+              ]
+            },
+            {
+              "title": "팀 전체",
+              "children": [
+                {
+                  "title": "방법 — Insights → Pulse (최근 1주 요약)"
+                }
+              ]
+            },
+            {
+              "title": "주간 기록",
+              "children": [
+                {
+                  "title": "방법 — 회의록 '활동 로그' 표에 각자 숫자 기입 → 팀장 확인"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "항목별 개인·팀 구분",
+            "활동 항목당 충족 3 / 70% 이상 1.5 / 미충족 0",
+            "앱 집계: 선택한 수업 주차"
+          ],
+          "evaluation_source": "docs/guide/10-activity.md",
+          "id": "task-d0d061466926",
+          "kind": "reference",
+          "progress_period": "7"
+        },
+        {
+          "title": "회의록 #3 제출 · 10/15 18:00",
+          "children": [
+            {
+              "title": "기록 기간: 10/8~10/14"
+            },
+            {
+              "title": "회의 준비",
+              "children": [
+                {
+                  "title": "이전 결정 확인"
+                },
+                {
+                  "title": "개인별 진행 상황 확인"
+                },
+                {
+                  "title": "막힌 점 모으기"
+                },
+                {
+                  "title": "커밋·이슈·PR·리뷰 기록 모으기"
+                }
+              ]
+            },
+            {
+              "title": "회의록 작성 ({{task.minutes_writer}})",
+              "children": [
+                {
+                  "title": "회의 일시·참석자 기록"
+                },
+                {
+                  "title": "이전 결정 이행 여부 기록"
+                },
+                {
+                  "title": "개인별 진행 상황 기록"
+                },
+                {
+                  "title": "결정과 이유 기록"
+                },
+                {
+                  "title": "다음 작업의 담당자·기한·이슈 기록"
+                },
+                {
+                  "title": "개인별 활동 횟수 기록"
+                }
+              ]
+            },
+            {
+              "title": "팀원 확인 받기"
+            },
+            {
+              "title": "GitHub에 원본 올리기",
+              "children": [
+                {
+                  "title": "형식: Markdown"
+                },
+                {
+                  "title": "경로: `docs/meetings/YYYY-MM-DD.md`"
+                },
+                {
+                  "title": "파일 날짜: 실제 회의일"
+                }
+              ],
+              "details": [
+                {
+                  "title": "저장 경로: `docs/meetings/YYYY-MM-DD.md`"
+                },
+                {
+                  "title": "날짜: 실제 회의일"
+                },
+                {
+                  "title": "PR로 올리면 활동 실적"
+                },
+                {
+                  "title": "본문 양식",
+                  "children": [
+                    {
+                      "title": "docs/meetings/YYYY-MM-DD.md로 저장하고 PDF로 변환해 LMS에 제출합니다(12장). 아래를 양식을 사용하 여 내용을 채웁니다."
+                    },
+                    {
+                      "title": "코드·양식 · markdown",
+                      "children": [
+                        {
+                          "title": "# [WEEK#] 회의록 — 팀명\n\n- 일시: 2026-10-13 (화) 20:00 ~ 21:00\n- 방식: 온라인(디스코드) / 대면(도서관 스터디룸)\n- 참석: 홍길동, 김철수, 이영희, 박민수 / 불참: 없음\n- 서기: 박민수\n\n## 1. 지난주 결정 사항 점검\n| 결정 사항 | 담당 | 완료 | 비고 |\n|---|---|---|---|\n| 저장 형식 CSV 확정 | 김철수 | O | storage.py 올림 |\n| 샘플 데이터 준비 | 이영희 | X | 이번 주 |\n\n## 2. 팀원별 진행 상황\n| 팀원 | 한 일 (이슈/풀 리퀘스트 번호) | 막힌 점 |\n|---|---|---|\n| 홍길동 | #3 입력 검증 이슈 등록 | 날짜 형식 검사 방법 |\n| 김철수 | #8 storage.py 커밋 | 없음 |\n\n## 3. 논의 내용과 결정 사항 (이유 포함)\n- 예산 저장은 별도 파일(budget.json)로 — 거래 CSV와 섞으면 통계가 복잡해져서\n\n## 4. 다음 주 할 일\n| 할 일 | 담당 | 마감 | 이슈 |\n|---|---|---|---|\n| add 기능 첫 동작 | 홍길동 | 10/21 | #3 |\n\n## 5. 활동 로그 (이번 주)\n| 팀원 | 커밋 | 풀 리퀘스트(생성/병합) | 리뷰 | 이슈 | 충돌 해결 | 특이사항 |\n|---|---|---|---|---|---|---|\n| 홍길동 | 3 | 0/0 | 0 | 2 | 0 | - |\n| 김철수 | 4 | 0/0 | 0 | 1 | 0 | - |\n\n## 6. 이번 주 점검표 (부록 A 6주차)\n- [x] 소스트리 설치 - [x] 클론 - [x] 자기소개 파일 커밋·Push - [x] 회의록 #3",
+                          "kind": "code"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "LMS에 PDF 제출 ({{task.minutes_submitter}})",
+              "children": [
+                {
+                  "title": "원본을 PDF로 변환",
+                  "details": [
+                    {
+                      "title": "GitHub에서 회의록 .md 파일 열기"
+                    },
+                    {
+                      "title": "브라우저 인쇄: Ctrl+P"
+                    },
+                    {
+                      "title": "대상: PDF로 저장"
+                    },
+                    {
+                      "title": "파일명 변경 → 저장"
+                    },
+                    {
+                      "title": "페이지·표·잘림 확인"
+                    }
+                  ]
+                },
+                {
+                  "title": "파일명: `[WEEK7] 회의록_{{team.name}}.pdf`"
+                },
+                {
+                  "title": "제출처: LMS 과제 탭"
+                },
+                {
+                  "title": "제출 완료 확인"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "팀",
+            "정해진 회의록 총 10회 LMS 제출",
+            "회의록 항목 전체 3점 (회차별 3점 아님)",
+            "증거: LMS 제출 기록"
+          ],
+          "evaluation_source": "docs/guide/10-activity.md",
+          "id": "task-7c439c1742b5",
+          "progress_period": "6",
+          "recording_start": "2026-10-08",
+          "recording_end": "2026-10-14",
+          "due_at": "2026-10-15T18:00:00+09:00"
+        },
+        {
+          "title": "수업 · 10/16",
+          "children": [
+            {
+              "title": "브랜치 생성·체크아웃·병합"
+            }
+          ],
+          "id": "task-644da317e91f",
+          "progress_period": "6"
+        }
+      ],
+      "status": "unknown",
+      "activity_start": "2026-10-16",
+      "activity_end": "2026-10-23"
+    },
+    {
+      "id": "8",
+      "weeks": [
+        8
+      ],
+      "label": "8주차",
+      "title": "중간고사와 개발 재개",
+      "start": "2026-10-20",
+      "end": "2026-10-27",
+      "tasks": [
+        {
+          "title": "시험 후 담당 기능 개발 재개",
+          "children": [
+            {
+              "title": "main 최신화",
+              "details": [
+                {
+                  "title": "소스트리에서 main 체크아웃"
+                },
+                {
+                  "title": "상단 Pull → Pull"
+                }
+              ]
+            },
+            {
+              "title": "`feature/기능이름` 브랜치 생성",
+              "details": [
+                {
+                  "title": "main 체크아웃 → 최신화"
+                },
+                {
+                  "title": "소스트리 → 브랜치"
+                },
+                {
+                  "title": "이름: `feature/기능이름`"
+                },
+                {
+                  "title": "새 브랜치 체크아웃 선택 → 생성"
+                }
+              ]
+            },
+            {
+              "title": "첫 동작 구현"
+            },
+            {
+              "title": "실행 확인"
+            },
+            {
+              "title": "커밋·Push",
+              "details": [
+                {
+                  "title": "변경 파일 스테이지 → 메시지 작성 → 커밋"
+                },
+                {
+                  "title": "내 브랜치 Push"
+                },
+                {
+                  "title": "GitHub 반영 확인"
+                }
+              ],
+              "evaluation": [
+                "개인",
+                "6주차부터 주 2회 이상·총 16회",
+                "10/19~25 시험 주 제외",
+                "활동 항목 전체 3점"
+              ],
+              "evaluation_source": "docs/guide/10-activity.md"
+            },
+            {
+              "title": "한 브랜치에는 한 명만 커밋"
+            }
+          ],
+          "evaluation": [
+            "프로젝트 결과물",
+            "기능 12 / 실행 재현 6 / 문서 6 / 협업 절차 6",
+            "팀 인원·기능 수 변경으로 배점을 자동 환산하지 않음"
+          ],
+          "evaluation_source": "docs/guide/15-evaluation.md",
+          "id": "task-e7869cfab08b-resume",
+          "progress_period": "8"
+        },
+        {
+          "title": "중간고사 · 10/23",
+          "children": [
+            {
+              "title": "10/19~10/25 활동 최소 기준 면제"
+            },
+            {
+              "title": "10/23 수업용 회의록 제출 없음 · 10/29 회의록 #4는 제출"
+            },
+            {
+              "title": "시험 뒤 주말부터 개발 재개"
+            }
+          ],
+          "id": "task-8718a8734a30",
+          "progress_period": "7"
+        },
+        {
+          "title": "학기 활동 기준",
+          "children": [
+            {
+              "title": "커밋 주 2회 이상"
+            },
+            {
+              "title": "이슈 주 1개 이상"
+            },
+            {
+              "title": "앱 집계: 선택한 수업 주차"
+            }
+          ],
+          "details": [
+            {
+              "title": "내 풀 리퀘스트",
+              "children": [
+                {
+                  "title": "방법 — 저장소 Pull requests 탭 검색창에 is:pr author:@me (병합된 것만: is:pr is:merged / author:@me)"
+                }
+              ]
+            },
+            {
+              "title": "내가 리뷰한 풀 리퀘스트",
+              "children": [
+                {
+                  "title": "방법 — is:pr reviewed-by:@me"
+                }
+              ]
+            },
+            {
+              "title": "내 이슈",
+              "children": [
+                {
+                  "title": "방법 — Issues 탭 검색창에 is:issue author:@me"
+                }
+              ]
+            },
+            {
+              "title": "내 커밋 수",
+              "children": [
+                {
+                  "title": "방법 — 저장소 Insights → Contributors (기간을 드래그로 조절)"
+                }
+              ]
+            },
+            {
+              "title": "팀 전체",
+              "children": [
+                {
+                  "title": "방법 — Insights → Pulse (최근 1주 요약)"
+                }
+              ]
+            },
+            {
+              "title": "주간 기록",
+              "children": [
+                {
+                  "title": "방법 — 회의록 '활동 로그' 표에 각자 숫자 기입 → 팀장 확인"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "항목별 개인·팀 구분",
+            "활동 항목당 충족 3 / 70% 이상 1.5 / 미충족 0",
+            "앱 집계: 선택한 수업 주차"
+          ],
+          "evaluation_source": "docs/guide/10-activity.md",
+          "id": "task-d0d061466926",
+          "kind": "reference",
+          "progress_period": "7"
+        }
+      ],
+      "status": "unknown",
+      "activity_start": "2026-10-23",
+      "activity_end": "2026-10-30"
+    },
+    {
+      "id": "9",
+      "weeks": [
+        9
+      ],
+      "label": "9주차",
+      "title": "PR 병합과 회의록",
+      "start": "2026-10-27",
+      "end": "2026-11-03",
+      "tasks": [
+        {
+          "title": "첫 PR 병합",
+          "children": [
+            {
+              "title": "PR 작성",
+              "details": [
+                {
+                  "title": "단위",
+                  "children": [
+                    {
+                      "title": "기준 — 풀 리퀘스트 1개 = 이슈 1개. 한 번에 여러 기능을 담지 않기 (수업 13주차 '잘 쪼갠 PR')"
+                    }
+                  ]
+                },
+                {
+                  "title": "제목",
+                  "children": [
+                    {
+                      "title": "기준 — 커밋 메시지처럼 한 줄. 예: 거래 입력 기능 추가 (#12)"
+                    }
+                  ]
+                },
+                {
+                  "title": "설명",
+                  "children": [
+                    {
+                      "title": "기준 — 3줄: 무엇을 바꿨나 / 왜(Closes #12) / 어떻게 확인했나(실행 방법). 화면이 바뀌면 스크린샷"
+                    }
+                  ]
+                },
+                {
+                  "title": "리뷰어",
+                  "children": [
+                    {
+                      "title": "기준 — 작성자 외 팀원 1명 이상을 Reviewers에 지정. 돌아가며 맡아서 한 사람에게 몰리지 않게"
+                    }
+                  ]
+                },
+                {
+                  "title": "병합",
+                  "children": [
+                    {
+                      "title": "기준 — Approve 1개 + 충돌 없음 → 작성자가 Merge pull request(기본 방식 'Create a merge commit') → / Confirm merge"
+                    }
+                  ]
+                },
+                {
+                  "title": "기한",
+                  "children": [
+                    {
+                      "title": "기준 — 리뷰 요청 후 48시간 안에 리뷰. 늦어지면 팀장이 다른 리뷰어 지정"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "PR에 적을 내용",
+              "children": [
+                {
+                  "title": "변경 내용"
+                },
+                {
+                  "title": "변경 이유"
+                },
+                {
+                  "title": "관련 이슈"
+                },
+                {
+                  "title": "실행 확인 방법"
+                }
+              ]
+            },
+            {
+              "title": "다른 팀원에게 리뷰 요청",
+              "details": [
+                {
+                  "title": "PR 오른쪽 Reviewers → 작성자 외 팀원 선택"
+                },
+                {
+                  "title": "리뷰어를 돌아가며 지정"
+                }
+              ]
+            },
+            {
+              "title": "48시간 내 리뷰",
+              "details": [
+                {
+                  "title": "리뷰는 '틀린 곳 찾기'가 아니라 팀 코드를 함께 좋게 만드는 대화입니다. 15~20분이면 충분합니다."
+                },
+                {
+                  "title": "풀 리퀘스트 설명과 연결된 이슈의 완료 조건을 읽음"
+                },
+                {
+                  "title": "Files changed 탭에서 바뀐 부분을 읽고, 줄 번호 옆 +로 코멘트. 가능하면 브랜치를 소스트리로 체크아웃해 직접 실행해 봄"
+                },
+                {
+                  "title": "Review changes → Approve(이대로 병합 가능) / Request changes(고친 뒤 다시 봄) / Comment(의견만)"
+                },
+                {
+                  "title": "동작",
+                  "children": [
+                    {
+                      "title": "질문 — 이슈의 완료 조건을 만족하나? 실행해 보니 되나? 잘못된 입력에는 어떻게 되나?"
+                    }
+                  ]
+                },
+                {
+                  "title": "읽기",
+                  "children": [
+                    {
+                      "title": "질문 — 함수·변수 이름만 보고 역할을 알 수 있나? 너무 긴 함수는 없나?"
+                    }
+                  ]
+                },
+                {
+                  "title": "문서",
+                  "children": [
+                    {
+                      "title": "질문 — 사용법이 바뀌었으면 README도 바뀌었나? 새 라이브러리가 requirements.txt에 있나?"
+                    }
+                  ]
+                },
+                {
+                  "title": "안전",
+                  "children": [
+                    {
+                      "title": "질문 — 토큰·비밀번호·개인정보·큰 데이터 파일이 들어 있지 않나?"
+                    }
+                  ]
+                },
+                {
+                  "title": "코멘트 예: [필수] 파일을 열고 닫지 않아요. with open(...) 으로 바꿔 주세요. / [제안] 이 반복문은 sum()으로 한 줄 이 됩니다. / [질문] 날짜가 없는 행은 왜 건너뛰나요? / [칭찬] 오류 메시지가 친절하네요. — [필수]는 3개 이내로, 사 람이 아니라 코드에 대해 말합니다."
+                },
+                {
+                  "title": "> [참고] 내용 없는 'LGTM'만 남긴 승인은 활동 규칙의 리뷰로 인정되지 않습니다. 실행해 봤다는 한 줄이나 구체적 인 코멘트 1개면 충분합니다."
+                }
+              ]
+            },
+            {
+              "title": "수정 요청 반영"
+            },
+            {
+              "title": "승인 확인",
+              "details": [
+                {
+                  "title": "PR의 Review changes 결과 확인"
+                },
+                {
+                  "title": "다른 팀원의 Approve 1개 이상"
+                },
+                {
+                  "title": "충돌·필수 수정 요청 해결 확인"
+                }
+              ]
+            },
+            {
+              "title": "병합",
+              "details": [
+                {
+                  "title": "PR → Merge pull request"
+                },
+                {
+                  "title": "기본 방식: Create a merge commit"
+                },
+                {
+                  "title": "Confirm merge"
+                },
+                {
+                  "title": "로컬 main 체크아웃 → Pull"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "개인",
+            "9주차부터 PR 생성·병합 주 1회 이상·총 7회",
+            "활동 항목 전체 3점",
+            "별도 팀 기준: 다른 팀원 승인 후 병합"
+          ],
+          "evaluation_source": "docs/guide/10-activity.md",
+          "id": "task-1425f70aabc1",
+          "progress_period": "9"
+        },
+        {
+          "title": "충돌 해결 실습",
+          "children": [
+            {
+              "title": "2인 1조 정하기"
+            },
+            {
+              "title": "충돌 해결",
+              "details": [
+                {
+                  "title": "두 사람이 같은 파일의 같은 부분을 고쳤을 때 GitHub 풀 리퀘스트에 'This branch has conflicts that must be resolved'가 뜹니다. 수업에서 배운 대로 내 브랜치에 main을 먼저 병합해 충돌을 해결한 뒤 Push하면 풀 리퀘스트 의 충돌 표시가 사라집니다."
+                },
+                {
+                  "title": "소스트리 사이드바 main 체크아웃 → Pull (원격의 최신 main을 받음)"
+                },
+                {
+                  "title": "내 브랜치(feature/...) 체크아웃 → History에서 main의 최신 커밋 우클릭 → 병합 → 확인 → 충돌 경고가 뜨면 닫기"
+                },
+                {
+                  "title": "커밋하지 않은 변경 사항을 선택하면 충돌 난 파일이 스테이지 아래에 보임"
+                },
+                {
+                  "title": "VS Code에서 그 파일을 열면 <<<<<<<, =======, >>>>>>>로 두 버전이 표시됨. 위쪽은 내 브랜치, 아래쪽은 main의 내용. 충돌 부분 위에 뜨는 메뉴(현재 변경 사항 수락 / 수신 변경 사항 수락 / 두 변경 사항 모두 수락)를 고르거나 손으로 정리해 표시 줄을 지우고 저장"
+                },
+                {
+                  "title": "프로그램을 실행해 정상인지 확인 → 소스트리에서 파일을 스테이지에 올림 → 커밋 (메시지 자동 입력, 그대로 두어도 됨) → Push"
+                },
+                {
+                  "title": "GitHub 풀 리퀘스트에서 충돌 표시가 사라졌는지 확인 → 리뷰 → 병합"
+                },
+                {
+                  "title": "충돌을 줄이는 습관: 작업 시작 전과 풀 리퀘스트 올리기 전에 main을 Pull해서 내 브랜치에 병합 / 같은 파일을 동시에 고칠 때는 이슈 댓글로 미리 알림 / 풀 리퀘스트를 작게, 자주"
+                },
+                {
+                  "title": "각자 1회 이상 충돌을 해결하고 회의록 활동 로그에 기록하는 것이 활동 규칙 항목입니다. 9주차에 부록 D-2 (https://github.com/sangjaepark0000/foss-8/blob/main/docs/guide/appendix-d-git-drill.md#appendix-d-2) 실습으로 한 번씩 경험합니다"
+                }
+              ]
+            },
+            {
+              "title": "정상 실행 확인"
+            },
+            {
+              "title": "커밋·Push",
+              "details": [
+                {
+                  "title": "변경 파일 스테이지 → 메시지 작성 → 커밋"
+                },
+                {
+                  "title": "내 브랜치 Push"
+                },
+                {
+                  "title": "GitHub 반영 확인"
+                }
+              ],
+              "evaluation": [
+                "개인",
+                "6주차부터 주 2회 이상·총 16회",
+                "10/19~25 시험 주 제외",
+                "활동 항목 전체 3점"
+              ],
+              "evaluation_source": "docs/guide/10-activity.md"
+            },
+            {
+              "title": "해결 사례를 회의록에 기록"
+            }
+          ],
+          "details": [
+            {
+              "title": "수업 9주차 실습(학생A·학생B가 같은 파일을 고쳐 충돌)과 같은 상황을 팀 저장소에서 일부러 만듭니다. A·B가 끝나 면 C·D가 반복합니다."
+            },
+            {
+              "title": "준비(팀장): docs/drill.md에 현재 당번: (이름) 한 줄을 넣어 풀 리퀘스트로 병합"
+            },
+            {
+              "title": "A와 B 모두: 소스트리 main 체크아웃 → Pull"
+            },
+            {
+              "title": "A: feature/drill-a 브랜치 → 그 줄을 현재 당번: A이름으로 수정 → 커밋 → Push → 풀 리퀘스트 → B가 Approve → A가 병합"
+            },
+            {
+              "title": "B: (A가 병합한 뒤, main을 Pull하지 말고) feature/drill-b 브랜치 → 같은 줄을 현재 당번: B이름으로 수정 → 커밋 → Push → 풀 리퀘스트 → 'This branch has conflicts' 확인"
+            },
+            {
+              "title": "B: 8.7절 (https://github.com/sangjaepark0000/foss-8/blob/main/docs/guide/08-collaboration.md#section-8-7) 순서대로 해결(main Pull → 내 브랜치에 main 병합 → VS Code에서 정리 → 커밋 → Push) → 충돌 표시가 사라지면 A가 Approve → 병합"
+            },
+            {
+              "title": "회의록 활동 로그의 '충돌 해결' 칸에 B 1회 기록. 이어서 C·D 반복(역할을 바꾸면 4명 모두 1회)"
+            }
+          ],
+          "evaluation": [
+            "개인",
+            "충돌 해결 1회 이상·회의록 기록",
+            "활동 항목 전체 3점"
+          ],
+          "evaluation_source": "docs/guide/10-activity.md",
+          "id": "task-df8c57f6d914",
+          "progress_period": "9"
+        },
+        {
+          "title": "main 보호 설정 ({{task.repository_admin}})",
+          "children": [
+            {
+              "title": "PR을 통한 병합 필수",
+              "details": [
+                {
+                  "title": "Settings → Branches → Add classic branch protection rule"
+                },
+                {
+                  "title": "Branch name pattern: main"
+                },
+                {
+                  "title": "Require a pull request before merging 체크"
+                }
+              ]
+            },
+            {
+              "title": "승인 1개 필수",
+              "details": [
+                {
+                  "title": "Require approvals 체크"
+                },
+                {
+                  "title": "승인 수: 1"
+                }
+              ]
+            },
+            {
+              "title": "관리자 우회 금지",
+              "details": [
+                {
+                  "title": "Do not allow bypassing the above settings 체크"
+                },
+                {
+                  "title": "Create"
+                },
+                {
+                  "title": "팀장도 직접 Push 제한 여부 확인"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "팀",
+            "기능별 브랜치·PR 사용",
+            "9주차부터 main 직접 커밋 금지",
+            "활동 항목 전체 3점"
+          ],
+          "evaluation_source": "docs/guide/10-activity.md",
+          "id": "task-44e672a134a2",
+          "progress_period": "9"
+        },
+        {
+          "title": "학기 활동 기준",
+          "children": [
+            {
+              "title": "커밋 주 2회 이상"
+            },
+            {
+              "title": "이슈 주 1개 이상"
+            },
+            {
+              "title": "PR 생성·병합 주 1회 이상"
+            },
+            {
+              "title": "다른 팀원 승인 후 병합",
+              "evaluation": [
+                "팀",
+                "PR마다 다른 팀원 승인 1개 이상",
+                "활동 항목 전체 3점"
+              ],
+              "evaluation_source": "docs/guide/10-activity.md"
+            },
+            {
+              "title": "앱 집계: 선택한 수업 주차"
+            }
+          ],
+          "details": [
+            {
+              "title": "내 풀 리퀘스트",
+              "children": [
+                {
+                  "title": "방법 — 저장소 Pull requests 탭 검색창에 is:pr author:@me (병합된 것만: is:pr is:merged / author:@me)"
+                }
+              ]
+            },
+            {
+              "title": "내가 리뷰한 풀 리퀘스트",
+              "children": [
+                {
+                  "title": "방법 — is:pr reviewed-by:@me"
+                }
+              ]
+            },
+            {
+              "title": "내 이슈",
+              "children": [
+                {
+                  "title": "방법 — Issues 탭 검색창에 is:issue author:@me"
+                }
+              ]
+            },
+            {
+              "title": "내 커밋 수",
+              "children": [
+                {
+                  "title": "방법 — 저장소 Insights → Contributors (기간을 드래그로 조절)"
+                }
+              ]
+            },
+            {
+              "title": "팀 전체",
+              "children": [
+                {
+                  "title": "방법 — Insights → Pulse (최근 1주 요약)"
+                }
+              ]
+            },
+            {
+              "title": "주간 기록",
+              "children": [
+                {
+                  "title": "방법 — 회의록 '활동 로그' 표에 각자 숫자 기입 → 팀장 확인"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "항목별 개인·팀 구분",
+            "활동 항목당 충족 3 / 70% 이상 1.5 / 미충족 0",
+            "앱 집계: 선택한 수업 주차"
+          ],
+          "evaluation_source": "docs/guide/10-activity.md",
+          "id": "task-4e06a3b9ec00",
+          "kind": "reference",
+          "progress_period": "9"
+        },
+        {
+          "title": "보고서·발표 평가 기준",
+          "children": [
+            {
+              "title": "중간보고서: 5점"
+            },
+            {
+              "title": "중간발표: 5점"
+            },
+            {
+              "title": "개인 충돌 해결: 1회 이상·기록 필요"
+            }
+          ],
+          "id": "task-7ae2902e03e8",
+          "kind": "reference",
+          "progress_period": "9"
+        },
+        {
+          "title": "회의록 #4 제출 · 10/29 18:00",
+          "children": [
+            {
+              "title": "기록 기간: 10/15~10/28"
+            },
+            {
+              "title": "회의 준비",
+              "children": [
+                {
+                  "title": "이전 결정 확인"
+                },
+                {
+                  "title": "개인별 진행 상황 확인"
+                },
+                {
+                  "title": "막힌 점 모으기"
+                },
+                {
+                  "title": "커밋·이슈·PR·리뷰 기록 모으기"
+                }
+              ]
+            },
+            {
+              "title": "회의록 작성 ({{task.minutes_writer}})",
+              "children": [
+                {
+                  "title": "회의 일시·참석자 기록"
+                },
+                {
+                  "title": "이전 결정 이행 여부 기록"
+                },
+                {
+                  "title": "개인별 진행 상황 기록"
+                },
+                {
+                  "title": "결정과 이유 기록"
+                },
+                {
+                  "title": "다음 작업의 담당자·기한·이슈 기록"
+                },
+                {
+                  "title": "개인별 활동 횟수 기록"
+                }
+              ]
+            },
+            {
+              "title": "팀원 확인 받기"
+            },
+            {
+              "title": "GitHub에 원본 올리기",
+              "children": [
+                {
+                  "title": "형식: Markdown"
+                },
+                {
+                  "title": "경로: `docs/meetings/YYYY-MM-DD.md`"
+                },
+                {
+                  "title": "파일 날짜: 실제 회의일"
+                }
+              ],
+              "details": [
+                {
+                  "title": "저장 경로: `docs/meetings/YYYY-MM-DD.md`"
+                },
+                {
+                  "title": "날짜: 실제 회의일"
+                },
+                {
+                  "title": "PR로 올리면 활동 실적"
+                },
+                {
+                  "title": "본문 양식",
+                  "children": [
+                    {
+                      "title": "docs/meetings/YYYY-MM-DD.md로 저장하고 PDF로 변환해 LMS에 제출합니다(12장). 아래를 양식을 사용하 여 내용을 채웁니다."
+                    },
+                    {
+                      "title": "코드·양식 · markdown",
+                      "children": [
+                        {
+                          "title": "# [WEEK#] 회의록 — 팀명\n\n- 일시: 2026-10-13 (화) 20:00 ~ 21:00\n- 방식: 온라인(디스코드) / 대면(도서관 스터디룸)\n- 참석: 홍길동, 김철수, 이영희, 박민수 / 불참: 없음\n- 서기: 박민수\n\n## 1. 지난주 결정 사항 점검\n| 결정 사항 | 담당 | 완료 | 비고 |\n|---|---|---|---|\n| 저장 형식 CSV 확정 | 김철수 | O | storage.py 올림 |\n| 샘플 데이터 준비 | 이영희 | X | 이번 주 |\n\n## 2. 팀원별 진행 상황\n| 팀원 | 한 일 (이슈/풀 리퀘스트 번호) | 막힌 점 |\n|---|---|---|\n| 홍길동 | #3 입력 검증 이슈 등록 | 날짜 형식 검사 방법 |\n| 김철수 | #8 storage.py 커밋 | 없음 |\n\n## 3. 논의 내용과 결정 사항 (이유 포함)\n- 예산 저장은 별도 파일(budget.json)로 — 거래 CSV와 섞으면 통계가 복잡해져서\n\n## 4. 다음 주 할 일\n| 할 일 | 담당 | 마감 | 이슈 |\n|---|---|---|---|\n| add 기능 첫 동작 | 홍길동 | 10/21 | #3 |\n\n## 5. 활동 로그 (이번 주)\n| 팀원 | 커밋 | 풀 리퀘스트(생성/병합) | 리뷰 | 이슈 | 충돌 해결 | 특이사항 |\n|---|---|---|---|---|---|---|\n| 홍길동 | 3 | 0/0 | 0 | 2 | 0 | - |\n| 김철수 | 4 | 0/0 | 0 | 1 | 0 | - |\n\n## 6. 이번 주 점검표 (부록 A 6주차)\n- [x] 소스트리 설치 - [x] 클론 - [x] 자기소개 파일 커밋·Push - [x] 회의록 #3",
+                          "kind": "code"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "LMS에 PDF 제출 ({{task.minutes_submitter}})",
+              "children": [
+                {
+                  "title": "원본을 PDF로 변환",
+                  "details": [
+                    {
+                      "title": "GitHub에서 회의록 .md 파일 열기"
+                    },
+                    {
+                      "title": "브라우저 인쇄: Ctrl+P"
+                    },
+                    {
+                      "title": "대상: PDF로 저장"
+                    },
+                    {
+                      "title": "파일명 변경 → 저장"
+                    },
+                    {
+                      "title": "페이지·표·잘림 확인"
+                    }
+                  ]
+                },
+                {
+                  "title": "파일명: `[WEEK9] 회의록_{{team.name}}.pdf`"
+                },
+                {
+                  "title": "제출처: LMS 과제 탭"
+                },
+                {
+                  "title": "제출 완료 확인"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "팀",
+            "정해진 회의록 총 10회 LMS 제출",
+            "회의록 항목 전체 3점 (회차별 3점 아님)",
+            "증거: LMS 제출 기록"
+          ],
+          "evaluation_source": "docs/guide/10-activity.md",
+          "id": "task-164f1804e570",
+          "progress_period": "7",
+          "recording_start": "2026-10-15",
+          "recording_end": "2026-10-28",
+          "due_at": "2026-10-29T18:00:00+09:00"
+        },
+        {
+          "title": "수업 · 10/30",
+          "children": [
+            {
+              "title": "PR·리뷰"
+            },
+            {
+              "title": "충돌 해결",
+              "details": [
+                {
+                  "title": "두 사람이 같은 파일의 같은 부분을 고쳤을 때 GitHub 풀 리퀘스트에 'This branch has conflicts that must be resolved'가 뜹니다. 수업에서 배운 대로 내 브랜치에 main을 먼저 병합해 충돌을 해결한 뒤 Push하면 풀 리퀘스트 의 충돌 표시가 사라집니다."
+                },
+                {
+                  "title": "소스트리 사이드바 main 체크아웃 → Pull (원격의 최신 main을 받음)"
+                },
+                {
+                  "title": "내 브랜치(feature/...) 체크아웃 → History에서 main의 최신 커밋 우클릭 → 병합 → 확인 → 충돌 경고가 뜨면 닫기"
+                },
+                {
+                  "title": "커밋하지 않은 변경 사항을 선택하면 충돌 난 파일이 스테이지 아래에 보임"
+                },
+                {
+                  "title": "VS Code에서 그 파일을 열면 <<<<<<<, =======, >>>>>>>로 두 버전이 표시됨. 위쪽은 내 브랜치, 아래쪽은 main의 내용. 충돌 부분 위에 뜨는 메뉴(현재 변경 사항 수락 / 수신 변경 사항 수락 / 두 변경 사항 모두 수락)를 고르거나 손으로 정리해 표시 줄을 지우고 저장"
+                },
+                {
+                  "title": "프로그램을 실행해 정상인지 확인 → 소스트리에서 파일을 스테이지에 올림 → 커밋 (메시지 자동 입력, 그대로 두어도 됨) → Push"
+                },
+                {
+                  "title": "GitHub 풀 리퀘스트에서 충돌 표시가 사라졌는지 확인 → 리뷰 → 병합"
+                },
+                {
+                  "title": "충돌을 줄이는 습관: 작업 시작 전과 풀 리퀘스트 올리기 전에 main을 Pull해서 내 브랜치에 병합 / 같은 파일을 동시에 고칠 때는 이슈 댓글로 미리 알림 / 풀 리퀘스트를 작게, 자주"
+                },
+                {
+                  "title": "각자 1회 이상 충돌을 해결하고 회의록 활동 로그에 기록하는 것이 활동 규칙 항목입니다. 9주차에 부록 D-2 (https://github.com/sangjaepark0000/foss-8/blob/main/docs/guide/appendix-d-git-drill.md#appendix-d-2) 실습으로 한 번씩 경험합니다"
+                }
+              ]
+            },
+            {
+              "title": "태그"
+            },
+            {
+              "title": "수업 후 첫 PR 병합 진행"
+            }
+          ],
+          "id": "task-62dc30602cfa",
+          "progress_period": "7"
+        }
+      ],
+      "status": "unknown",
+      "activity_start": "2026-10-30",
+      "activity_end": "2026-11-06"
+    },
+    {
+      "id": "10",
+      "weeks": [
+        10
+      ],
+      "label": "10주차",
+      "title": "중간발표와 피드백",
+      "start": "2026-11-03",
+      "end": "2026-11-10",
+      "tasks": [
+        {
+          "title": "발표 피드백 반영",
+          "children": [
+            {
+              "title": "질문·지적을 이슈로 등록"
+            },
+            {
+              "title": "담당자 지정",
+              "details": [
+                {
+                  "title": "이슈 오른쪽 Assignees → 담당 팀원 선택"
+                }
+              ]
+            },
+            {
+              "title": "완료 조건 정하기",
+              "details": [
+                {
+                  "title": "무엇이 동작하면 이슈를 닫을지 확인 가능한 문장으로 작성"
+                }
+              ]
+            },
+            {
+              "title": "수정·검증"
+            },
+            {
+              "title": "PR·리뷰·병합"
+            }
+          ],
+          "id": "task-c2700d93edbf",
+          "progress_period": "10"
+        },
+        {
+          "title": "타 팀이 맡을 이슈 준비 ({{task.cross_team_contact}})",
+          "children": [
+            {
+              "title": "기한: 11/13 수업 전"
+            },
+            {
+              "title": "good first issue 2개 이상 등록",
+              "details": [
+                {
+                  "title": "GitHub → Issues → New issue"
+                },
+                {
+                  "title": "배경·할 일·완료 조건·관련 파일 작성"
+                },
+                {
+                  "title": "Labels → good first issue"
+                },
+                {
+                  "title": "작고 독립적인 작업 2개 이상 준비"
+                }
+              ]
+            },
+            {
+              "title": "이슈에 적을 내용",
+              "children": [
+                {
+                  "title": "배경"
+                },
+                {
+                  "title": "할 일"
+                },
+                {
+                  "title": "완료 조건"
+                },
+                {
+                  "title": "관련 파일"
+                }
+              ]
+            },
+            {
+              "title": "CONTRIBUTING의 타 팀 기여자 안내 확인"
+            }
+          ],
+          "id": "task-1288b89e3523",
+          "progress_period": "10"
+        },
+        {
+          "title": "학기 활동 기준",
+          "children": [
+            {
+              "title": "커밋 주 2회 이상"
+            },
+            {
+              "title": "이슈 주 1개 이상"
+            },
+            {
+              "title": "PR 생성·병합 주 1회 이상"
+            },
+            {
+              "title": "다른 팀원 승인 후 병합",
+              "evaluation": [
+                "팀",
+                "PR마다 다른 팀원 승인 1개 이상",
+                "활동 항목 전체 3점"
+              ],
+              "evaluation_source": "docs/guide/10-activity.md"
+            },
+            {
+              "title": "앱 집계: 선택한 수업 주차"
+            }
+          ],
+          "details": [
+            {
+              "title": "내 풀 리퀘스트",
+              "children": [
+                {
+                  "title": "방법 — 저장소 Pull requests 탭 검색창에 is:pr author:@me (병합된 것만: is:pr is:merged / author:@me)"
+                }
+              ]
+            },
+            {
+              "title": "내가 리뷰한 풀 리퀘스트",
+              "children": [
+                {
+                  "title": "방법 — is:pr reviewed-by:@me"
+                }
+              ]
+            },
+            {
+              "title": "내 이슈",
+              "children": [
+                {
+                  "title": "방법 — Issues 탭 검색창에 is:issue author:@me"
+                }
+              ]
+            },
+            {
+              "title": "내 커밋 수",
+              "children": [
+                {
+                  "title": "방법 — 저장소 Insights → Contributors (기간을 드래그로 조절)"
+                }
+              ]
+            },
+            {
+              "title": "팀 전체",
+              "children": [
+                {
+                  "title": "방법 — Insights → Pulse (최근 1주 요약)"
+                }
+              ]
+            },
+            {
+              "title": "주간 기록",
+              "children": [
+                {
+                  "title": "방법 — 회의록 '활동 로그' 표에 각자 숫자 기입 → 팀장 확인"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "항목별 개인·팀 구분",
+            "활동 항목당 충족 3 / 70% 이상 1.5 / 미충족 0",
+            "앱 집계: 선택한 수업 주차"
+          ],
+          "evaluation_source": "docs/guide/10-activity.md",
+          "id": "task-537605604bd1",
+          "kind": "reference",
+          "progress_period": "10"
+        },
+        {
+          "title": "회의록 #5 제출 · 11/5 18:00",
+          "children": [
+            {
+              "title": "기록 기간: 10/29~11/4"
+            },
+            {
+              "title": "회의 준비",
+              "children": [
+                {
+                  "title": "이전 결정 확인"
+                },
+                {
+                  "title": "개인별 진행 상황 확인"
+                },
+                {
+                  "title": "막힌 점 모으기"
+                },
+                {
+                  "title": "커밋·이슈·PR·리뷰 기록 모으기"
+                }
+              ]
+            },
+            {
+              "title": "회의록 작성 ({{task.minutes_writer}})",
+              "children": [
+                {
+                  "title": "회의 일시·참석자 기록"
+                },
+                {
+                  "title": "이전 결정 이행 여부 기록"
+                },
+                {
+                  "title": "개인별 진행 상황 기록"
+                },
+                {
+                  "title": "결정과 이유 기록"
+                },
+                {
+                  "title": "다음 작업의 담당자·기한·이슈 기록"
+                },
+                {
+                  "title": "개인별 활동 횟수 기록"
+                }
+              ]
+            },
+            {
+              "title": "팀원 확인 받기"
+            },
+            {
+              "title": "GitHub에 원본 올리기",
+              "children": [
+                {
+                  "title": "형식: Markdown"
+                },
+                {
+                  "title": "경로: `docs/meetings/YYYY-MM-DD.md`"
+                },
+                {
+                  "title": "파일 날짜: 실제 회의일"
+                }
+              ],
+              "details": [
+                {
+                  "title": "저장 경로: `docs/meetings/YYYY-MM-DD.md`"
+                },
+                {
+                  "title": "날짜: 실제 회의일"
+                },
+                {
+                  "title": "PR로 올리면 활동 실적"
+                },
+                {
+                  "title": "본문 양식",
+                  "children": [
+                    {
+                      "title": "docs/meetings/YYYY-MM-DD.md로 저장하고 PDF로 변환해 LMS에 제출합니다(12장). 아래를 양식을 사용하 여 내용을 채웁니다."
+                    },
+                    {
+                      "title": "코드·양식 · markdown",
+                      "children": [
+                        {
+                          "title": "# [WEEK#] 회의록 — 팀명\n\n- 일시: 2026-10-13 (화) 20:00 ~ 21:00\n- 방식: 온라인(디스코드) / 대면(도서관 스터디룸)\n- 참석: 홍길동, 김철수, 이영희, 박민수 / 불참: 없음\n- 서기: 박민수\n\n## 1. 지난주 결정 사항 점검\n| 결정 사항 | 담당 | 완료 | 비고 |\n|---|---|---|---|\n| 저장 형식 CSV 확정 | 김철수 | O | storage.py 올림 |\n| 샘플 데이터 준비 | 이영희 | X | 이번 주 |\n\n## 2. 팀원별 진행 상황\n| 팀원 | 한 일 (이슈/풀 리퀘스트 번호) | 막힌 점 |\n|---|---|---|\n| 홍길동 | #3 입력 검증 이슈 등록 | 날짜 형식 검사 방법 |\n| 김철수 | #8 storage.py 커밋 | 없음 |\n\n## 3. 논의 내용과 결정 사항 (이유 포함)\n- 예산 저장은 별도 파일(budget.json)로 — 거래 CSV와 섞으면 통계가 복잡해져서\n\n## 4. 다음 주 할 일\n| 할 일 | 담당 | 마감 | 이슈 |\n|---|---|---|---|\n| add 기능 첫 동작 | 홍길동 | 10/21 | #3 |\n\n## 5. 활동 로그 (이번 주)\n| 팀원 | 커밋 | 풀 리퀘스트(생성/병합) | 리뷰 | 이슈 | 충돌 해결 | 특이사항 |\n|---|---|---|---|---|---|---|\n| 홍길동 | 3 | 0/0 | 0 | 2 | 0 | - |\n| 김철수 | 4 | 0/0 | 0 | 1 | 0 | - |\n\n## 6. 이번 주 점검표 (부록 A 6주차)\n- [x] 소스트리 설치 - [x] 클론 - [x] 자기소개 파일 커밋·Push - [x] 회의록 #3",
+                          "kind": "code"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "LMS에 PDF 제출 ({{task.minutes_submitter}})",
+              "children": [
+                {
+                  "title": "원본을 PDF로 변환",
+                  "details": [
+                    {
+                      "title": "GitHub에서 회의록 .md 파일 열기"
+                    },
+                    {
+                      "title": "브라우저 인쇄: Ctrl+P"
+                    },
+                    {
+                      "title": "대상: PDF로 저장"
+                    },
+                    {
+                      "title": "파일명 변경 → 저장"
+                    },
+                    {
+                      "title": "페이지·표·잘림 확인"
+                    }
+                  ]
+                },
+                {
+                  "title": "파일명: `[WEEK10] 회의록_{{team.name}}.pdf`"
+                },
+                {
+                  "title": "제출처: LMS 과제 탭"
+                },
+                {
+                  "title": "제출 완료 확인"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "팀",
+            "정해진 회의록 총 10회 LMS 제출",
+            "회의록 항목 전체 3점 (회차별 3점 아님)",
+            "증거: LMS 제출 기록"
+          ],
+          "evaluation_source": "docs/guide/10-activity.md",
+          "id": "task-e5e21f350aef",
+          "progress_period": "9",
+          "recording_start": "2026-10-29",
+          "recording_end": "2026-11-04",
+          "due_at": "2026-11-05T18:00:00+09:00"
+        },
+        {
+          "title": "중간보고서 제출 · 11/5 18:00",
+          "children": [
+            {
+              "title": "작성 내용",
+              "children": [
+                {
+                  "title": "진행 요약",
+                  "details": [
+                    {
+                      "title": "들어갈 내용 — 제안서 대비 진행률 표: 기능 4개 각각 계획 / 현재 상태(완료·진행·미착수) / 담당 / 관 / 련 풀 리퀘스트 번호"
+                    },
+                    {
+                      "title": "분량 — 1쪽"
+                    }
+                  ]
+                },
+                {
+                  "title": "MVP 기능 2개",
+                  "details": [
+                    {
+                      "title": "들어갈 내용 — 동작하는 기능 2개의 실행 화면 캡처와 설명, README대로 설치·실행되는지 확인 결과"
+                    },
+                    {
+                      "title": "분량 — 2~3쪽"
+                    }
+                  ]
+                },
+                {
+                  "title": "협업 기록",
+                  "details": [
+                    {
+                      "title": "들어갈 내용 — Insights → Contributors·Pulse 캡처, 팀 통계(커밋·풀 리퀘스트·이슈·리뷰 수), 브랜 / 치 그래프 캡처(소스트리), 충돌 해결 사례 1개"
+                    },
+                    {
+                      "title": "분량 — 1~2쪽"
+                    }
+                  ]
+                },
+                {
+                  "title": "타 팀 기여 상태",
+                  "details": [
+                    {
+                      "title": "들어갈 내용 — 맡은 상대 팀 이슈 링크·상태(배정/작업 중/풀 리퀘스트 제출), 우리 저장소에 온 요청 처 / 리 상태"
+                    },
+                    {
+                      "title": "분량 — 1쪽"
+                    }
+                  ]
+                },
+                {
+                  "title": "문제와 대응",
+                  "details": [
+                    {
+                      "title": "들어갈 내용 — 기술·협업 문제 각 1개 이상: 상황 → 시도 → 해결(또는 도움 필요)"
+                    },
+                    {
+                      "title": "분량 — 1쪽"
+                    }
+                  ]
+                },
+                {
+                  "title": "남은 계획",
+                  "details": [
+                    {
+                      "title": "들어갈 내용 — 11~15주차 주차별 계획, 기능 동결(11/27)·릴리스(12/4~11) 일정, 기능 범위 조정이 / 있으면 그 내용"
+                    },
+                    {
+                      "title": "분량 — 1쪽"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "모을 자료",
+              "children": [
+                {
+                  "title": "기능별 PR 링크"
+                },
+                {
+                  "title": "실행 캡처"
+                },
+                {
+                  "title": "Insights 통계"
+                },
+                {
+                  "title": "브랜치 그래프"
+                },
+                {
+                  "title": "충돌 사례"
+                }
+              ]
+            },
+            {
+              "title": "제출 규칙",
+              "children": [
+                {
+                  "title": "PDF 5~10쪽"
+                },
+                {
+                  "title": "파일명: `[중간보고서] {{team.name}}.pdf`"
+                },
+                {
+                  "title": "제출처: LMS 과제 탭"
+                }
+              ]
+            },
+            {
+              "title": "미배정 외부 이슈: 실제 상태와 계획 기록"
+            }
+          ],
+          "evaluation": [
+            "팀",
+            "보고서 5점",
+            "진행·계획 1 / MVP 2 / 협업 1 / 타 팀 기여·문제 대응 1"
+          ],
+          "evaluation_source": "docs/guide/15-evaluation.md",
+          "id": "task-61b34d6e1234",
+          "progress_period": "9"
+        },
+        {
+          "title": "중간발표 · 11/6",
+          "children": [
+            {
+              "title": "기능 2개 병합"
+            },
+            {
+              "title": "기능 2개 실행 확인"
+            },
+            {
+              "title": "시연 준비"
+            },
+            {
+              "title": "백업 영상 녹화"
+            },
+            {
+              "title": "발언 분담"
+            },
+            {
+              "title": "리허설"
+            },
+            {
+              "title": "발표 10분·질의응답 5분"
+            },
+            {
+              "title": "발표자료 이메일 제출",
+              "children": [
+                {
+                  "title": "기한: 발표 후 당일"
+                },
+                {
+                  "title": "받는 사람: shoh0320@pknu.ac.kr"
+                },
+                {
+                  "title": "제목: `[OSS 중간] {{team.name}}`"
+                },
+                {
+                  "title": "첨부: PPT 또는 PDF"
+                },
+                {
+                  "title": "발송 완료 확인"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "팀",
+            "발표 5점",
+            "시연 2 / 구성·전달·전원 발언 2 / 질의응답 1"
+          ],
+          "evaluation_source": "docs/guide/15-evaluation.md",
+          "id": "task-c676205a8378",
+          "progress_period": "9"
+        },
+        {
+          "title": "학기 활동 기준",
+          "children": [
+            {
+              "title": "커밋 주 2회 이상"
+            },
+            {
+              "title": "이슈 주 1개 이상"
+            },
+            {
+              "title": "PR 생성·병합 주 1회 이상"
+            },
+            {
+              "title": "다른 팀원 승인 후 병합",
+              "evaluation": [
+                "팀",
+                "PR마다 다른 팀원 승인 1개 이상",
+                "활동 항목 전체 3점"
+              ],
+              "evaluation_source": "docs/guide/10-activity.md"
+            },
+            {
+              "title": "앱 집계: 선택한 수업 주차"
+            }
+          ],
+          "details": [
+            {
+              "title": "내 풀 리퀘스트",
+              "children": [
+                {
+                  "title": "방법 — 저장소 Pull requests 탭 검색창에 is:pr author:@me (병합된 것만: is:pr is:merged / author:@me)"
+                }
+              ]
+            },
+            {
+              "title": "내가 리뷰한 풀 리퀘스트",
+              "children": [
+                {
+                  "title": "방법 — is:pr reviewed-by:@me"
+                }
+              ]
+            },
+            {
+              "title": "내 이슈",
+              "children": [
+                {
+                  "title": "방법 — Issues 탭 검색창에 is:issue author:@me"
+                }
+              ]
+            },
+            {
+              "title": "내 커밋 수",
+              "children": [
+                {
+                  "title": "방법 — 저장소 Insights → Contributors (기간을 드래그로 조절)"
+                }
+              ]
+            },
+            {
+              "title": "팀 전체",
+              "children": [
+                {
+                  "title": "방법 — Insights → Pulse (최근 1주 요약)"
+                }
+              ]
+            },
+            {
+              "title": "주간 기록",
+              "children": [
+                {
+                  "title": "방법 — 회의록 '활동 로그' 표에 각자 숫자 기입 → 팀장 확인"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "항목별 개인·팀 구분",
+            "활동 항목당 충족 3 / 70% 이상 1.5 / 미충족 0",
+            "앱 집계: 선택한 수업 주차"
+          ],
+          "evaluation_source": "docs/guide/10-activity.md",
+          "id": "task-4e06a3b9ec00",
+          "kind": "reference",
+          "progress_period": "9"
+        },
+        {
+          "title": "보고서·발표 평가 기준",
+          "children": [
+            {
+              "title": "중간보고서: 5점"
+            },
+            {
+              "title": "중간발표: 5점"
+            },
+            {
+              "title": "개인 충돌 해결: 1회 이상·기록 필요"
+            }
+          ],
+          "id": "task-7ae2902e03e8",
+          "kind": "reference",
+          "progress_period": "9"
+        }
+      ],
+      "status": "unknown",
+      "activity_start": "2026-11-06",
+      "activity_end": "2026-11-13"
+    },
+    {
+      "id": "11",
+      "weeks": [
+        11
+      ],
+      "label": "11주차",
+      "title": "타 팀 기여 시작",
+      "start": "2026-11-10",
+      "end": "2026-11-17",
+      "tasks": [
+        {
+          "title": "상대 팀 이슈 배정받기",
+          "children": [
+            {
+              "title": "상대 팀 CONTRIBUTING 읽기"
+            },
+            {
+              "title": "good first issue 선택"
+            },
+            {
+              "title": "배정 요청 댓글 작성",
+              "details": [
+                {
+                  "title": "예: {{team.name}}이 이 이슈를 맡겠습니다. 11/26까지 PR을 올리겠습니다."
+                },
+                {
+                  "title": "Assignees 지정 확인 후 작업 시작"
+                }
+              ]
+            },
+            {
+              "title": "담당자 지정 확인"
+            }
+          ],
+          "id": "task-89f76e76bb57",
+          "progress_period": "11"
+        },
+        {
+          "title": "Fork와 작업 환경 준비",
+          "children": [
+            {
+              "title": "상대 저장소 Fork ({{task.repository_admin}})",
+              "details": [
+                {
+                  "title": "상대 저장소 → Fork → Create fork"
+                },
+                {
+                  "title": "팀장 계정의 fork 생성 확인"
+                }
+              ]
+            },
+            {
+              "title": "팀원 협력자 등록",
+              "details": [
+                {
+                  "title": "fork → Settings → Collaborators"
+                },
+                {
+                  "title": "팀원 초대 → 초대 수락 확인"
+                }
+              ]
+            },
+            {
+              "title": "별도 폴더에 Clone",
+              "details": [
+                {
+                  "title": "우리 프로젝트와 다른 폴더 선택"
+                },
+                {
+                  "title": "fork의 HTTPS 주소로 Clone"
+                }
+              ]
+            },
+            {
+              "title": "feature 브랜치 생성",
+              "details": [
+                {
+                  "title": "최신 main에서 새 브랜치 생성"
+                },
+                {
+                  "title": "이름: `feature/이슈이름`"
+                },
+                {
+                  "title": "한 브랜치에는 한 명만 커밋"
+                }
+              ]
+            }
+          ],
+          "id": "task-59a0f9a1919d",
+          "progress_period": "11"
+        },
+        {
+          "title": "역할 분담과 구현",
+          "children": [
+            {
+              "title": "구현 담당 정하기"
+            },
+            {
+              "title": "실행 확인 담당 정하기"
+            },
+            {
+              "title": "PR 설명·회의록 담당 정하기"
+            },
+            {
+              "title": "구현"
+            },
+            {
+              "title": "실행 확인"
+            },
+            {
+              "title": "목표: 11/26까지 외부 PR 제출"
+            }
+          ],
+          "id": "task-cd9ab4c58918",
+          "progress_period": "11"
+        },
+        {
+          "title": "다른 팀의 요청 처리",
+          "children": [
+            {
+              "title": "배정 요청: 24시간 내 응답"
+            },
+            {
+              "title": "받은 PR: 48시간 내 리뷰"
+            }
+          ],
+          "id": "task-4a7adf4f5f23",
+          "progress_period": "11"
+        },
+        {
+          "title": "학기 활동 기준",
+          "children": [
+            {
+              "title": "커밋 주 2회 이상"
+            },
+            {
+              "title": "이슈 주 1개 이상"
+            },
+            {
+              "title": "PR 생성·병합 주 1회 이상"
+            },
+            {
+              "title": "다른 팀원 승인 후 병합",
+              "evaluation": [
+                "팀",
+                "PR마다 다른 팀원 승인 1개 이상",
+                "활동 항목 전체 3점"
+              ],
+              "evaluation_source": "docs/guide/10-activity.md"
+            },
+            {
+              "title": "앱 집계: 선택한 수업 주차"
+            }
+          ],
+          "details": [
+            {
+              "title": "내 풀 리퀘스트",
+              "children": [
+                {
+                  "title": "방법 — 저장소 Pull requests 탭 검색창에 is:pr author:@me (병합된 것만: is:pr is:merged / author:@me)"
+                }
+              ]
+            },
+            {
+              "title": "내가 리뷰한 풀 리퀘스트",
+              "children": [
+                {
+                  "title": "방법 — is:pr reviewed-by:@me"
+                }
+              ]
+            },
+            {
+              "title": "내 이슈",
+              "children": [
+                {
+                  "title": "방법 — Issues 탭 검색창에 is:issue author:@me"
+                }
+              ]
+            },
+            {
+              "title": "내 커밋 수",
+              "children": [
+                {
+                  "title": "방법 — 저장소 Insights → Contributors (기간을 드래그로 조절)"
+                }
+              ]
+            },
+            {
+              "title": "팀 전체",
+              "children": [
+                {
+                  "title": "방법 — Insights → Pulse (최근 1주 요약)"
+                }
+              ]
+            },
+            {
+              "title": "주간 기록",
+              "children": [
+                {
+                  "title": "방법 — 회의록 '활동 로그' 표에 각자 숫자 기입 → 팀장 확인"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "항목별 개인·팀 구분",
+            "활동 항목당 충족 3 / 70% 이상 1.5 / 미충족 0",
+            "앱 집계: 선택한 수업 주차"
+          ],
+          "evaluation_source": "docs/guide/10-activity.md",
+          "id": "task-a4ee15e07730",
+          "kind": "reference",
+          "progress_period": "11"
+        },
+        {
+          "title": "회의록 #6 제출 · 11/12 18:00",
+          "children": [
+            {
+              "title": "기록 기간: 11/5~11/11"
+            },
+            {
+              "title": "회의 준비",
+              "children": [
+                {
+                  "title": "이전 결정 확인"
+                },
+                {
+                  "title": "개인별 진행 상황 확인"
+                },
+                {
+                  "title": "막힌 점 모으기"
+                },
+                {
+                  "title": "커밋·이슈·PR·리뷰 기록 모으기"
+                }
+              ]
+            },
+            {
+              "title": "회의록 작성 ({{task.minutes_writer}})",
+              "children": [
+                {
+                  "title": "회의 일시·참석자 기록"
+                },
+                {
+                  "title": "이전 결정 이행 여부 기록"
+                },
+                {
+                  "title": "개인별 진행 상황 기록"
+                },
+                {
+                  "title": "결정과 이유 기록"
+                },
+                {
+                  "title": "다음 작업의 담당자·기한·이슈 기록"
+                },
+                {
+                  "title": "개인별 활동 횟수 기록"
+                }
+              ]
+            },
+            {
+              "title": "팀원 확인 받기"
+            },
+            {
+              "title": "GitHub에 원본 올리기",
+              "children": [
+                {
+                  "title": "형식: Markdown"
+                },
+                {
+                  "title": "경로: `docs/meetings/YYYY-MM-DD.md`"
+                },
+                {
+                  "title": "파일 날짜: 실제 회의일"
+                }
+              ],
+              "details": [
+                {
+                  "title": "저장 경로: `docs/meetings/YYYY-MM-DD.md`"
+                },
+                {
+                  "title": "날짜: 실제 회의일"
+                },
+                {
+                  "title": "PR로 올리면 활동 실적"
+                },
+                {
+                  "title": "본문 양식",
+                  "children": [
+                    {
+                      "title": "docs/meetings/YYYY-MM-DD.md로 저장하고 PDF로 변환해 LMS에 제출합니다(12장). 아래를 양식을 사용하 여 내용을 채웁니다."
+                    },
+                    {
+                      "title": "코드·양식 · markdown",
+                      "children": [
+                        {
+                          "title": "# [WEEK#] 회의록 — 팀명\n\n- 일시: 2026-10-13 (화) 20:00 ~ 21:00\n- 방식: 온라인(디스코드) / 대면(도서관 스터디룸)\n- 참석: 홍길동, 김철수, 이영희, 박민수 / 불참: 없음\n- 서기: 박민수\n\n## 1. 지난주 결정 사항 점검\n| 결정 사항 | 담당 | 완료 | 비고 |\n|---|---|---|---|\n| 저장 형식 CSV 확정 | 김철수 | O | storage.py 올림 |\n| 샘플 데이터 준비 | 이영희 | X | 이번 주 |\n\n## 2. 팀원별 진행 상황\n| 팀원 | 한 일 (이슈/풀 리퀘스트 번호) | 막힌 점 |\n|---|---|---|\n| 홍길동 | #3 입력 검증 이슈 등록 | 날짜 형식 검사 방법 |\n| 김철수 | #8 storage.py 커밋 | 없음 |\n\n## 3. 논의 내용과 결정 사항 (이유 포함)\n- 예산 저장은 별도 파일(budget.json)로 — 거래 CSV와 섞으면 통계가 복잡해져서\n\n## 4. 다음 주 할 일\n| 할 일 | 담당 | 마감 | 이슈 |\n|---|---|---|---|\n| add 기능 첫 동작 | 홍길동 | 10/21 | #3 |\n\n## 5. 활동 로그 (이번 주)\n| 팀원 | 커밋 | 풀 리퀘스트(생성/병합) | 리뷰 | 이슈 | 충돌 해결 | 특이사항 |\n|---|---|---|---|---|---|---|\n| 홍길동 | 3 | 0/0 | 0 | 2 | 0 | - |\n| 김철수 | 4 | 0/0 | 0 | 1 | 0 | - |\n\n## 6. 이번 주 점검표 (부록 A 6주차)\n- [x] 소스트리 설치 - [x] 클론 - [x] 자기소개 파일 커밋·Push - [x] 회의록 #3",
+                          "kind": "code"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "LMS에 PDF 제출 ({{task.minutes_submitter}})",
+              "children": [
+                {
+                  "title": "원본을 PDF로 변환",
+                  "details": [
+                    {
+                      "title": "GitHub에서 회의록 .md 파일 열기"
+                    },
+                    {
+                      "title": "브라우저 인쇄: Ctrl+P"
+                    },
+                    {
+                      "title": "대상: PDF로 저장"
+                    },
+                    {
+                      "title": "파일명 변경 → 저장"
+                    },
+                    {
+                      "title": "페이지·표·잘림 확인"
+                    }
+                  ]
+                },
+                {
+                  "title": "파일명: `[WEEK11] 회의록_{{team.name}}.pdf`"
+                },
+                {
+                  "title": "제출처: LMS 과제 탭"
+                },
+                {
+                  "title": "제출 완료 확인"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "팀",
+            "정해진 회의록 총 10회 LMS 제출",
+            "회의록 항목 전체 3점 (회차별 3점 아님)",
+            "증거: LMS 제출 기록"
+          ],
+          "evaluation_source": "docs/guide/10-activity.md",
+          "id": "task-58a1a4f032b0",
+          "progress_period": "10",
+          "recording_start": "2026-11-05",
+          "recording_end": "2026-11-11",
+          "due_at": "2026-11-12T18:00:00+09:00"
+        },
+        {
+          "title": "수업 · 11/13",
+          "children": [
+            {
+              "title": "Fork"
+            },
+            {
+              "title": "외부 PR"
+            },
+            {
+              "title": "수업 후 상대 팀 기여 시작"
+            }
+          ],
+          "id": "task-4292e2cb6ae3",
+          "progress_period": "10"
+        }
+      ],
+      "status": "unknown",
+      "activity_start": "2026-11-13",
+      "activity_end": "2026-11-20"
+    },
+    {
+      "id": "12",
+      "weeks": [
+        12
+      ],
+      "label": "12주차",
+      "title": "외부 PR과 기능 마무리",
+      "start": "2026-11-17",
+      "end": "2026-11-24",
+      "tasks": [
+        {
+          "title": "리뷰 대응",
+          "children": [
+            {
+              "title": "받은 PR: 48시간 내 리뷰"
+            },
+            {
+              "title": "상대 리뷰: 24시간 내 수정"
+            },
+            {
+              "title": "같은 브랜치에 커밋·Push",
+              "details": [
+                {
+                  "title": "리뷰 요청 내용을 기존 브랜치에서 수정"
+                },
+                {
+                  "title": "커밋·Push"
+                },
+                {
+                  "title": "기존 PR 자동 갱신 확인"
+                }
+              ]
+            }
+          ],
+          "id": "task-43ac2b93cfe6",
+          "progress_period": "12"
+        },
+        {
+          "title": "담당 기능 마무리",
+          "children": [
+            {
+              "title": "구현 완료"
+            },
+            {
+              "title": "실행 확인"
+            },
+            {
+              "title": "사용법 작성"
+            },
+            {
+              "title": "PR·리뷰·병합"
+            }
+          ],
+          "id": "task-68bf2d397a06",
+          "progress_period": "12"
+        },
+        {
+          "title": "학기 활동 기준",
+          "children": [
+            {
+              "title": "커밋 주 2회 이상"
+            },
+            {
+              "title": "이슈 주 1개 이상"
+            },
+            {
+              "title": "PR 생성·병합 주 1회 이상"
+            },
+            {
+              "title": "다른 팀원 승인 후 병합",
+              "evaluation": [
+                "팀",
+                "PR마다 다른 팀원 승인 1개 이상",
+                "활동 항목 전체 3점"
+              ],
+              "evaluation_source": "docs/guide/10-activity.md"
+            },
+            {
+              "title": "앱 집계: 선택한 수업 주차"
+            }
+          ],
+          "details": [
+            {
+              "title": "내 풀 리퀘스트",
+              "children": [
+                {
+                  "title": "방법 — 저장소 Pull requests 탭 검색창에 is:pr author:@me (병합된 것만: is:pr is:merged / author:@me)"
+                }
+              ]
+            },
+            {
+              "title": "내가 리뷰한 풀 리퀘스트",
+              "children": [
+                {
+                  "title": "방법 — is:pr reviewed-by:@me"
+                }
+              ]
+            },
+            {
+              "title": "내 이슈",
+              "children": [
+                {
+                  "title": "방법 — Issues 탭 검색창에 is:issue author:@me"
+                }
+              ]
+            },
+            {
+              "title": "내 커밋 수",
+              "children": [
+                {
+                  "title": "방법 — 저장소 Insights → Contributors (기간을 드래그로 조절)"
+                }
+              ]
+            },
+            {
+              "title": "팀 전체",
+              "children": [
+                {
+                  "title": "방법 — Insights → Pulse (최근 1주 요약)"
+                }
+              ]
+            },
+            {
+              "title": "주간 기록",
+              "children": [
+                {
+                  "title": "방법 — 회의록 '활동 로그' 표에 각자 숫자 기입 → 팀장 확인"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "항목별 개인·팀 구분",
+            "활동 항목당 충족 3 / 70% 이상 1.5 / 미충족 0",
+            "앱 집계: 선택한 수업 주차"
+          ],
+          "evaluation_source": "docs/guide/10-activity.md",
+          "id": "task-525dbdd30cac",
+          "kind": "reference",
+          "progress_period": "12"
+        },
+        {
+          "title": "회의록 #7 제출 · 11/19 18:00",
+          "children": [
+            {
+              "title": "기록 기간: 11/12~11/18"
+            },
+            {
+              "title": "회의 준비",
+              "children": [
+                {
+                  "title": "이전 결정 확인"
+                },
+                {
+                  "title": "개인별 진행 상황 확인"
+                },
+                {
+                  "title": "막힌 점 모으기"
+                },
+                {
+                  "title": "커밋·이슈·PR·리뷰 기록 모으기"
+                }
+              ]
+            },
+            {
+              "title": "회의록 작성 ({{task.minutes_writer}})",
+              "children": [
+                {
+                  "title": "회의 일시·참석자 기록"
+                },
+                {
+                  "title": "이전 결정 이행 여부 기록"
+                },
+                {
+                  "title": "개인별 진행 상황 기록"
+                },
+                {
+                  "title": "결정과 이유 기록"
+                },
+                {
+                  "title": "다음 작업의 담당자·기한·이슈 기록"
+                },
+                {
+                  "title": "개인별 활동 횟수 기록"
+                }
+              ]
+            },
+            {
+              "title": "팀원 확인 받기"
+            },
+            {
+              "title": "GitHub에 원본 올리기",
+              "children": [
+                {
+                  "title": "형식: Markdown"
+                },
+                {
+                  "title": "경로: `docs/meetings/YYYY-MM-DD.md`"
+                },
+                {
+                  "title": "파일 날짜: 실제 회의일"
+                }
+              ],
+              "details": [
+                {
+                  "title": "저장 경로: `docs/meetings/YYYY-MM-DD.md`"
+                },
+                {
+                  "title": "날짜: 실제 회의일"
+                },
+                {
+                  "title": "PR로 올리면 활동 실적"
+                },
+                {
+                  "title": "본문 양식",
+                  "children": [
+                    {
+                      "title": "docs/meetings/YYYY-MM-DD.md로 저장하고 PDF로 변환해 LMS에 제출합니다(12장). 아래를 양식을 사용하 여 내용을 채웁니다."
+                    },
+                    {
+                      "title": "코드·양식 · markdown",
+                      "children": [
+                        {
+                          "title": "# [WEEK#] 회의록 — 팀명\n\n- 일시: 2026-10-13 (화) 20:00 ~ 21:00\n- 방식: 온라인(디스코드) / 대면(도서관 스터디룸)\n- 참석: 홍길동, 김철수, 이영희, 박민수 / 불참: 없음\n- 서기: 박민수\n\n## 1. 지난주 결정 사항 점검\n| 결정 사항 | 담당 | 완료 | 비고 |\n|---|---|---|---|\n| 저장 형식 CSV 확정 | 김철수 | O | storage.py 올림 |\n| 샘플 데이터 준비 | 이영희 | X | 이번 주 |\n\n## 2. 팀원별 진행 상황\n| 팀원 | 한 일 (이슈/풀 리퀘스트 번호) | 막힌 점 |\n|---|---|---|\n| 홍길동 | #3 입력 검증 이슈 등록 | 날짜 형식 검사 방법 |\n| 김철수 | #8 storage.py 커밋 | 없음 |\n\n## 3. 논의 내용과 결정 사항 (이유 포함)\n- 예산 저장은 별도 파일(budget.json)로 — 거래 CSV와 섞으면 통계가 복잡해져서\n\n## 4. 다음 주 할 일\n| 할 일 | 담당 | 마감 | 이슈 |\n|---|---|---|---|\n| add 기능 첫 동작 | 홍길동 | 10/21 | #3 |\n\n## 5. 활동 로그 (이번 주)\n| 팀원 | 커밋 | 풀 리퀘스트(생성/병합) | 리뷰 | 이슈 | 충돌 해결 | 특이사항 |\n|---|---|---|---|---|---|---|\n| 홍길동 | 3 | 0/0 | 0 | 2 | 0 | - |\n| 김철수 | 4 | 0/0 | 0 | 1 | 0 | - |\n\n## 6. 이번 주 점검표 (부록 A 6주차)\n- [x] 소스트리 설치 - [x] 클론 - [x] 자기소개 파일 커밋·Push - [x] 회의록 #3",
+                          "kind": "code"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "LMS에 PDF 제출 ({{task.minutes_submitter}})",
+              "children": [
+                {
+                  "title": "원본을 PDF로 변환",
+                  "details": [
+                    {
+                      "title": "GitHub에서 회의록 .md 파일 열기"
+                    },
+                    {
+                      "title": "브라우저 인쇄: Ctrl+P"
+                    },
+                    {
+                      "title": "대상: PDF로 저장"
+                    },
+                    {
+                      "title": "파일명 변경 → 저장"
+                    },
+                    {
+                      "title": "페이지·표·잘림 확인"
+                    }
+                  ]
+                },
+                {
+                  "title": "파일명: `[WEEK12] 회의록_{{team.name}}.pdf`"
+                },
+                {
+                  "title": "제출처: LMS 과제 탭"
+                },
+                {
+                  "title": "제출 완료 확인"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "팀",
+            "정해진 회의록 총 10회 LMS 제출",
+            "회의록 항목 전체 3점 (회차별 3점 아님)",
+            "증거: LMS 제출 기록"
+          ],
+          "evaluation_source": "docs/guide/10-activity.md",
+          "id": "task-99d4fbc19055",
+          "progress_period": "11",
+          "recording_start": "2026-11-12",
+          "recording_end": "2026-11-18",
+          "due_at": "2026-11-19T18:00:00+09:00"
+        },
+        {
+          "title": "수업 · 11/20",
+          "children": [
+            {
+              "title": "어멘드·체리픽"
+            },
+            {
+              "title": "리셋·리버트"
+            },
+            {
+              "title": "스태시"
+            }
+          ],
+          "id": "task-8998df4b2f51",
+          "progress_period": "11"
+        }
+      ],
+      "status": "unknown",
+      "activity_start": "2026-11-20",
+      "activity_end": "2026-11-27"
+    },
+    {
+      "id": "13",
+      "weeks": [
+        13
+      ],
+      "label": "13주차",
+      "title": "병합 확인과 릴리스",
+      "start": "2026-11-24",
+      "end": "2026-12-01",
+      "tasks": [
+        {
+          "title": "README 정리",
+          "children": [
+            {
+              "title": "제목·소개"
+            },
+            {
+              "title": "실행 화면"
+            },
+            {
+              "title": "기능·담당 표"
+            },
+            {
+              "title": "설치·실행 방법"
+            },
+            {
+              "title": "사용 예시 3개 이상"
+            },
+            {
+              "title": "팀원·기여 안내"
+            },
+            {
+              "title": "라이선스"
+            }
+          ],
+          "details": [
+            {
+              "title": "1",
+              "children": [
+                {
+                  "title": "항목 — 제목·한 줄 소개"
+                },
+                {
+                  "title": "내용 — 프로젝트 이름, 무엇을 하는 프로그램인지 한 문장"
+                }
+              ]
+            },
+            {
+              "title": "2",
+              "children": [
+                {
+                  "title": "항목 — 스크린샷"
+                },
+                {
+                  "title": "내용 — 실행 화면 1장 이상"
+                }
+              ]
+            },
+            {
+              "title": "3",
+              "children": [
+                {
+                  "title": "항목 — 주요 기능"
+                },
+                {
+                  "title": "내용 — 기능 4개 표 (이름·설명·담당)"
+                }
+              ]
+            },
+            {
+              "title": "4",
+              "children": [
+                {
+                  "title": "항목 — 설치·실행"
+                },
+                {
+                  "title": "내용 — git clone → pip install -r requirements.txt → python main.py (9.3), 테스트한 / Python 버전"
+                }
+              ]
+            },
+            {
+              "title": "5",
+              "children": [
+                {
+                  "title": "항목 — 사용법"
+                },
+                {
+                  "title": "내용 — 실제 명령·메뉴 예시 3개 이상과 결과 (수업 13주차 '사용자 가이드' 역할)"
+                }
+              ]
+            },
+            {
+              "title": "6",
+              "children": [
+                {
+                  "title": "항목 — 팀원·기여"
+                },
+                {
+                  "title": "내용 — 이름·역할·GitHub 아이디 표, CONTRIBUTING·행동 수칙 링크"
+                }
+              ]
+            },
+            {
+              "title": "7",
+              "children": [
+                {
+                  "title": "항목 — 라이선스"
+                },
+                {
+                  "title": "내용 — MIT License — see LICENSE 한 줄"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "프로젝트 결과물",
+            "README 7항목·CONTRIBUTING·행동 수칙·LICENSE",
+            "문서 6점"
+          ],
+          "evaluation_source": "docs/guide/15-evaluation.md",
+          "id": "task-d475e5a88e7c",
+          "progress_period": "13"
+        },
+        {
+          "title": "완성 기준 점검",
+          "children": [
+            {
+              "title": "핵심 기능 동작"
+            },
+            {
+              "title": "새 환경 실행"
+            },
+            {
+              "title": "README·CONTRIBUTING·행동 수칙·LICENSE"
+            },
+            {
+              "title": "PR·승인·병합 기록"
+            },
+            {
+              "title": "외부 기여 기록"
+            },
+            {
+              "title": "회의록 제출 기록"
+            }
+          ],
+          "evaluation": [
+            "프로젝트 결과물",
+            "기능 12 / 실행 재현 6 / 문서 6 / 협업 절차 6",
+            "팀 인원·기능 수 변경으로 배점을 자동 환산하지 않음"
+          ],
+          "evaluation_source": "docs/guide/15-evaluation.md",
+          "id": "task-a3f9a1135a3b",
+          "progress_period": "13"
+        },
+        {
+          "title": "결과물 평가 기준",
+          "children": [
+            {
+              "title": "기능 동작: 12점"
+            },
+            {
+              "title": "실행 재현: 6점"
+            },
+            {
+              "title": "문서: 6점"
+            },
+            {
+              "title": "협업 절차: 6점"
+            },
+            {
+              "title": "팀별 배점 조정: 승인 근거 확인 필요"
+            }
+          ],
+          "details": [
+            {
+              "title": "기능 동작(기준 2)",
+              "children": [
+                {
+                  "title": "배점 — 12"
+                },
+                {
+                  "title": "만점 기준 — 기능 4개 모두 동작, 시연 성공"
+                },
+                {
+                  "title": "부분 점수 예 — 3개 9점, 2개 6점, 1개 3점"
+                }
+              ]
+            },
+            {
+              "title": "실행 재현(기준 1)",
+              "children": [
+                {
+                  "title": "배점 — 6"
+                },
+                {
+                  "title": "만점 기준 — 새 폴더에서 README대로 실행 성공, v1.0.0 태그"
+                },
+                {
+                  "title": "부분 점수 예 — README 보완 후 성공 4점, 태그 없음 -2"
+                }
+              ]
+            },
+            {
+              "title": "문서(기준 3)",
+              "children": [
+                {
+                  "title": "배점 — 6"
+                },
+                {
+                  "title": "만점 기준 — README 7항목, CONTRIBUTING·행동 수칙· / LICENSE"
+                },
+                {
+                  "title": "부분 점수 예 — 항목 누락 1개당 -1"
+                }
+              ]
+            },
+            {
+              "title": "협업 절차(기준 4·5)",
+              "children": [
+                {
+                  "title": "배점 — 6"
+                },
+                {
+                  "title": "만점 기준 — 모든 기능이 풀 리퀘스트·리뷰로 병합, 타 팀 이슈 해 / 결·병합, 받은 풀 리퀘스트 병합"
+                },
+                {
+                  "title": "부분 점수 예 — main 직접 커밋 있음 -2, 타 팀 기여 미병 / 합 -2, 받은 풀 리퀘스트 미처리 -2"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "프로젝트 결과물",
+            "기능 12 / 실행 재현 6 / 문서 6 / 협업 절차 6",
+            "팀 인원·기능 수 변경으로 배점을 자동 환산하지 않음"
+          ],
+          "evaluation_source": "docs/guide/15-evaluation.md",
+          "id": "task-16898d817705",
+          "kind": "reference",
+          "progress_period": "13"
+        },
+        {
+          "title": "외부 PR 제출 · 11/26까지",
+          "children": [
+            {
+              "title": "base: 상대 팀 원본 확인"
+            },
+            {
+              "title": "head: 우리 fork 확인"
+            },
+            {
+              "title": "PR에 적을 내용",
+              "children": [
+                {
+                  "title": "변경 내용"
+                },
+                {
+                  "title": "변경 이유"
+                },
+                {
+                  "title": "연결 이슈"
+                },
+                {
+                  "title": "확인 방법"
+                },
+                {
+                  "title": "참여 팀원"
+                }
+              ]
+            }
+          ],
+          "details": [
+            {
+              "title": "fork → Contribute → Open pull request"
+            },
+            {
+              "title": "base repository: 상대 팀 원본"
+            },
+            {
+              "title": "head repository: 우리 fork"
+            },
+            {
+              "title": "Create pull request"
+            }
+          ],
+          "evaluation": [
+            "팀",
+            "타 팀 이슈 PR 해결·병합",
+            "활동 항목 전체 3점",
+            "제출만으로 충족되지 않음"
+          ],
+          "evaluation_source": "docs/guide/10-activity.md",
+          "id": "task-ce8edf33d5f3",
+          "progress_period": "12"
+        },
+        {
+          "title": "회의록 #8 제출 · 11/26 18:00",
+          "children": [
+            {
+              "title": "기록 기간: 11/19~11/25"
+            },
+            {
+              "title": "회의 준비",
+              "children": [
+                {
+                  "title": "이전 결정 확인"
+                },
+                {
+                  "title": "개인별 진행 상황 확인"
+                },
+                {
+                  "title": "막힌 점 모으기"
+                },
+                {
+                  "title": "커밋·이슈·PR·리뷰 기록 모으기"
+                }
+              ]
+            },
+            {
+              "title": "회의록 작성 ({{task.minutes_writer}})",
+              "children": [
+                {
+                  "title": "회의 일시·참석자 기록"
+                },
+                {
+                  "title": "이전 결정 이행 여부 기록"
+                },
+                {
+                  "title": "개인별 진행 상황 기록"
+                },
+                {
+                  "title": "결정과 이유 기록"
+                },
+                {
+                  "title": "다음 작업의 담당자·기한·이슈 기록"
+                },
+                {
+                  "title": "개인별 활동 횟수 기록"
+                }
+              ]
+            },
+            {
+              "title": "팀원 확인 받기"
+            },
+            {
+              "title": "GitHub에 원본 올리기",
+              "children": [
+                {
+                  "title": "형식: Markdown"
+                },
+                {
+                  "title": "경로: `docs/meetings/YYYY-MM-DD.md`"
+                },
+                {
+                  "title": "파일 날짜: 실제 회의일"
+                }
+              ],
+              "details": [
+                {
+                  "title": "저장 경로: `docs/meetings/YYYY-MM-DD.md`"
+                },
+                {
+                  "title": "날짜: 실제 회의일"
+                },
+                {
+                  "title": "PR로 올리면 활동 실적"
+                },
+                {
+                  "title": "본문 양식",
+                  "children": [
+                    {
+                      "title": "docs/meetings/YYYY-MM-DD.md로 저장하고 PDF로 변환해 LMS에 제출합니다(12장). 아래를 양식을 사용하 여 내용을 채웁니다."
+                    },
+                    {
+                      "title": "코드·양식 · markdown",
+                      "children": [
+                        {
+                          "title": "# [WEEK#] 회의록 — 팀명\n\n- 일시: 2026-10-13 (화) 20:00 ~ 21:00\n- 방식: 온라인(디스코드) / 대면(도서관 스터디룸)\n- 참석: 홍길동, 김철수, 이영희, 박민수 / 불참: 없음\n- 서기: 박민수\n\n## 1. 지난주 결정 사항 점검\n| 결정 사항 | 담당 | 완료 | 비고 |\n|---|---|---|---|\n| 저장 형식 CSV 확정 | 김철수 | O | storage.py 올림 |\n| 샘플 데이터 준비 | 이영희 | X | 이번 주 |\n\n## 2. 팀원별 진행 상황\n| 팀원 | 한 일 (이슈/풀 리퀘스트 번호) | 막힌 점 |\n|---|---|---|\n| 홍길동 | #3 입력 검증 이슈 등록 | 날짜 형식 검사 방법 |\n| 김철수 | #8 storage.py 커밋 | 없음 |\n\n## 3. 논의 내용과 결정 사항 (이유 포함)\n- 예산 저장은 별도 파일(budget.json)로 — 거래 CSV와 섞으면 통계가 복잡해져서\n\n## 4. 다음 주 할 일\n| 할 일 | 담당 | 마감 | 이슈 |\n|---|---|---|---|\n| add 기능 첫 동작 | 홍길동 | 10/21 | #3 |\n\n## 5. 활동 로그 (이번 주)\n| 팀원 | 커밋 | 풀 리퀘스트(생성/병합) | 리뷰 | 이슈 | 충돌 해결 | 특이사항 |\n|---|---|---|---|---|---|---|\n| 홍길동 | 3 | 0/0 | 0 | 2 | 0 | - |\n| 김철수 | 4 | 0/0 | 0 | 1 | 0 | - |\n\n## 6. 이번 주 점검표 (부록 A 6주차)\n- [x] 소스트리 설치 - [x] 클론 - [x] 자기소개 파일 커밋·Push - [x] 회의록 #3",
+                          "kind": "code"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "LMS에 PDF 제출 ({{task.minutes_submitter}})",
+              "children": [
+                {
+                  "title": "원본을 PDF로 변환",
+                  "details": [
+                    {
+                      "title": "GitHub에서 회의록 .md 파일 열기"
+                    },
+                    {
+                      "title": "브라우저 인쇄: Ctrl+P"
+                    },
+                    {
+                      "title": "대상: PDF로 저장"
+                    },
+                    {
+                      "title": "파일명 변경 → 저장"
+                    },
+                    {
+                      "title": "페이지·표·잘림 확인"
+                    }
+                  ]
+                },
+                {
+                  "title": "파일명: `[WEEK13] 회의록_{{team.name}}.pdf`"
+                },
+                {
+                  "title": "제출처: LMS 과제 탭"
+                },
+                {
+                  "title": "제출 완료 확인"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "팀",
+            "정해진 회의록 총 10회 LMS 제출",
+            "회의록 항목 전체 3점 (회차별 3점 아님)",
+            "증거: LMS 제출 기록"
+          ],
+          "evaluation_source": "docs/guide/10-activity.md",
+          "id": "task-adeb53d4b262",
+          "progress_period": "12",
+          "recording_start": "2026-11-19",
+          "recording_end": "2026-11-25",
+          "due_at": "2026-11-26T18:00:00+09:00"
+        },
+        {
+          "title": "기능 동결 · 11/27부터",
+          "children": [
+            {
+              "title": "새 기능 추가 중단"
+            },
+            {
+              "title": "버그 수정"
+            },
+            {
+              "title": "문서 보완"
+            },
+            {
+              "title": "코드 정리"
+            }
+          ],
+          "id": "task-30e4f28c7a33",
+          "progress_period": "12"
+        }
+      ],
+      "status": "unknown",
+      "activity_start": "2026-11-27",
+      "activity_end": "2026-12-04"
+    },
+    {
+      "id": "14",
+      "weeks": [
+        14
+      ],
+      "label": "14주차",
+      "title": "실행 검증과 발표 준비",
+      "start": "2026-12-01",
+      "end": "2026-12-08",
+      "tasks": [
+        {
+          "title": "새 환경 실행 검증 · 12/7~11",
+          "children": [
+            {
+              "title": "새 폴더에 Clone"
+            },
+            {
+              "title": "`pip install -r requirements.txt` 실행"
+            },
+            {
+              "title": "README의 실행 명령 확인"
+            },
+            {
+              "title": "핵심 기능 확인"
+            },
+            {
+              "title": "검증 결과 기록"
+            }
+          ],
+          "evaluation": [
+            "프로젝트 결과물",
+            "v1.0.0·새 폴더에서 README대로 실행",
+            "실행 재현 6점"
+          ],
+          "evaluation_source": "docs/guide/15-evaluation.md",
+          "id": "task-ae52a0f0a68d",
+          "progress_period": "14"
+        },
+        {
+          "title": "실행 문제 수정",
+          "children": [
+            {
+              "title": "코드·README 수정"
+            },
+            {
+              "title": "재실행"
+            },
+            {
+              "title": "필요 시 v1.0.1 생성"
+            }
+          ],
+          "details": [
+            {
+              "title": "문제 재현"
+            },
+            {
+              "title": "코드·README 수정"
+            },
+            {
+              "title": "새 폴더 실행 재확인"
+            },
+            {
+              "title": "필요 시 v1.0.1 태그·배포"
+            }
+          ],
+          "id": "task-0b35b8a0834d",
+          "progress_period": "14"
+        },
+        {
+          "title": "기록 일정 확인",
+          "children": [
+            {
+              "title": "회의록 #10 기록 범위: 12/9까지",
+              "evaluation": [
+                "팀",
+                "정해진 회의록 총 10회 LMS 제출",
+                "회의록 항목 전체 3점 (회차별 3점 아님)",
+                "증거: LMS 제출 기록"
+              ],
+              "evaluation_source": "docs/guide/10-activity.md"
+            },
+            {
+              "title": "제출에 필요한 실행 검증을 기록 마감 전에 배치"
+            }
+          ],
+          "id": "task-ca38a0bbc031",
+          "progress_period": "14"
+        },
+        {
+          "title": "최종 자료 모으기",
+          "children": [
+            {
+              "title": "릴리스 링크"
+            },
+            {
+              "title": "기능 실행 화면"
+            },
+            {
+              "title": "개인별 대표 PR·리뷰"
+            },
+            {
+              "title": "타 팀 기여 링크"
+            },
+            {
+              "title": "협업 통계"
+            },
+            {
+              "title": "회의록 10회 링크"
+            }
+          ],
+          "id": "task-65340e43b99e",
+          "progress_period": "14"
+        },
+        {
+          "title": "다음 마감",
+          "children": [
+            {
+              "title": "활동 집계: 12/13까지"
+            },
+            {
+              "title": "최종보고서: 12/17 18:00"
+            },
+            {
+              "title": "최종발표: 12/18"
+            }
+          ],
+          "id": "task-1e617f4c47df",
+          "progress_period": "14"
+        },
+        {
+          "title": "타 팀 기여 마무리 · 12/3까지",
+          "children": [
+            {
+              "title": "외부 PR 수정 반영"
+            },
+            {
+              "title": "외부 PR 병합 확인",
+              "details": [
+                {
+                  "title": "상대 원본 저장소 → Pull requests"
+                },
+                {
+                  "title": "해당 PR의 Merged 상태 확인"
+                },
+                {
+                  "title": "PR 링크를 회의록에 기록"
+                }
+              ],
+              "evaluation": [
+                "팀",
+                "타 팀 이슈 PR 해결·병합",
+                "활동 항목 전체 3점",
+                "제출만으로 충족되지 않음"
+              ],
+              "evaluation_source": "docs/guide/10-activity.md"
+            },
+            {
+              "title": "받은 PR 리뷰·병합"
+            },
+            {
+              "title": "양쪽 PR 링크 기록"
+            }
+          ],
+          "evaluation": [
+            "팀",
+            "타 팀 이슈 PR 해결·병합",
+            "활동 항목 전체 3점",
+            "제출만으로 충족되지 않음"
+          ],
+          "evaluation_source": "docs/guide/10-activity.md",
+          "id": "task-7d55547740cb",
+          "progress_period": "13"
+        },
+        {
+          "title": "회의록 #9 제출 · 12/3 18:00",
+          "children": [
+            {
+              "title": "기록 기간: 11/26~12/2"
+            },
+            {
+              "title": "회의 준비",
+              "children": [
+                {
+                  "title": "이전 결정 확인"
+                },
+                {
+                  "title": "개인별 진행 상황 확인"
+                },
+                {
+                  "title": "막힌 점 모으기"
+                },
+                {
+                  "title": "커밋·이슈·PR·리뷰 기록 모으기"
+                }
+              ]
+            },
+            {
+              "title": "회의록 작성 ({{task.minutes_writer}})",
+              "children": [
+                {
+                  "title": "회의 일시·참석자 기록"
+                },
+                {
+                  "title": "이전 결정 이행 여부 기록"
+                },
+                {
+                  "title": "개인별 진행 상황 기록"
+                },
+                {
+                  "title": "결정과 이유 기록"
+                },
+                {
+                  "title": "다음 작업의 담당자·기한·이슈 기록"
+                },
+                {
+                  "title": "개인별 활동 횟수 기록"
+                }
+              ]
+            },
+            {
+              "title": "팀원 확인 받기"
+            },
+            {
+              "title": "GitHub에 원본 올리기",
+              "children": [
+                {
+                  "title": "형식: Markdown"
+                },
+                {
+                  "title": "경로: `docs/meetings/YYYY-MM-DD.md`"
+                },
+                {
+                  "title": "파일 날짜: 실제 회의일"
+                }
+              ],
+              "details": [
+                {
+                  "title": "저장 경로: `docs/meetings/YYYY-MM-DD.md`"
+                },
+                {
+                  "title": "날짜: 실제 회의일"
+                },
+                {
+                  "title": "PR로 올리면 활동 실적"
+                },
+                {
+                  "title": "본문 양식",
+                  "children": [
+                    {
+                      "title": "docs/meetings/YYYY-MM-DD.md로 저장하고 PDF로 변환해 LMS에 제출합니다(12장). 아래를 양식을 사용하 여 내용을 채웁니다."
+                    },
+                    {
+                      "title": "코드·양식 · markdown",
+                      "children": [
+                        {
+                          "title": "# [WEEK#] 회의록 — 팀명\n\n- 일시: 2026-10-13 (화) 20:00 ~ 21:00\n- 방식: 온라인(디스코드) / 대면(도서관 스터디룸)\n- 참석: 홍길동, 김철수, 이영희, 박민수 / 불참: 없음\n- 서기: 박민수\n\n## 1. 지난주 결정 사항 점검\n| 결정 사항 | 담당 | 완료 | 비고 |\n|---|---|---|---|\n| 저장 형식 CSV 확정 | 김철수 | O | storage.py 올림 |\n| 샘플 데이터 준비 | 이영희 | X | 이번 주 |\n\n## 2. 팀원별 진행 상황\n| 팀원 | 한 일 (이슈/풀 리퀘스트 번호) | 막힌 점 |\n|---|---|---|\n| 홍길동 | #3 입력 검증 이슈 등록 | 날짜 형식 검사 방법 |\n| 김철수 | #8 storage.py 커밋 | 없음 |\n\n## 3. 논의 내용과 결정 사항 (이유 포함)\n- 예산 저장은 별도 파일(budget.json)로 — 거래 CSV와 섞으면 통계가 복잡해져서\n\n## 4. 다음 주 할 일\n| 할 일 | 담당 | 마감 | 이슈 |\n|---|---|---|---|\n| add 기능 첫 동작 | 홍길동 | 10/21 | #3 |\n\n## 5. 활동 로그 (이번 주)\n| 팀원 | 커밋 | 풀 리퀘스트(생성/병합) | 리뷰 | 이슈 | 충돌 해결 | 특이사항 |\n|---|---|---|---|---|---|---|\n| 홍길동 | 3 | 0/0 | 0 | 2 | 0 | - |\n| 김철수 | 4 | 0/0 | 0 | 1 | 0 | - |\n\n## 6. 이번 주 점검표 (부록 A 6주차)\n- [x] 소스트리 설치 - [x] 클론 - [x] 자기소개 파일 커밋·Push - [x] 회의록 #3",
+                          "kind": "code"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "LMS에 PDF 제출 ({{task.minutes_submitter}})",
+              "children": [
+                {
+                  "title": "원본을 PDF로 변환",
+                  "details": [
+                    {
+                      "title": "GitHub에서 회의록 .md 파일 열기"
+                    },
+                    {
+                      "title": "브라우저 인쇄: Ctrl+P"
+                    },
+                    {
+                      "title": "대상: PDF로 저장"
+                    },
+                    {
+                      "title": "파일명 변경 → 저장"
+                    },
+                    {
+                      "title": "페이지·표·잘림 확인"
+                    }
+                  ]
+                },
+                {
+                  "title": "파일명: `[WEEK14] 회의록_{{team.name}}.pdf`"
+                },
+                {
+                  "title": "제출처: LMS 과제 탭"
+                },
+                {
+                  "title": "제출 완료 확인"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "팀",
+            "정해진 회의록 총 10회 LMS 제출",
+            "회의록 항목 전체 3점 (회차별 3점 아님)",
+            "증거: LMS 제출 기록"
+          ],
+          "evaluation_source": "docs/guide/10-activity.md",
+          "id": "task-75ce250874a9",
+          "progress_period": "13",
+          "recording_start": "2026-11-26",
+          "recording_end": "2026-12-02",
+          "due_at": "2026-12-03T18:00:00+09:00"
+        },
+        {
+          "title": "v1.0.0 릴리스 · 12/4",
+          "children": [
+            {
+              "title": "main 최신화",
+              "details": [
+                {
+                  "title": "소스트리에서 main 체크아웃"
+                },
+                {
+                  "title": "상단 Pull → Pull"
+                }
+              ]
+            },
+            {
+              "title": "v1.0.0 태그 생성",
+              "details": [
+                {
+                  "title": "소스트리 → main 체크아웃 → Pull"
+                },
+                {
+                  "title": "상단 태그"
+                },
+                {
+                  "title": "태그 이름: v1.0.0"
+                },
+                {
+                  "title": "태그 추가"
+                }
+              ]
+            },
+            {
+              "title": "태그 Push",
+              "details": [
+                {
+                  "title": "소스트리 → Push"
+                },
+                {
+                  "title": "모든 태그 푸시 선택"
+                },
+                {
+                  "title": "Push → GitHub 태그 확인"
+                }
+              ]
+            },
+            {
+              "title": "릴리스 노트 작성 (권장)",
+              "children": [
+                {
+                  "title": "기능 요약"
+                },
+                {
+                  "title": "설치·실행 방법"
+                },
+                {
+                  "title": "스크린샷"
+                }
+              ],
+              "details": [
+                {
+                  "title": "GitHub → Releases → Draft a new release"
+                },
+                {
+                  "title": "Choose a tag: v1.0.0"
+                },
+                {
+                  "title": "제목: v1.0.0"
+                },
+                {
+                  "title": "기능 요약·설치/실행·스크린샷 작성"
+                },
+                {
+                  "title": "Publish release"
+                }
+              ]
+            },
+            {
+              "title": "원문상 태그 zip도 인정"
+            }
+          ],
+          "evaluation": [
+            "프로젝트 결과물",
+            "v1.0.0·새 폴더에서 README대로 실행",
+            "실행 재현 6점"
+          ],
+          "evaluation_source": "docs/guide/15-evaluation.md",
+          "id": "task-8164fd550b17",
+          "progress_period": "13"
+        }
+      ],
+      "status": "unknown",
+      "activity_start": "2026-12-04",
+      "activity_end": "2026-12-11"
+    },
+    {
+      "id": "makeup",
+      "weeks": [
+        "makeup"
+      ],
+      "label": "보강 주",
+      "title": "보강 수업과 최종 준비",
+      "start": "2026-12-08",
+      "end": "2026-12-15",
+      "tasks": [
+        {
+          "title": "감점·무효 기준",
+          "children": [
+            {
+              "title": "최종보고서: 10점"
+            },
+            {
+              "title": "최종발표: 5점"
+            },
+            {
+              "title": "지각 제출: 제출물 총점 10% 감점"
+            },
+            {
+              "title": "허위 회의록·활동 로그 금지"
+            },
+            {
+              "title": "설명하지 못하는 AI 코드: 해당 PR 활동 제외"
+            }
+          ],
+          "details": [
+            {
+              "title": "다른 저장소 코드를 출처 표기 없이 복사(라이선스 위반 포함)",
+              "children": [
+                {
+                  "title": "처리 — 해당 기능 결과물 점수 0"
+                }
+              ]
+            },
+            {
+              "title": "AI로 만든 코드를 설명하지 못함",
+              "children": [
+                {
+                  "title": "처리 — 해당 풀 리퀘스트 활동 집계 제외"
+                }
+              ]
+            },
+            {
+              "title": "main 강제 푸시, 보호 규칙 해제, 리뷰 없는 병합",
+              "children": [
+                {
+                  "title": "처리 — 활동 규칙 7번 0점"
+                }
+              ]
+            },
+            {
+              "title": "허위 회의록·활동 로그",
+              "children": [
+                {
+                  "title": "처리 — 회의록 항목 0점"
+                }
+              ]
+            },
+            {
+              "title": "제출 마감(목 18:00) 초과",
+              "children": [
+                {
+                  "title": "처리 — 지각 제출은 각 제출물 총점에서 10% 감점"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "항목별 개인·팀 구분",
+            "활동 항목당 충족 3 / 70% 이상 1.5 / 미충족 0",
+            "앱 집계: 선택한 수업 주차"
+          ],
+          "evaluation_source": "docs/guide/10-activity.md",
+          "id": "task-f6169a274d30",
+          "kind": "reference",
+          "progress_period": "makeup"
+        },
+        {
+          "title": "회의록 #10 제출 · 12/10 18:00",
+          "children": [
+            {
+              "title": "기록 기간: 12/3~12/9"
+            },
+            {
+              "title": "회의 준비",
+              "children": [
+                {
+                  "title": "이전 결정 확인"
+                },
+                {
+                  "title": "개인별 진행 상황 확인"
+                },
+                {
+                  "title": "막힌 점 모으기"
+                },
+                {
+                  "title": "커밋·이슈·PR·리뷰 기록 모으기"
+                }
+              ]
+            },
+            {
+              "title": "회의록 작성 ({{task.minutes_writer}})",
+              "children": [
+                {
+                  "title": "회의 일시·참석자 기록"
+                },
+                {
+                  "title": "이전 결정 이행 여부 기록"
+                },
+                {
+                  "title": "개인별 진행 상황 기록"
+                },
+                {
+                  "title": "결정과 이유 기록"
+                },
+                {
+                  "title": "다음 작업의 담당자·기한·이슈 기록"
+                },
+                {
+                  "title": "개인별 활동 횟수 기록"
+                }
+              ]
+            },
+            {
+              "title": "팀원 확인 받기"
+            },
+            {
+              "title": "GitHub에 원본 올리기",
+              "children": [
+                {
+                  "title": "형식: Markdown"
+                },
+                {
+                  "title": "경로: `docs/meetings/YYYY-MM-DD.md`"
+                },
+                {
+                  "title": "파일 날짜: 실제 회의일"
+                }
+              ],
+              "details": [
+                {
+                  "title": "저장 경로: `docs/meetings/YYYY-MM-DD.md`"
+                },
+                {
+                  "title": "날짜: 실제 회의일"
+                },
+                {
+                  "title": "PR로 올리면 활동 실적"
+                },
+                {
+                  "title": "본문 양식",
+                  "children": [
+                    {
+                      "title": "docs/meetings/YYYY-MM-DD.md로 저장하고 PDF로 변환해 LMS에 제출합니다(12장). 아래를 양식을 사용하 여 내용을 채웁니다."
+                    },
+                    {
+                      "title": "코드·양식 · markdown",
+                      "children": [
+                        {
+                          "title": "# [WEEK#] 회의록 — 팀명\n\n- 일시: 2026-10-13 (화) 20:00 ~ 21:00\n- 방식: 온라인(디스코드) / 대면(도서관 스터디룸)\n- 참석: 홍길동, 김철수, 이영희, 박민수 / 불참: 없음\n- 서기: 박민수\n\n## 1. 지난주 결정 사항 점검\n| 결정 사항 | 담당 | 완료 | 비고 |\n|---|---|---|---|\n| 저장 형식 CSV 확정 | 김철수 | O | storage.py 올림 |\n| 샘플 데이터 준비 | 이영희 | X | 이번 주 |\n\n## 2. 팀원별 진행 상황\n| 팀원 | 한 일 (이슈/풀 리퀘스트 번호) | 막힌 점 |\n|---|---|---|\n| 홍길동 | #3 입력 검증 이슈 등록 | 날짜 형식 검사 방법 |\n| 김철수 | #8 storage.py 커밋 | 없음 |\n\n## 3. 논의 내용과 결정 사항 (이유 포함)\n- 예산 저장은 별도 파일(budget.json)로 — 거래 CSV와 섞으면 통계가 복잡해져서\n\n## 4. 다음 주 할 일\n| 할 일 | 담당 | 마감 | 이슈 |\n|---|---|---|---|\n| add 기능 첫 동작 | 홍길동 | 10/21 | #3 |\n\n## 5. 활동 로그 (이번 주)\n| 팀원 | 커밋 | 풀 리퀘스트(생성/병합) | 리뷰 | 이슈 | 충돌 해결 | 특이사항 |\n|---|---|---|---|---|---|---|\n| 홍길동 | 3 | 0/0 | 0 | 2 | 0 | - |\n| 김철수 | 4 | 0/0 | 0 | 1 | 0 | - |\n\n## 6. 이번 주 점검표 (부록 A 6주차)\n- [x] 소스트리 설치 - [x] 클론 - [x] 자기소개 파일 커밋·Push - [x] 회의록 #3",
+                          "kind": "code"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "title": "LMS에 PDF 제출 ({{task.minutes_submitter}})",
+              "children": [
+                {
+                  "title": "원본을 PDF로 변환",
+                  "details": [
+                    {
+                      "title": "GitHub에서 회의록 .md 파일 열기"
+                    },
+                    {
+                      "title": "브라우저 인쇄: Ctrl+P"
+                    },
+                    {
+                      "title": "대상: PDF로 저장"
+                    },
+                    {
+                      "title": "파일명 변경 → 저장"
+                    },
+                    {
+                      "title": "페이지·표·잘림 확인"
+                    }
+                  ]
+                },
+                {
+                  "title": "파일명: `[WEEK4] 회의록_{{team.name}}.pdf`"
+                },
+                {
+                  "title": "제출처: LMS 과제 탭"
+                },
+                {
+                  "title": "제출 완료 확인"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "팀",
+            "정해진 회의록 총 10회 LMS 제출",
+            "회의록 항목 전체 3점 (회차별 3점 아님)",
+            "증거: LMS 제출 기록"
+          ],
+          "evaluation_source": "docs/guide/10-activity.md",
+          "id": "task-1ced0b50e3db",
+          "progress_period": "14",
+          "recording_start": "2026-12-03",
+          "recording_end": "2026-12-09",
+          "due_at": "2026-12-10T18:00:00+09:00"
+        },
+        {
+          "title": "보강 · 12/11",
+          "children": [
+            {
+              "title": "최종보고서 작성"
+            },
+            {
+              "title": "발표자료 작성"
+            },
+            {
+              "title": "시연 녹화"
+            },
+            {
+              "title": "리허설"
+            },
+            {
+              "title": "예상 질문 준비"
+            }
+          ],
+          "id": "task-9b2efd5f84f0",
+          "progress_period": "14"
+        }
+      ],
+      "status": "unknown",
+      "activity_start": "2026-12-11",
+      "activity_end": "2026-12-18"
+    },
+    {
+      "id": "15",
+      "weeks": [
+        15
+      ],
+      "label": "15주차",
+      "title": "최종 제출과 발표",
+      "start": "2026-12-15",
+      "end": "2026-12-22",
+      "tasks": [
+        {
+          "title": "최종보고서 제출 · 12/17 18:00",
+          "children": [
+            {
+              "title": "작성 내용",
+              "children": [
+                {
+                  "title": "프로젝트 개요",
+                  "details": [
+                    {
+                      "title": "들어갈 내용 — 문제·목표·결과 요약, 저장소 주소, v1.0.0 태그·릴리스 주소"
+                    }
+                  ]
+                },
+                {
+                  "title": "최종 기능",
+                  "details": [
+                    {
+                      "title": "들어갈 내용 — 기능 4개 표(계획 vs 실제, 담당), 실행 화면"
+                    }
+                  ]
+                },
+                {
+                  "title": "프로그램 구조",
+                  "details": [
+                    {
+                      "title": "들어갈 내용 — 파일·모듈 구성(9.2), 데이터 흐름, 사용 라이브러리"
+                    }
+                  ]
+                },
+                {
+                  "title": "협업 기록",
+                  "details": [
+                    {
+                      "title": "들어갈 내용 — Insights 캡처(Contributors, Pulse), 팀 통계 표(커밋·풀 리퀘스트·이슈·리뷰 수), 브랜치 그래프 캡 / 처(소스트리), 충돌 해결 사례 1~2개"
+                    }
+                  ]
+                },
+                {
+                  "title": "개인별 기여",
+                  "details": [
+                    {
+                      "title": "들어갈 내용 — 팀원별: 담당 기능, 대표 풀 리퀘스트 2개 링크, 리뷰 활동"
+                    }
+                  ]
+                },
+                {
+                  "title": "타 팀 기여",
+                  "details": [
+                    {
+                      "title": "들어갈 내용 — 맡은 이슈·풀 리퀘스트 링크(병합 여부), 우리 저장소에 병합한 타 팀 풀 리퀘스트 링크, 배운 점"
+                    }
+                  ]
+                },
+                {
+                  "title": "문제와 해결",
+                  "details": [
+                    {
+                      "title": "들어갈 내용 — 기술·협업 각 1개 이상: 상황 → 시도 → 해결 → 배운 점 (중간발표 지적 사항 반영 포함)"
+                    }
+                  ]
+                },
+                {
+                  "title": "회고·향후 계획"
+                }
+              ]
+            },
+            {
+              "title": "첨부할 근거",
+              "children": [
+                {
+                  "title": "v1.0.0·릴리스 링크"
+                },
+                {
+                  "title": "실행 화면"
+                },
+                {
+                  "title": "Insights·브랜치 그래프"
+                },
+                {
+                  "title": "충돌 사례"
+                },
+                {
+                  "title": "개인별 대표 PR 2개·리뷰"
+                },
+                {
+                  "title": "타 팀 이슈·PR·병합 링크"
+                }
+              ]
+            },
+            {
+              "title": "부록",
+              "children": [
+                {
+                  "title": "회의록 10회 링크"
+                },
+                {
+                  "title": "최종 점검표"
+                },
+                {
+                  "title": "팀 약속"
+                }
+              ]
+            },
+            {
+              "title": "제출 규칙",
+              "children": [
+                {
+                  "title": "표지·목차 포함 PDF 10~20쪽"
+                },
+                {
+                  "title": "파일명: `[최종보고서] {{team.name}}.pdf`"
+                },
+                {
+                  "title": "제출처: LMS 과제 탭"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "팀",
+            "보고서 10점",
+            "기능·구조 3 / 협업 3 / 개인·타 팀 기여 2 / 문제·회고 1 / 형식 1"
+          ],
+          "evaluation_source": "docs/guide/15-evaluation.md",
+          "id": "task-fc1974c95add",
+          "progress_period": "makeup"
+        },
+        {
+          "title": "최종발표 · 12/18",
+          "children": [
+            {
+              "title": "실제 기능 시연"
+            },
+            {
+              "title": "GitHub 협업 기록 준비"
+            },
+            {
+              "title": "발언 분담"
+            },
+            {
+              "title": "백업 영상 준비"
+            },
+            {
+              "title": "리허설"
+            },
+            {
+              "title": "발표 15분·질의응답 5분"
+            },
+            {
+              "title": "발표자료 이메일 제출",
+              "children": [
+                {
+                  "title": "기한: 발표 후 당일"
+                },
+                {
+                  "title": "받는 사람: shoh0320@pknu.ac.kr"
+                },
+                {
+                  "title": "제목: `[OSS 최종] {{team.name}}`"
+                },
+                {
+                  "title": "첨부: PPT 또는 PDF"
+                },
+                {
+                  "title": "발송 완료 확인"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "팀",
+            "발표 5점",
+            "시연 2 / 구성·전달·전원 발언 2 / 질의응답 1"
+          ],
+          "evaluation_source": "docs/guide/15-evaluation.md",
+          "id": "task-55f86b9c7c55",
+          "progress_period": "makeup"
+        },
+        {
+          "title": "감점·무효 기준",
+          "children": [
+            {
+              "title": "최종보고서: 10점"
+            },
+            {
+              "title": "최종발표: 5점"
+            },
+            {
+              "title": "지각 제출: 제출물 총점 10% 감점"
+            },
+            {
+              "title": "허위 회의록·활동 로그 금지"
+            },
+            {
+              "title": "설명하지 못하는 AI 코드: 해당 PR 활동 제외"
+            }
+          ],
+          "details": [
+            {
+              "title": "다른 저장소 코드를 출처 표기 없이 복사(라이선스 위반 포함)",
+              "children": [
+                {
+                  "title": "처리 — 해당 기능 결과물 점수 0"
+                }
+              ]
+            },
+            {
+              "title": "AI로 만든 코드를 설명하지 못함",
+              "children": [
+                {
+                  "title": "처리 — 해당 풀 리퀘스트 활동 집계 제외"
+                }
+              ]
+            },
+            {
+              "title": "main 강제 푸시, 보호 규칙 해제, 리뷰 없는 병합",
+              "children": [
+                {
+                  "title": "처리 — 활동 규칙 7번 0점"
+                }
+              ]
+            },
+            {
+              "title": "허위 회의록·활동 로그",
+              "children": [
+                {
+                  "title": "처리 — 회의록 항목 0점"
+                }
+              ]
+            },
+            {
+              "title": "제출 마감(목 18:00) 초과",
+              "children": [
+                {
+                  "title": "처리 — 지각 제출은 각 제출물 총점에서 10% 감점"
+                }
+              ]
+            }
+          ],
+          "evaluation": [
+            "항목별 개인·팀 구분",
+            "활동 항목당 충족 3 / 70% 이상 1.5 / 미충족 0",
+            "앱 집계: 선택한 수업 주차"
+          ],
+          "evaluation_source": "docs/guide/10-activity.md",
+          "id": "task-f6169a274d30",
+          "kind": "reference",
+          "progress_period": "makeup"
+        }
+      ],
+      "status": "unknown",
+      "activity_start": "2026-12-11",
+      "activity_end": "2026-12-18"
+    }
+  ]
+}

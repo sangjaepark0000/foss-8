@@ -103,10 +103,9 @@ def report(catalog, name):
             rows.append([portable_links(value) for value in columns])
     if sum(row[0].isdigit() for row in rows) != count:
         raise ValueError(f"{title}의 필수 항목 {count}개를 읽지 못했습니다. 원문 형식을 확인하세요.")
-    team_url = catalog.reference(*catalog.resolve("team"))["url"]
     lines = [f"# {title}", "",
              "> 안내서 요구사항에서 만든 작업용 Markdown 양식입니다. 내용을 작성한 후 제출용 PDF로 변환하세요.",
-             f"> 원문의 기능 4개 기준은 보존했습니다. 승인된 팀별 적용 사항은 [팀 결정]({team_url})을 확인하세요.",
+             "> 원문의 기능 4개 기준은 보존했습니다. 팀별 조정은 승인 근거를 별도로 기록하세요.",
              "", "## 표지", "", "- 팀명: ", "- 프로젝트 이름: ",
              "- 팀원·GitHub 아이디: ", "- 저장소 주소: ", "- 작성일: ", "", "## 목차", ""]
     lines += [f"- {row[0] + '. ' if row[0].isdigit() else ''}{row[1]}" for row in rows]
@@ -126,8 +125,22 @@ def report(catalog, name):
             "derived": True, "source": source}
 
 
-def get(catalog, name):
+def get(catalog, name, team_config=None):
     if name not in TITLES:
         raise ValueError(f"알 수 없는 양식: {name}. 지원 양식: {', '.join(TITLES)}")
     item = minutes(catalog) if name == "minutes" else report(catalog, name)
-    return {"id": name, **item}
+    item = {"id": name, **item}
+    if team_config is not None:
+        content = item["content"]
+        if name == "minutes":
+            # Attendance and actual progress stay blank; membership does not prove attendance.
+            content = content.replace("회의록 — 팀명", "회의록 — " + team_config["name"], 1)
+        else:
+            content = content.replace("- 팀명: \n", "- 팀명: " + team_config["name"] + "\n", 1)
+            content = content.replace("- 저장소 주소: \n", "- 저장소 주소: " + team_config["repository"] + "\n", 1)
+            people = ", ".join(f'{p["name"]} (@{p["github"]})' for p in team_config["members"])
+            content = content.replace("- 팀원·GitHub 아이디: \n", "- 팀원·GitHub 아이디: " + people + "\n", 1)
+            content = content.replace(f"[{TITLES[name]}] 팀명.pdf",
+                                      f"[{TITLES[name]}] {team_config['name']}.pdf")
+        item["content"] = content
+    return item
