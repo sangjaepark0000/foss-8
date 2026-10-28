@@ -36,8 +36,10 @@ def parser():
     form.add_argument("--week", help="회의록 제출 회차 (예: 9), 보강: makeup")
     form.add_argument("--team", help="회의록 팀 이름")
     form.add_argument("--team-file", help="팀 기본정보 JSON 파일 (name·repository·members)")
-    form.add_argument("-o", "--output", help="UTF-8 Markdown 저장 경로")
+    form.add_argument("-o", "--output", help="Markdown 서식 또는 제출용 PDF 저장 경로")
     form.add_argument("--force", action="store_true", help="기존 출력 파일 덮어쓰기")
+    form.add_argument("--pdf", metavar="MARKDOWN", help="작성한 회의록을 제출 파일명의 PDF로 변환")
+    form.add_argument("--browser", help="PDF 변환에 사용할 Chrome/Chromium 실행 파일")
     check = commands.add_parser("check", help="완성 기준 배점표 불러오기, 저장소 상태와 비교" )
     week = commands.add_parser("week", help="주차를 선택해 할 일 조회")
     return root
@@ -57,6 +59,15 @@ def main(argv=None):
             command_parser.print_help()
             return 0
         if args.command == "format":
+            if args.pdf:
+                if args.name != "minutes" or args.date or args.team_file:
+                    raise ValueError("PDF 변환은 format minutes --pdf 회의록.md로 실행하세요. --date·--team-file은 초안 생성 옵션입니다.")
+                from .minutes_pdf import export
+                path = export(args.pdf, args.output, args.week, args.team, args.force, args.browser)
+                print("제출용 PDF 저장: " + str(path))
+                return 0
+            if args.browser:
+                raise ValueError("--browser는 --pdf 변환과 함께 지정하세요.")
             if args.force and not args.output:
                 raise ValueError("--force는 --output 저장 경로와 함께 지정하세요.")
             filled = any((args.date, args.week, args.team, args.team_file))
