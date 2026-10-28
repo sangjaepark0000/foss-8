@@ -444,6 +444,16 @@ class TuiTests(unittest.TestCase):
         self.assertIn("회차별 3점 아님", text)
         self.assertNotIn("완료됨", text)
 
+    def test_minutes_task_creates_an_editable_draft_without_marking_submission(self):
+        index = next(i for i, row in enumerate(self.app.items()) if row.get("recording_start"))
+        self.app.selected[self.app.selection_key] = index
+        with patch("foss8.tui.edit_form", side_effect=lambda s, title, fields, submit: submit({"date": "2026-10-28"})):
+            self.app.handle("\n", Screen())
+        path = self.path.parent.parent / "docs/meetings/2026-10-28.md"
+        self.assertIn("[WEEK9]", path.read_text())
+        self.assertFalse(self.app.done(self.app.items()[index]))
+        self.assertFalse(self.path.with_name("progress.json").exists())
+
 
 if __name__ == "__main__":
     unittest.main()

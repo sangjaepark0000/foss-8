@@ -38,6 +38,13 @@ def parser():
     form = commands.add_parser("format", help="회의록·보고서 빈 양식 출력")
     form.add_argument("name", nargs="?", choices=tuple(templates.TITLES),
                       help="minutes: 회의록, proposal: 제안서, midterm: 중간보고서, final: 최종보고서")
+    minutes_parser = commands.add_parser("minutes", help="회의록 작성 파일 생성")
+    minutes_commands = minutes_parser.add_subparsers(dest="minutes_command", required=True)
+    draft = minutes_commands.add_parser("draft", help="기본정보·제출 회차를 채운 Markdown 초안 저장")
+    draft.add_argument("--date", help="회의 날짜 (YYYY-MM-DD), 기본값 오늘")
+    draft.add_argument("--week", help="제출 회차 (예: 9), 보강: makeup. 기본값 다음 제출 회차")
+    draft.add_argument("-o", "--output", help="Markdown 저장 경로. 기본값 docs/meetings/회의날짜.md")
+    draft.add_argument("--force", action="store_true", help="기존 초안 덮어쓰기")
     check = commands.add_parser("check", help="완성 기준 배점표 불러오기, 저장소 상태와 비교" )
     week = commands.add_parser("week", help="주차별 할 일·방법·평가기준 탐색")
     week.add_argument("number", nargs="?", help="강의 주차 (예: 9), 보강: makeup. 생략하면 오늘의 학사 주차")
@@ -89,6 +96,9 @@ def main(argv=None):
         if args.command == "check":
             print("기능 준비중")
             return 0
+        if args.command == "minutes":
+            from . import minutes
+            return minutes.run(args)
         if args.command == "week":
             return weeks.run(args)
         if args.command == "team":

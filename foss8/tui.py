@@ -7,7 +7,7 @@ from pathlib import Path
 import queue
 import threading
 
-from . import assessments, discovery, github_activity, progress, team, weeks
+from . import assessments, discovery, github_activity, minutes, progress, team, weeks
 
 
 TABS = ("할 일", "평가", "팀 설정")
@@ -121,6 +121,7 @@ class App:
         self.activity_running = False
         self.activity_attempted = set()
         self.activity_errors = {}
+        self.minutes_files = {}
 
     @property
     def period(self):
@@ -345,6 +346,15 @@ class App:
         if chosen is not CANCEL:
             self.period_index, self.scroll, self.focus = chosen, 0, "list"
 
+    def create_minutes(self, screen):
+        def submit(values):
+            on = date.fromisoformat(values["date"])
+            output = self.path.parent.parent / "docs/meetings" / (on.isoformat() + ".md")
+            path = minutes.create(on, self.period["id"], self.config, output=output)
+            self.minutes_files[self.period["id"]] = path
+            self.message = "초안 저장: " + str(path)
+        edit_form(screen, "회의록 초안 만들기 · 기존 파일은 보호", [Setting("회의 날짜", weeks.today().isoformat(), "date")], submit)
+
     def save(self, raw):
         self.config = team.save(raw, self.path)
         self.config_revision += 1
@@ -506,6 +516,10 @@ class App:
                 lines = self.assessment_detail(item, dw)
             else:
                 lines = task_detail(item, dw, self.tab == 1 and item.get("kind") != "reference", self.methods)
+                if item.get("recording_start"):
+                    lines = ["Enter: 회의록 초안 파일 만들기", ""] + lines
+                    if self.period["id"] in self.minutes_files:
+                        lines += ["", "초안: " + str(self.minutes_files[self.period["id"]])]
             available = max(0, dh - len(title_lines) - 2)
             self.scroll = min(self.scroll, max(0, len(lines) - available))
             for i, line in enumerate(lines[self.scroll:self.scroll + available]):
@@ -530,6 +544,8 @@ class App:
                 help_text = "↑↓ 선택/스크롤  Enter 주간 집계 입력"
             elif items[selected].get("kind") == "reference":
                 help_text = "↑↓ 선택/스크롤  평가 기준 확인"
+            elif items[selected].get("recording_start"):
+                help_text = "Enter 회의록 초안 만들기  Space 완료 표시"
         if self.tab == 2 and items and items[selected].kind == "discover":
             extra_help = "Enter 읽기/검토·적용  r 다시 읽기  q 종료"
         if self.tab in (0, 1) and items and items[selected].get("kind") == "assessment_criterion" and self.focus in ("list", "detail"):
@@ -595,7 +611,10 @@ class App:
             except (ValueError, OSError) as error:
                 self.message = str(error)
         elif key in ("\n", "\r", curses.KEY_ENTER) and self.tab in (0, 1) and self.focus in ("list", "detail") and screen is not None:
-            self.edit_assessment(screen)
+            if self.items() and self.items()[self.index()].get("recording_start"):
+                self.create_minutes(screen)
+            else:
+                self.edit_assessment(screen)
         elif key in ("\n", "\r", curses.KEY_ENTER) and self.tab == 2 and self.focus in ("list", "detail") and screen is not None:
             self.edit_setting(screen)
         elif key == curses.KEY_DC and self.tab == 2 and self.focus == "list" and screen is not None:
