@@ -145,6 +145,11 @@ def create(on=None, week=None, config=None, output=None, force=False):
 
 def run(args):
     from . import team
+    if args.minutes_command == 'pdf':
+        from .minutes_pdf import export
+        path = export(args.source, args.output, args.week, args.team, args.force, args.browser)
+        print('제출용 PDF 저장: ' + str(path))
+        return 0
     path = create(args.date, args.week, team.load(), args.output, args.force)
     print('회의록 초안 저장: ' + str(path))
     return 0

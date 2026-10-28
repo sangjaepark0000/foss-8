@@ -447,12 +447,23 @@ class TuiTests(unittest.TestCase):
     def test_minutes_task_creates_an_editable_draft_without_marking_submission(self):
         index = next(i for i, row in enumerate(self.app.items()) if row.get("recording_start"))
         self.app.selected[self.app.selection_key] = index
-        with patch("foss8.tui.edit_form", side_effect=lambda s, title, fields, submit: submit({"date": "2026-10-28"})):
+        with patch("foss8.tui.choose", return_value="draft"), patch("foss8.tui.edit_form", side_effect=lambda s, title, fields, submit: submit({"date": "2026-10-28"})):
             self.app.handle("\n", Screen())
         path = self.path.parent.parent / "docs/meetings/2026-10-28.md"
         self.assertIn("[WEEK9]", path.read_text())
         self.assertFalse(self.app.done(self.app.items()[index]))
         self.assertFalse(self.path.with_name("progress.json").exists())
+
+    def test_minutes_task_exports_the_selected_file_without_marking_submission(self):
+        index = next(i for i, row in enumerate(self.app.items()) if row.get("recording_start"))
+        self.app.selected[self.app.selection_key] = index
+        source = self.path.parent.parent / "docs/meetings/2026-10-28.md"
+        target = source.with_suffix(".pdf")
+        with patch("foss8.tui.choose", return_value="pdf"), patch("foss8.tui.edit_text", return_value=str(source)), patch("foss8.minutes_pdf.export", return_value=target) as export:
+            self.app.handle("\n", Screen())
+        export.assert_called_once_with(str(source), week="9")
+        self.assertIn("제출용 PDF 저장", self.app.message)
+        self.assertFalse(self.app.done(self.app.items()[index]))
 
 
 if __name__ == "__main__":

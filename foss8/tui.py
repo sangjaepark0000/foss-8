@@ -355,6 +355,33 @@ class App:
             self.message = "초안 저장: " + str(path)
         edit_form(screen, "회의록 초안 만들기 · 기존 파일은 보호", [Setting("회의 날짜", weeks.today().isoformat(), "date")], submit)
 
+    def minutes_action(self, screen):
+        action = choose(screen, "회의록 작성·제출 준비", [("draft", "작성할 초안 만들기"), ("pdf", "완성한 회의록을 제출용 PDF로 저장")], "draft")
+        if action == "draft":
+            self.create_minutes(screen)
+        elif action == "pdf":
+            from . import minutes_pdf
+            folder = self.path.parent.parent / "docs/meetings"
+            default = self.minutes_files.get(self.period["id"])
+            if default is None and folder.is_dir():
+                for path in sorted(folder.glob("*.md"), reverse=True):
+                    try:
+                        cycle, _ = minutes_pdf.submission_info(path.read_text(encoding="utf-8"))
+                    except (ValueError, OSError):
+                        continue
+                    if cycle.period_id == self.period["id"]:
+                        default = path
+                        break
+            value = edit_text(screen, "완성한 회의록 Markdown 경로", str(default or folder / (weeks.today().isoformat() + ".md")))
+            if value is not None:
+                try:
+                    self.message = "제출용 PDF 만드는 중…"
+                    self.draw(screen)
+                    path = minutes_pdf.export(value, week=self.period["id"])
+                    self.message = "제출용 PDF 저장: " + str(path)
+                except (ValueError, OSError) as error:
+                    self.message = str(error)
+
     def save(self, raw):
         self.config = team.save(raw, self.path)
         self.config_revision += 1
@@ -517,7 +544,7 @@ class App:
             else:
                 lines = task_detail(item, dw, self.tab == 1 and item.get("kind") != "reference", self.methods)
                 if item.get("recording_start"):
-                    lines = ["Enter: 회의록 초안 파일 만들기", ""] + lines
+                    lines = ["Enter: 초안 만들기 / 제출용 PDF 저장", ""] + lines
                     if self.period["id"] in self.minutes_files:
                         lines += ["", "초안: " + str(self.minutes_files[self.period["id"]])]
             available = max(0, dh - len(title_lines) - 2)
@@ -545,7 +572,7 @@ class App:
             elif items[selected].get("kind") == "reference":
                 help_text = "↑↓ 선택/스크롤  평가 기준 확인"
             elif items[selected].get("recording_start"):
-                help_text = "Enter 회의록 초안 만들기  Space 완료 표시"
+                help_text = "Enter 초안/PDF 만들기  Space 완료 표시"
         if self.tab == 2 and items and items[selected].kind == "discover":
             extra_help = "Enter 읽기/검토·적용  r 다시 읽기  q 종료"
         if self.tab in (0, 1) and items and items[selected].get("kind") == "assessment_criterion" and self.focus in ("list", "detail"):
@@ -612,7 +639,7 @@ class App:
                 self.message = str(error)
         elif key in ("\n", "\r", curses.KEY_ENTER) and self.tab in (0, 1) and self.focus in ("list", "detail") and screen is not None:
             if self.items() and self.items()[self.index()].get("recording_start"):
-                self.create_minutes(screen)
+                self.minutes_action(screen)
             else:
                 self.edit_assessment(screen)
         elif key in ("\n", "\r", curses.KEY_ENTER) and self.tab == 2 and self.focus in ("list", "detail") and screen is not None:
