@@ -32,6 +32,12 @@ def parser():
     form = commands.add_parser("format", help="회의록·보고서 빈 양식 출력")
     form.add_argument("name", nargs="?", choices=tuple(templates.TITLES),
                       help="minutes: 회의록, proposal: 제안서, midterm: 중간보고서, final: 최종보고서")
+    form.add_argument("--date", help="회의 날짜 (YYYY-MM-DD), 회의록 초안 기본값 오늘")
+    form.add_argument("--week", help="회의록 제출 회차 (예: 9), 보강: makeup")
+    form.add_argument("--team", help="회의록 팀 이름")
+    form.add_argument("--team-file", help="팀 기본정보 JSON 파일 (name·repository·members)")
+    form.add_argument("-o", "--output", help="UTF-8 Markdown 저장 경로")
+    form.add_argument("--force", action="store_true", help="기존 출력 파일 덮어쓰기")
     check = commands.add_parser("check", help="완성 기준 배점표 불러오기, 저장소 상태와 비교" )
     week = commands.add_parser("week", help="주차를 선택해 할 일 조회")
     return root
@@ -51,14 +57,32 @@ def main(argv=None):
             command_parser.print_help()
             return 0
         if args.command == "format":
+            if args.force and not args.output:
+                raise ValueError("--force는 --output 저장 경로와 함께 지정하세요.")
+            filled = any((args.date, args.week, args.team, args.team_file))
+            if filled and args.name != "minutes":
+                raise ValueError("--date·--week·--team·--team-file은 format minutes에서 사용하세요.")
+            if args.output and args.name is None:
+                raise ValueError("저장할 양식을 선택하세요. 예: format minutes -o 회의록.md")
             if args.name is None:
                 print("쓸 수 있는 양식:")
                 for name, title in templates.TITLES.items():
                     print(f"  {name:12} {title}")
                 print("\n예: python main.py format minutes")
             else:
-                item = templates.get(Catalog(), args.name)
-                print(item["content"], end="")
+                if args.name == "minutes" and (filled or args.output):
+                    from . import minutes
+                    content = minutes.draft(args.date, args.week, minutes.load_config(args.team_file, args.team))
+                else:
+                    content = templates.get(Catalog(), args.name)["content"]
+                if args.output:
+                    from .minutes import save_file
+                    if not args.output.lower().endswith((".md", ".markdown")):
+                        raise ValueError("서식 저장 경로는 .md 또는 .markdown 파일로 지정하세요.")
+                    path = save_file(args.output, content, args.force)
+                    print("서식 저장: " + str(path))
+                else:
+                    print(content, end="")
             return 0
         if args.command == "check":
             print("기능 준비중")
