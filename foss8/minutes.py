@@ -124,10 +124,15 @@ def draft(on=None, week=None, config=None, catalog=None):
             result.append(line)
     content = '\n'.join(result) + '\n'
     agenda = ['### 안내서에서 확인할 일 (' + period['label'] + ')', '']
-    agenda += ['- [ ] ' + weeks.plain(t['title']) for t in period['tasks'] if not t.get('recording_start')]
+    agenda += ['- [ ] ' + weeks.plain(t['title']) +
+               (' (' + weeks.timing_notes(t)[0].removeprefix('시작: ') + ')' if t.get('after_class') else '') +
+               (' [이어서]' if t.get('carryover_from') else '')
+               for t in weeks.view_tasks(period) if not t.get('recording_start')]
     agenda += ['', '### 회의 결정', '']
     content = content.replace('- 결정: / 이유:', '\n'.join(agenda) + '- 결정: / 이유:', 1)
     items = checklist(catalog, period['weeks'][0])
+    if period['id'] == '9':
+        items = [value + (' (10/30 수업 후)' if i < 5 else ' [다음 제출]') for i, value in enumerate(items)]
     content = re.sub(r'## 6\. 이번 주 점검표 \(부록 A 해당 주차\)\n.*?(?=\n\[원문 양식\])',
                      lambda _: '## 6. 이번 주 점검표 (부록 A ' + period['label'] + ')\n' +
                      '\n'.join('- [ ] ' + value for value in items) + '\n', content, flags=re.S)

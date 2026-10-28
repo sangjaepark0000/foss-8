@@ -338,7 +338,10 @@
             }
           ],
           "id": "task-23fa79c27768",
-          "progress_period": "3"
+          "progress_period": "3",
+          "after_class": "2026-09-18",
+          "after_class_source": "docs/guide/03-roadmap.md",
+          "carry_next_week": true
         },
         {
           "title": "프로젝트 주제 정하기",
@@ -861,7 +864,10 @@
             }
           ],
           "id": "task-dc39b00ede4c",
-          "progress_period": "5"
+          "progress_period": "5",
+          "after_class": "2026-10-02",
+          "after_class_source": "docs/guide/03-roadmap.md",
+          "carry_next_week": true
         },
         {
           "title": "담당 기능 이슈 등록",
@@ -939,7 +945,10 @@
             }
           ],
           "id": "task-c806fef92607",
-          "progress_period": "5"
+          "progress_period": "5",
+          "after_class": "2026-10-02",
+          "after_class_source": "docs/guide/03-roadmap.md",
+          "carry_next_week": true
         },
         {
           "title": "제안서 제출 · 10/1 18:00",
@@ -1431,7 +1440,10 @@
             }
           ],
           "id": "task-cd22aa8bcff2",
-          "progress_period": "6"
+          "progress_period": "6",
+          "after_class": "2026-10-09",
+          "after_class_source": "docs/guide/03-roadmap.md",
+          "carry_next_week": true
         },
         {
           "title": "팀 저장소 클론",
@@ -1477,7 +1489,10 @@
             }
           ],
           "id": "task-77fd1af70740",
-          "progress_period": "6"
+          "progress_period": "6",
+          "after_class": "2026-10-09",
+          "after_class_source": "docs/guide/03-roadmap.md",
+          "carry_next_week": true
         },
         {
           "title": "첫 커밋 올리기",
@@ -1534,7 +1549,10 @@
             }
           ],
           "id": "task-7b690181177f",
-          "progress_period": "6"
+          "progress_period": "6",
+          "after_class": "2026-10-09",
+          "after_class_source": "docs/guide/03-roadmap.md",
+          "carry_next_week": true
         },
         {
           "title": "공통 코드 준비 ({{task.development_lead}})",
@@ -1556,7 +1574,10 @@
             }
           ],
           "id": "task-6ca8ea5d413c",
-          "progress_period": "6"
+          "progress_period": "6",
+          "after_class": "2026-10-09",
+          "after_class_source": "docs/guide/03-roadmap.md",
+          "carry_next_week": true
         },
         {
           "title": "학기 활동 기준",
@@ -1891,7 +1912,10 @@
           ],
           "evaluation_source": "docs/guide/15-evaluation.md",
           "id": "task-e7869cfab08b",
-          "progress_period": "7"
+          "progress_period": "7",
+          "after_class": "2026-10-16",
+          "after_class_source": "docs/guide/03-roadmap.md",
+          "carry_next_week": true
         },
         {
           "title": "학기 활동 기준",
@@ -2487,7 +2511,10 @@
           ],
           "evaluation_source": "docs/guide/10-activity.md",
           "id": "task-1425f70aabc1",
-          "progress_period": "9"
+          "progress_period": "9",
+          "after_class": "2026-10-30",
+          "after_class_source": "docs/guide/03-roadmap.md",
+          "carry_next_week": true
         },
         {
           "title": "충돌 해결 실습",
@@ -2585,7 +2612,10 @@
           ],
           "evaluation_source": "docs/guide/10-activity.md",
           "id": "task-df8c57f6d914",
-          "progress_period": "9"
+          "progress_period": "9",
+          "after_class": "2026-10-30",
+          "after_class_source": "docs/guide/03-roadmap.md",
+          "carry_next_week": true
         },
         {
           "title": "main 보호 설정 ({{task.repository_admin}})",
@@ -2638,7 +2668,10 @@
           ],
           "evaluation_source": "docs/guide/10-activity.md",
           "id": "task-44e672a134a2",
-          "progress_period": "9"
+          "progress_period": "9",
+          "after_class": "2026-10-30",
+          "after_class_source": "docs/guide/03-roadmap.md",
+          "carry_next_week": true
         },
         {
           "title": "학기 활동 기준",
@@ -2974,7 +3007,10 @@
             }
           ],
           "id": "task-c2700d93edbf",
-          "progress_period": "10"
+          "progress_period": "10",
+          "after_class": "2026-11-06",
+          "after_class_source": "docs/guide/03-roadmap.md",
+          "carry_next_week": true
         },
         {
           "title": "타 팀이 맡을 이슈 준비 ({{task.cross_team_contact}})",
@@ -3618,7 +3654,10 @@
             }
           ],
           "id": "task-59a0f9a1919d",
-          "progress_period": "11"
+          "progress_period": "11",
+          "after_class": "2026-11-13",
+          "after_class_source": "docs/guide/03-roadmap.md",
+          "carry_next_week": true
         },
         {
           "title": "역할 분담과 구현",
@@ -3643,7 +3682,10 @@
             }
           ],
           "id": "task-cd9ab4c58918",
-          "progress_period": "11"
+          "progress_period": "11",
+          "after_class": "2026-11-13",
+          "after_class_source": "docs/guide/03-roadmap.md",
+          "carry_next_week": true
         },
         {
           "title": "다른 팀의 요청 처리",

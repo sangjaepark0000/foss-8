@@ -44,6 +44,14 @@ class MinutesTests(unittest.TestCase):
         self.assertIn('[WEEK10]', automatic)
         self.assertIn('제출 마감: 2026-11-05 18:00', automatic)
 
+    def test_draft_distinguishes_post_class_actions_and_later_submissions(self):
+        content = minutes.draft('2026-10-28', config=self.config)
+        self.assertIn('첫 PR 병합 (10/30 수업 후)', content)
+        self.assertIn('충돌 해결 실습 (10/30 수업 후)', content)
+        self.assertIn('회의록 #5(11/5) [다음 제출]', content)
+        following = minutes.draft('2026-11-04', config=self.config)
+        self.assertIn('첫 PR 병합 (10/30 수업 후) [이어서]', following)
+
     def test_makeup_and_non_submission_weeks(self):
         content = minutes.draft('2026-12-09', week='makeup', config=self.config)
         self.assertIn('[WEEK4]', content)

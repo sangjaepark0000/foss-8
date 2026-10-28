@@ -172,7 +172,7 @@ class TuiTests(unittest.TestCase):
     def test_checkbox_precedes_title_and_evaluation_marker_follows_it(self):
         screen = Screen()
         self.app.draw(screen)
-        self.assertIn("[ ] 첫 PR 병합 [평가]", screen.text)
+        self.assertIn("[ ] [수업 후] 첫 PR 병합 [평가]", screen.text)
         self.assertNotIn("[평가] [ ]", screen.text)
 
     def test_reference_rules_are_not_checkable_tasks(self):
@@ -464,6 +464,38 @@ class TuiTests(unittest.TestCase):
         export.assert_called_once_with(str(source), week="9")
         self.assertIn("제출용 PDF 저장", self.app.message)
         self.assertFalse(self.app.done(self.app.items()[index]))
+
+    def test_before_class_list_prioritizes_current_deadline_and_marks_later_work(self):
+        with patch("foss8.weeks.today", return_value=date(2026, 10, 28)):
+            rows = self.app.items()
+            pr = next(i for i, row in enumerate(rows) if row.get("id") == "task-1425f70aabc1")
+            minutes = next(i for i, row in enumerate(rows) if row.get("recording_start"))
+            self.assertLess(minutes, pr)
+            criterion = next(row for row in rows if row.get("criterion") and row["criterion"].id == "prs")
+            self.assertEqual(criterion["after_class"], "2026-10-30")
+            self.assertIn("10/30 수업 후", "\n".join(self.app.assessment_detail(criterion, 80)))
+            screen = Screen()
+            self.app.draw(screen)
+            self.assertIn("[수업 후]", screen.text)
+
+    def test_same_post_class_task_shares_completion_across_weeks(self):
+        task_id = "task-1425f70aabc1"
+        def select():
+            index = next(i for i, row in enumerate(self.app.items()) if row.get("id") == task_id)
+            self.app.selected[self.app.selection_key] = index
+            return self.app.items()[index]
+        original = select()
+        self.app.handle(" ")
+        self.app.change_period(1)
+        carried = select()
+        self.assertEqual(carried["carryover_from"], "9주차")
+        self.assertTrue(self.app.done(carried))
+        self.assertIn("10/30 수업 후", "\n".join(tui.task_detail(carried, 80)))
+        self.app.handle(" ")
+        self.app.change_period(-1)
+        self.assertFalse(self.app.done(select()))
+        records = self.app.progress.data["contexts"][tui.progress.context(self.app.config)]
+        self.assertEqual(list(records), [original["progress_period"] + "/" + task_id])
 
 
 if __name__ == "__main__":

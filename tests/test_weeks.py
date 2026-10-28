@@ -69,6 +69,18 @@ class WeekTests(unittest.TestCase):
         self.assertEqual((minutes["recording_start"], minutes["recording_end"]), ("2026-10-15", "2026-10-28"))
         self.assertEqual(minutes["progress_period"], "7")
 
+    def test_post_class_actions_are_shared_in_the_following_week(self):
+        nine, ten = weeks.select(self.periods, "9"), weeks.select(self.periods, "10")
+        task = next(t for t in nine["tasks"] if t["title"] == "첫 PR 병합")
+        carried = next(t for t in weeks.view_tasks(ten) if t["id"] == task["id"])
+        self.assertEqual(task["after_class"], "2026-10-30")
+        self.assertEqual(carried["progress_period"], task["progress_period"])
+        self.assertEqual(carried["carryover_from"], "9주차")
+        self.assertIn('첫 PR 병합 [수업 후]', weeks.render(nine))
+        self.assertIn('첫 PR 병합 [이어서]', weeks.render(ten))
+        deadline = next(t for t in nine["tasks"] if t.get("recording_start"))
+        self.assertNotIn("after_class", deadline)
+
     def test_overview_puts_week_and_title_before_dates_and_hides_details(self):
         output = self.cli("9")
         self.assertEqual(output.returncode, 0, output.stderr)

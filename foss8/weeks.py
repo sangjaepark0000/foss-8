@@ -15,7 +15,33 @@ def load(team_config=None):
     for period in periods:
         period["references"] = [t for t in period["tasks"] if t.get("kind") == "reference"]
         period["tasks"] = [t for t in period["tasks"] if t.get("kind") != "reference"]
+        period["carryovers"] = []
+    for source, following in zip(periods, periods[1:]):
+        for task in source["tasks"]:
+            if task.get("carry_next_week"):
+                following["carryovers"].append({**task, "carryover_from": source["label"],
+                                                "progress_period": task.get("progress_period", source["id"])})
     return periods
+
+
+def view_tasks(period):
+    return period["tasks"] + period.get("carryovers", [])
+
+
+def timing_marker(node):
+    return " [이어서]" if node.get("carryover_from") else " [수업 후]" if node.get("after_class") else ""
+
+
+def timing_notes(node):
+    if not node.get("after_class"):
+        return []
+    day = date.fromisoformat(node["after_class"])
+    notes = [f'시작: {day.month}/{day.day} 수업 후']
+    if node.get("carryover_from"):
+        notes.append(node["carryover_from"] + "에서 이어지는 같은 작업입니다.")
+    if node.get("carry_next_week"):
+        notes.append("이번 주·다음 주의 완료 표시를 함께 관리합니다.")
+    return notes
 
 
 def today():
@@ -66,7 +92,7 @@ def parse_path(value):
 
 
 def resolve(period, path=()):
-    node = {"title": period["title"], "children": period["tasks"]}
+    node = {"title": period["title"], "children": view_tasks(period)}
     for number in path:
         children = entries(node)
         if number < 1 or number > len(children):
@@ -110,7 +136,8 @@ def render(period, path=(), interactive=False):
         if node.get("kind") == "code":
             lines.extend(node["title"].splitlines())
         else:
-            lines += wrapped(node["title"] + (" [평가]" if node.get("evaluation") else ""))
+            lines += wrapped(node["title"] + timing_marker(node) + (" [평가]" if node.get("evaluation") else ""))
+        lines += timing_notes(node)
         lines.append("")
     children = entries(node)
     for number, child in enumerate(children, 1):
@@ -120,7 +147,7 @@ def render(period, path=(), interactive=False):
         if child.get("kind") == "code":
             lines.append(f"  {number}. 예시 코드  ›")
         else:
-            lines += wrapped(child["title"] + marker + suffix, prefix=f"  {number}. ")
+            lines += wrapped(child["title"] + timing_marker(child) + marker + suffix, prefix=f"  {number}. ")
     if not path or children:
         lines.append("")
     if interactive:
@@ -172,7 +199,7 @@ def render_tree(period, expanded):
             opened = path in expanded and expandable(node)
             arrow = "▾" if opened else "▸" if expandable(node) else " "
             marker = " [평가]" if node.get("evaluation") else ""
-            title = "예시 코드" if node.get("kind") == "code" else node["title"]
+            title = "예시 코드" if node.get("kind") == "code" else node["title"] + timing_marker(node)
             prefix = "  " * (len(parent) + 1) + key + " " + arrow + " "
             lines.extend(wrapped(title + marker, prefix=prefix))
             if opened:
@@ -181,7 +208,7 @@ def render_tree(period, expanded):
                 else:
                     draw(entries(node), path)
 
-    draw(period["tasks"])
+    draw(view_tasks(period))
     lines += ["", "번호: 펼치기/접기 · 4.6.1처럼 바로 열기 · 여러 항목: 4 5",
               "w 9: 주차 변경 · p/n: 이전/다음 기간 · c: 모두 접기 · q: 종료"]
     return "\n".join(lines) + "\n"

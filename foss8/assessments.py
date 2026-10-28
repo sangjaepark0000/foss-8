@@ -14,12 +14,13 @@ class Criterion:
     target: int
     starts: date
     action: str
+    after_class: bool = False
 
 
 CRITERIA = (
     Criterion("commits", "커밋", 2, date(2026, 10, 9), "진행 중인 작업의 의미 있는 변경을 커밋"),
     Criterion("issues", "이슈 작성", 1, date(2026, 10, 9), "실제 작업 전에 목적·할 일·완료 조건을 담은 이슈 등록"),
-    Criterion("prs", "PR 생성·병합", 1, date(2026, 10, 30), "작성한 PR의 리뷰·수정을 마치고 승인 후 병합"),
+    Criterion("prs", "PR 생성·병합", 1, date(2026, 10, 30), "작성한 PR의 리뷰·수정을 마치고 승인 후 병합", True),
 )
 ENDS = date(2026, 12, 13)
 EXAM_START, EXAM_END = date(2026, 10, 19), date(2026, 10, 25)

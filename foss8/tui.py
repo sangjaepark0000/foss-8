@@ -45,7 +45,9 @@ def evaluation_groups(node):
 
 
 def task_detail(node, width, evaluation=False, methods=False):
-    lines = []
+    lines = [line for note in weeks.timing_notes(node) for line in weeks.wrapped(note, width=width)]
+    if lines:
+        lines.append("")
 
     def add(value, prefix=""):
         lines.extend(weeks.wrapped(value, prefix=prefix, width=width))
@@ -162,7 +164,7 @@ class App:
     def items(self):
         if self.tab == 2:
             return self.settings()
-        tasks = self.period["tasks"]
+        tasks = weeks.view_tasks(self.period)
         bundles = self.assessments.for_period(progress.context(self.config), self.period)
         rows = []
         for bundle in bundles:
@@ -175,8 +177,11 @@ class App:
                 rows.append({"kind": "assessment_criterion", "bundle": bundle,
                              "criterion": criterion, "title": criterion.title,
                              "subtitle": f'{bundle.start.month}/{bundle.start.day} ~ {bundle.end.month}/{bundle.end.day}',
-                             "status": status})
+                             "status": status,
+                             **({"after_class": criterion.starts.isoformat()} if criterion.after_class and
+                                self.period["start"] <= criterion.starts.isoformat() < self.period["end"] else {})})
         shown = [t for t in tasks if evaluation_groups(t)] if self.tab == 1 else tasks
+        shown = sorted(shown, key=lambda t: bool(t.get("after_class") and t["after_class"] > weeks.today().isoformat()))
         return rows + shown + self.period.get("references", [])
 
     def index(self):
@@ -208,6 +213,7 @@ class App:
         bundle = item["bundle"]
         criterion = item["criterion"]
         lines = weeks.wrapped(bundle.line(criterion), width=width)
+        lines += weeks.timing_notes(item)
         lines += ["", criterion.action, "", f'반복 기준  매주 {criterion.target}회 이상 · 개인별',
                   f'집계 기준  {self.period["label"]}', f'기간 상태  {bundle.lifecycle(weeks.today())}']
         if bundle.exempt:
@@ -516,17 +522,18 @@ class App:
             if y + heights[i] > ly + lh:
                 break
             item = items[i]
-            title = item.label if self.tab == 2 else weeks.plain(item["title"])
+            phase = weeks.timing_marker(item).strip() if self.tab != 2 else ""
+            title = item.label if self.tab == 2 else (phase + " " if phase else "") + weeks.plain(item["title"])
             if self.tab == 0:
                 if item.get("kind") not in ("reference", "assessment_criterion"):
                     title = ("[x] " if self.done(item) else "[ ] ") + title
-                if evaluation_groups(item) or item.get("kind") == "assessment_criterion":
+                if evaluation_groups(item):
                     title += " [평가]"
             if self.tab != 2 and item.get("kind") == "assessment_criterion":
                 c, b = item["criterion"], item["bundle"]
                 value = b.counts.get(c.id)
                 title += "  면제" if b.exempt else f"  {value if value is not None else '?'}/{c.target}회"
-            base_attr = curses.A_BOLD if self.tab != 2 and evaluation_groups(item) else curses.A_NORMAL
+            base_attr = curses.A_BOLD if self.tab != 2 and (evaluation_groups(item) or item.get("kind") == "assessment_criterion") else curses.A_NORMAL
             put(screen, y, 2, ("› " if i == selected else "  ") + title,
                 (curses.A_REVERSE if self.focus == "list" else curses.A_BOLD) if i == selected else base_attr, width=lw - 1)
             self.list_rows[y] = i
