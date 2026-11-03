@@ -48,6 +48,13 @@ class MinutesTests(unittest.TestCase):
         self.assertNotIn('홍길동', content)
         self.assertEqual(sum(line.startswith('## ') for line in content.splitlines()), 6)
 
+    def test_exam_week_discloses_distinct_submission_cycle_and_sources(self):
+        content = minutes.draft('2026-10-21', config=self.config)
+        self.assertIn('수업 주차: 8주차', content)
+        self.assertIn('해당 수업 주차에 해당하는 회의록 제출 회차는 없습니다', content)
+        self.assertIn('회의록 제출 일정', content)
+        self.assertIn('개인 점검표', content)
+
     def test_meeting_date_and_submission_week_are_separate(self):
         content = minutes.draft('2026-10-30', week='9', config=self.config)
         self.assertIn('WEEK9', content)
