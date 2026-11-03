@@ -215,9 +215,15 @@ def draft(on=None, week=None, config=None, catalog=None):
     content = content.replace('# [WEEK#] 회의록 — 팀명', f'# [WEEK{cycle.week}] 회의록 — {team_name}', 1)
     content = content.replace('- 일시: ', f'- 일시: {on.isoformat()} ({"월화수목금토일"[on.weekday()]}) ', 1)
     due = datetime.fromisoformat(cycle.due_at)
-    context = [f'- 기록기간: {cycle.recording_start} ~ {cycle.recording_end}',
+    context = [f'- 수업 주차: {period["label"]}',
+               f'- 기록기간: {cycle.recording_start} ~ {cycle.recording_end}',
                f'- 제출 마감: {due:%Y-%m-%d %H:%M} (한국 시간)', f'- 저장소: {config["repository"]}',
                '- 팀원: ' + ', '.join(p['name'] + (f' (@{p["github"]})' if p['github'] else '') for p in members)]
+    if not any(c.period_id == period['id'] for c in cycles(catalog)):
+        context.append('- 안내: 해당 수업 주차에 해당하는 회의록 제출 회차는 없습니다. 아래 제출 회차를 별도로 확인하세요.')
+    elif period['id'] != cycle.period_id:
+        context.append('- 안내: 선택한 제출 회차가 회의 날짜의 수업 주차와 다릅니다.')
+    context.append('- 출처: [회의록 제출 일정](https://github.com/sangjaepark0000/foss-8/blob/main/docs/guide/12-minutes.md) · [주차별 로드맵](https://github.com/sangjaepark0000/foss-8/blob/main/docs/guide/03-roadmap.md) · [개인 점검표](https://github.com/sangjaepark0000/foss-8/blob/main/docs/guide/appendix-a-checklist.md)')
     content = content.replace('\n## 1.', '\n' + '\n'.join(context) + '\n\n## 1.', 1)
     result, section = [], 0
     for line in content.splitlines():
