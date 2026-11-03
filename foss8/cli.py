@@ -33,6 +33,7 @@ def parser():
     form = commands.add_parser("format", help="회의록·보고서 빈 양식 출력")
     form.add_argument("name", nargs="?", choices=tuple(templates.TITLES),
                       help="minutes: 회의록, proposal: 제안서, midterm: 중간보고서, final: 최종보고서")
+    form.add_argument("--activity", help="수집한 활동 JSON 경로")
     form.add_argument("--previous", help="이전 회의록 Markdown 경로")
     form.add_argument("--date", help="회의 날짜 (YYYY-MM-DD), 회의록 초안 기본값 오늘")
     form.add_argument("--week", help="회의록 제출 회차 (예: 9), 보강: makeup")
@@ -42,6 +43,12 @@ def parser():
     form.add_argument("--force", action="store_true", help="기존 출력 파일 덮어쓰기")
     form.add_argument("--pdf", metavar="MARKDOWN", help="작성한 회의록을 제출 파일명의 PDF로 변환")
     form.add_argument("--browser", help="PDF 변환에 사용할 Chrome/Chromium 실행 파일")
+    activity = commands.add_parser("activity", help="GitHub 활동 근거 수집")
+    activity.add_argument("--repo", required=True, help="owner/repository")
+    activity.add_argument("--start", required=True, help="시작일 YYYY-MM-DD (한국 시간)")
+    activity.add_argument("--end", required=True, help="종료일 YYYY-MM-DD (한국 시간)")
+    activity.add_argument("--team-file", help="팀 기본정보 JSON")
+    activity.add_argument("-o", "--output", required=True, help="활동 JSON 저장 경로")
     check = commands.add_parser("check", help="완성 기준 배점표 불러오기, 저장소 상태와 비교" )
     week = commands.add_parser("week", help="주차를 선택해 할 일 조회")
     return root
@@ -60,6 +67,15 @@ def main(argv=None):
         if args.command == "help":
             command_parser.print_help()
             return 0
+        if args.command == "activity":
+            from . import activity, minutes
+            team = minutes.load_config(args.team_file)
+            if not team['members']:
+                raise ValueError('팀 기본정보에 GitHub ID가 있는 팀원을 등록하세요.')
+            data = activity.collect(args.repo, args.start, args.end, team['members'])
+            path = minutes.save_file(args.output, json.dumps(data, ensure_ascii=False, indent=2) + "\n")
+            print("활동 근거 저장: " + str(path))
+            return 0
         if args.command == "format":
             if args.pdf:
                 if args.name != "minutes" or args.date or args.team_file:
@@ -72,7 +88,7 @@ def main(argv=None):
                 raise ValueError("--browser는 --pdf 변환과 함께 지정하세요.")
             if args.force and not args.output:
                 raise ValueError("--force는 --output 저장 경로와 함께 지정하세요.")
-            filled = any((args.date, args.week, args.team, args.team_file, args.previous))
+            filled = any((args.date, args.week, args.team, args.team_file, args.previous, args.activity))
             if (args.date or args.week or args.previous) and args.name != "minutes":
                 raise ValueError("--date·--week은 format minutes에서 사용하세요.")
             if args.output and args.name is None:
@@ -93,6 +109,10 @@ def main(argv=None):
                     if args.name != "minutes" and (args.team or args.team_file or args.output):
                         from . import minutes
                         content = templates.fill_report(content, minutes.load_config(args.team_file, args.team))
+                if args.activity and args.name == "minutes":
+                    from . import activity
+                    data = json.loads(Path(args.activity).read_text(encoding="utf-8"))
+                    content += "\n## GitHub 활동 근거 초안 (확인 필요)\n\n" + activity.markdown(data) + "\n"
                 if args.output:
                     from .minutes import save_file
                     if not args.output.lower().endswith((".md", ".markdown")):
