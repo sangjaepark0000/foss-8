@@ -22,6 +22,17 @@ class MinutesTests(unittest.TestCase):
                                     'members': [{'name': '가람', 'github': 'garam'},
                                                 {'name': '나래', 'github': 'narae'}]})
 
+    def test_shared_report_cover_uses_team_file_without_claiming_attendance(self):
+        from foss8 import templates
+        from foss8.guide import Catalog
+        self.config['project'] = '도구'
+        for name in ('proposal', 'midterm', 'final'):
+            content = templates.fill_report(templates.get(Catalog(), name)['content'], self.config)
+            self.assertIn('- 팀명: 테스트 팀', content)
+            self.assertIn('- 프로젝트 이름: 도구', content)
+            self.assertIn('가람 (@garam)', content)
+            self.assertIn('[작성]', content)
+
     def test_post_exam_meeting_uses_actual_submission_cycle_and_blank_facts(self):
         content = minutes.draft('2026-10-28', config=self.config)
         self.assertIn('# [WEEK9] 회의록 — 테스트 팀', content)

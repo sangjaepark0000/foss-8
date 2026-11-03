@@ -115,7 +115,10 @@ def normalize_config(raw):
         if not isinstance(login, str) or login and not re.fullmatch(r'@?[A-Za-z0-9-]+', login):
             raise ValueError('팀원의 GitHub ID 형식을 확인하세요.')
         members.append({'name': member_name.strip(), 'github': login.lstrip('@')})
-    return {'name': name, 'repository': repository, 'members': members}
+    project = raw.get('project', '')
+    if not isinstance(project, str) or any(ord(c) < 32 for c in project):
+        raise ValueError('프로젝트 이름은 한 줄 문자열로 입력하세요.')
+    return {'name': name, 'project': project, 'repository': repository, 'members': members}
 
 
 def load_config(path=None, team_name=None, start=None):
