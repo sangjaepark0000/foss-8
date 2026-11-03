@@ -33,6 +33,7 @@ def parser():
     form = commands.add_parser("format", help="회의록·보고서 빈 양식 출력")
     form.add_argument("name", nargs="?", choices=tuple(templates.TITLES),
                       help="minutes: 회의록, proposal: 제안서, midterm: 중간보고서, final: 최종보고서")
+    form.add_argument("--previous", help="이전 회의록 Markdown 경로")
     form.add_argument("--date", help="회의 날짜 (YYYY-MM-DD), 회의록 초안 기본값 오늘")
     form.add_argument("--week", help="회의록 제출 회차 (예: 9), 보강: makeup")
     form.add_argument("--team", help="회의록 팀 이름")
@@ -71,8 +72,8 @@ def main(argv=None):
                 raise ValueError("--browser는 --pdf 변환과 함께 지정하세요.")
             if args.force and not args.output:
                 raise ValueError("--force는 --output 저장 경로와 함께 지정하세요.")
-            filled = any((args.date, args.week, args.team, args.team_file))
-            if (args.date or args.week) and args.name != "minutes":
+            filled = any((args.date, args.week, args.team, args.team_file, args.previous))
+            if (args.date or args.week or args.previous) and args.name != "minutes":
                 raise ValueError("--date·--week은 format minutes에서 사용하세요.")
             if args.output and args.name is None:
                 raise ValueError("저장할 양식을 선택하세요. 예: format minutes -o 회의록.md")
@@ -85,6 +86,8 @@ def main(argv=None):
                 if args.name == "minutes" and (filled or args.output):
                     from . import minutes
                     content = minutes.draft(args.date, args.week, minutes.load_config(args.team_file, args.team))
+                    if args.previous:
+                        content = minutes.carry_previous(content, args.previous)
                 else:
                     content = templates.get(Catalog(), args.name)["content"]
                     if args.name != "minutes" and (args.team or args.team_file or args.output):
