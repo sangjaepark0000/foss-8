@@ -42,6 +42,11 @@ def parser():
     form.add_argument("--pdf", metavar="MARKDOWN", help="작성한 회의록을 제출 파일명의 PDF로 변환")
     form.add_argument("--browser", help="PDF 변환에 사용할 Chrome/Chromium 실행 파일")
     check = commands.add_parser("check", help="완성 기준 배점표 불러오기, 저장소 상태와 비교" )
+    check.add_argument(
+    "--path",
+    default=".",
+    help="기본 파일을 검사할 폴더를 지정. 기본값은 현재 폴더",
+    )
     week = commands.add_parser("week", help="주차를 선택해 할 일 조회")
     return root
 
@@ -102,7 +107,7 @@ def main(argv=None):
             print(check.format_result_items(items))
 
             # 현재 폴더의 기본 파일 검사
-            repository_path = Path.cwd()
+            repository_path = Path(args.path).expanduser().resolve()
             results = check.check_required_files(repository_path)
 
             print()
