@@ -61,9 +61,9 @@ class MinutesTests(unittest.TestCase):
         path.write_text('직접 작성한 내용', encoding='utf-8')
         with self.assertRaises(FileExistsError):
             minutes.create('2026-10-28', config=self.config, output=path)
-        self.assertEqual(path.read_text(), '직접 작성한 내용')
+        self.assertEqual(path.read_text(encoding="utf-8"), '직접 작성한 내용')
         minutes.create('2026-10-28', config=self.config, output=path, force=True)
-        self.assertIn('[WEEK9]', path.read_text())
+        self.assertIn('[WEEK9]', path.read_text(encoding="utf-8"))
         with self.assertRaises(ValueError):
             minutes.create('2026-10-28', output=self.root / 'wrong.pdf')
         self.assertEqual(list(path.parent.iterdir()), [path])
