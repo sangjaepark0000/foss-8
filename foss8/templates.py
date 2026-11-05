@@ -131,3 +131,13 @@ def get(catalog, name):
         raise ValueError(f"알 수 없는 양식: {name}. 지원 양식: {', '.join(TITLES)}")
     item = minutes(catalog) if name == "minutes" else report(catalog, name)
     return {"id": name, **item}
+
+
+def fill_report(content, config):
+    """Fill only shared cover details, leaving all report prose untouched."""
+    members = ', '.join(p['name'] + (f" (@{p['github']})" if p['github'] else '') for p in config['members'])
+    fields = {'팀명': config['name'], '프로젝트 이름': config.get('project', ''),
+              '팀원·GitHub 아이디': members, '저장소 주소': config['repository']}
+    for label, value in fields.items():
+        content = content.replace(f'- {label}: ', f'- {label}: {value}', 1)
+    return content

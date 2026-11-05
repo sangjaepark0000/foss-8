@@ -77,8 +77,8 @@ def main(argv=None):
             if args.force and not args.output:
                 raise ValueError("--force는 --output 저장 경로와 함께 지정하세요.")
             filled = any((args.date, args.week, args.team, args.team_file))
-            if filled and args.name != "minutes":
-                raise ValueError("--date·--week·--team·--team-file은 format minutes에서 사용하세요.")
+            if (args.date or args.week) and args.name != "minutes":
+                raise ValueError("--date·--week은 format minutes에서 사용하세요.")
             if args.output and args.name is None:
                 raise ValueError("저장할 양식을 선택하세요. 예: format minutes -o 회의록.md")
             if args.name is None:
@@ -92,6 +92,9 @@ def main(argv=None):
                     content = minutes.draft(args.date, args.week, minutes.load_config(args.team_file, args.team))
                 else:
                     content = templates.get(Catalog(), args.name)["content"]
+                    if args.name != "minutes" and (args.team or args.team_file or args.output):
+                        from . import minutes
+                        content = templates.fill_report(content, minutes.load_config(args.team_file, args.team))
                 if args.output:
                     from .minutes import save_file
                     if not args.output.lower().endswith((".md", ".markdown")):
