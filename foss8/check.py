@@ -109,7 +109,7 @@ def check_required_files(repository_path):
 
     # 잘못된 폴더를 검사해 모든 파일을 '누락'으로 표시하지 않도록 확인
     if not root.is_dir():
-        raise ValueError(f"검사할 폴더가 존재하지 않습니다: {root}")
+        raise ValueError(f"검사 경로가 존재하는 폴더가 아닙니다: {root}")
 
     results = []
 
@@ -140,6 +140,6 @@ def format_file_results(results):
         lines.append(f"[{item['status']}] {item['name']}")
 
     lines.append("")
-    lines.append("문서 내용은 직접 확인해 주세요.")
+    lines.append("문서 내용은 직접 확인해주세요.")
 
     return "\n".join(lines)
