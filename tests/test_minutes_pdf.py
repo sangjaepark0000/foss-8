@@ -5,8 +5,11 @@ import subprocess
 import tempfile
 import unittest
 from unittest.mock import patch
+from urllib.parse import urlsplit
+from urllib.request import url2pathname
 
 from foss8 import cli, minutes, minutes_pdf
+
 
 
 class MinutesPdfTests(unittest.TestCase):
@@ -25,7 +28,8 @@ class MinutesPdfTests(unittest.TestCase):
         self.assertIn('--no-pdf-header-footer', args)
         self.assertFalse(kwargs.get('shell', False))
         pdf = Path(next(a.split('=', 1)[1] for a in args if a.startswith('--print-to-pdf=')))
-        html = Path(args[-1].removeprefix('file://')).read_text()
+        html_path = Path(url2pathname(urlsplit(args[-1]).path))
+        html = html_path.read_text(encoding="utf-8")
         self.assertIn('lang="ko"', html)
         self.assertIn('Noto Sans CJK KR', html)
         pdf.write_bytes(b'%PDF-1.7\n' + b'example' * 30)
@@ -35,7 +39,7 @@ class MinutesPdfTests(unittest.TestCase):
         output = minutes_pdf.export(self.source, runner=self.runner)
         self.assertEqual(output.name, '[WEEK9] 회의록_예시 팀.pdf')
         self.assertTrue(output.read_bytes().startswith(b'%PDF-'))
-        self.assertEqual(self.source.read_text(), self.content)
+        self.assertEqual(self.source.read_text(encoding="utf-8"), self.content)
         with self.assertRaises(FileExistsError):
             minutes_pdf.export(self.source, runner=lambda *a, **kw: self.fail('must reject before rendering'))
 
@@ -47,7 +51,7 @@ class MinutesPdfTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, '변환에 실패'):
             minutes_pdf.export(self.source, output=target, force=True, runner=fail)
         self.assertEqual(target.read_bytes(), b'existing submission')
-        self.assertEqual(self.source.read_text(), self.content)
+        self.assertEqual(self.source.read_text(encoding="utf-8"), self.content)
 
     def test_timeout_and_missing_browser_are_actionable(self):
         def timeout(args, **kwargs):
