@@ -1,3 +1,5 @@
+import json
+from datetime import date
 from pathlib import Path
 from .guide import Catalog, plain
 
@@ -143,3 +145,130 @@ def format_file_results(results):
     lines.append("문서 내용은 직접 확인해주세요.")
 
     return "\n".join(lines)
+
+def summarize_activity_category(category):
+    if not isinstance(category, dict):
+        return {
+            "count": None,
+            "links": [],
+            "error": "활동 항목이 없거나 형식이 올바르지 않습니다.",
+        }
+
+    error = category.get("error")
+    if error:
+        return {
+            "count": None,
+            "links": [],
+            "error": str(error),
+        }
+
+    if "error" not in category:
+        return {
+            "count": None,
+            "links": [],
+            "error": "조회 성공 여부를 확인할 수 없습니다.",
+        }
+
+    links = category.get("links")
+    if not isinstance(links, list) or any(
+        not isinstance(link, str) or not link.strip()
+        for link in links
+    ):
+        return {
+            "count": None,
+            "links": [],
+            "error": "활동 근거 링크 형식이 올바르지 않습니다.",
+        }
+
+    # 같은 근거 링크가 반복돼도 한 건으로 집계
+    links = list(dict.fromkeys(links))
+
+    return {
+        "count": len(links),
+        "links": links,
+        "error": None,
+    }
+
+def load_activity_results(path):
+    source = Path(path).expanduser()
+
+    try:
+        data = json.loads(source.read_text(encoding="utf-8-sig"))
+    except (OSError, UnicodeError, json.JSONDecodeError) as error:
+        raise ValueError(
+            f"활동 파일을 읽을 수 없습니다: {source}\n{error}"
+        ) from error
+
+    if not isinstance(data, dict):
+        raise ValueError(
+            "활동 파일의 최상위 항목은 JSON 객체여야 합니다."
+        )
+
+    repository = data.get("repository")
+    if not isinstance(repository, str) or not repository.strip():
+        raise ValueError("활동 파일에 저장소 정보가 없습니다.")
+
+    try:
+        start = date.fromisoformat(data["start"])
+        end = date.fromisoformat(data["end"])
+    except (KeyError, TypeError, ValueError) as error:
+        raise ValueError(
+            "활동 파일의 시작일과 종료일을 확인하세요."
+        ) from error
+
+    if start > end:
+        raise ValueError(
+            "활동 파일의 시작일이 종료일보다 늦습니다."
+        )
+
+    members = data.get("members")
+    if not isinstance(members, list) or not members:
+        raise ValueError("활동 파일에 팀원 목록이 없습니다.")
+
+    results = []
+
+    for member in members:
+        if not isinstance(member, dict):
+            raise ValueError(
+                "활동 파일의 팀원 정보 형식을 확인하세요."
+            )
+
+        name = member.get("name")
+        login = member.get("github")
+
+        if not isinstance(name, str) or not name.strip():
+            raise ValueError("팀원 이름이 없습니다.")
+
+        if not isinstance(login, str) or not login.strip():
+            raise ValueError(
+                f"{name} 팀원의 GitHub ID가 없습니다."
+            )
+
+        categories = member.get("categories")
+        if not isinstance(categories, dict):
+            categories = {}
+
+        counts = {}
+
+        for key in (
+            "commits",
+            "prs_created",
+            "prs_merged",
+            "issues",
+        ):
+            counts[key] = summarize_activity_category(
+                categories.get(key)
+            )
+
+        results.append({
+            "name": name,
+            "github": login,
+            "categories": counts,
+        })
+
+    return {
+        "repository": repository,
+        "start": start.isoformat(),
+        "end": end.isoformat(),
+        "members": results,
+    }

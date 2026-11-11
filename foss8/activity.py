@@ -18,7 +18,7 @@ def bounds(start, end):
 
 def api(endpoint):
     response = subprocess.run(['gh', 'api', '--paginate', '--slurp', endpoint],
-                              capture_output=True, text=True, timeout=120, check=False)
+                              capture_output=True, text=True, encoding="utf-8", timeout=120, check=False)
     if response.returncode:
         raise RuntimeError(response.stderr.strip() or 'GitHub 조회 실패')
     pages = json.loads(response.stdout)
