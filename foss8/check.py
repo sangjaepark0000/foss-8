@@ -1,6 +1,7 @@
-import json
-from datetime import date
+from unicodedata import east_asian_width
+from datetime import date, timedelta
 from pathlib import Path
+from urllib.parse import urlsplit
 from .guide import Catalog, plain
 
 # 평가 항목별 확인 방식과 안내
@@ -146,129 +147,98 @@ def format_file_results(results):
 
     return "\n".join(lines)
 
-def summarize_activity_category(category):
-    if not isinstance(category, dict):
-        return {
-            "count": None,
-            "links": [],
-            "error": "활동 항목이 없거나 형식이 올바르지 않습니다.",
-        }
+ACTIVITY_RULES = (
+    ("commits", "커밋", 2, date(2026, 10, 9)),
+    ("prs_created", "PR 생성", 1, date(2026, 10, 30)),
+    ("prs_merged", "PR 병합", 1, date(2026, 10, 30)),
+    ("issues", "이슈 작성", 1, date(2026, 10, 9)),
+)
+ACTIVITY_END = date(2026, 12, 13)
+EXAM_START = date(2026, 10, 19)
+EXAM_END = date(2026, 10, 25)
 
-    error = category.get("error")
-    if error:
-        return {
-            "count": None,
-            "links": [],
-            "error": str(error),
-        }
 
-    if "error" not in category:
-        return {
-            "count": None,
-            "links": [],
-            "error": "조회 성공 여부를 확인할 수 없습니다.",
-        }
+def format_activity_rules():
+    lines = ["[주간 활동 기준]", "집계 주간: 월요일~일요일 (한국 시간)"]
+    for _, label, minimum, starts_on in ACTIVITY_RULES:
+        lines.append(f"- {label}: 주 {minimum}건 이상 ({starts_on}~{ACTIVITY_END})")
+    lines.append(f"중간고사 면제: {EXAM_START}~{EXAM_END}")
+    return "\n".join(lines)
 
-    links = category.get("links")
-    if not isinstance(links, list) or any(
-        not isinstance(link, str) or not link.strip()
-        for link in links
-    ):
-        return {
-            "count": None,
-            "links": [],
-            "error": "활동 근거 링크 형식이 올바르지 않습니다.",
-        }
 
-    # 같은 근거 링크가 반복돼도 한 건으로 집계
-    links = list(dict.fromkeys(links))
+def collect_activity(last_7_days=False):
+    from . import activity, minutes
 
-    return {
-        "count": len(links),
-        "links": links,
-        "error": None,
-    }
+    team = minutes.load_config()
+    remote = urlsplit(team["repository"])
+    if remote.hostname != "github.com":
+        raise ValueError("GitHub 저장소 폴더에서 실행하세요.")
+    repo = remote.path.strip("/").removesuffix(".git")
 
-def load_activity_results(path):
-    source = Path(path).expanduser()
+    members = team["members"]
+    if not members:
+        raise ValueError("README의 팀원 표에 GitHub ID를 등록하세요.")
 
-    try:
-        data = json.loads(source.read_text(encoding="utf-8-sig"))
-    except (OSError, UnicodeError, json.JSONDecodeError) as error:
-        raise ValueError(
-            f"활동 파일을 읽을 수 없습니다: {source}\n{error}"
-        ) from error
+    today = minutes.today()
+    start = today - timedelta(days=6 if last_7_days else today.weekday())
+    return activity.collect(repo, start.isoformat(), today.isoformat(), members)
 
-    if not isinstance(data, dict):
-        raise ValueError(
-            "활동 파일의 최상위 항목은 JSON 객체여야 합니다."
-        )
+def activity_cell(category, start, end, starts_on, minimum):
+    if category["error"]:
+        return "확인 불가"
+    if end < starts_on or start > ACTIVITY_END:
+        return "대상 아님"
+    if EXAM_START <= start and end <= EXAM_END:
+        return "면제"
+    if start < starts_on or end > ACTIVITY_END or start <= EXAM_END and end >= EXAM_START:
+        return "수동 확인"
+    return f"{len(category['links'])}/{minimum}"
 
-    repository = data.get("repository")
-    if not isinstance(repository, str) or not repository.strip():
-        raise ValueError("활동 파일에 저장소 정보가 없습니다.")
 
-    try:
-        start = date.fromisoformat(data["start"])
-        end = date.fromisoformat(data["end"])
-    except (KeyError, TypeError, ValueError) as error:
-        raise ValueError(
-            "활동 파일의 시작일과 종료일을 확인하세요."
-        ) from error
+def terminal_width(text):
+    return sum(2 if east_asian_width(char) in ("W", "F") else 1 for char in text)
 
-    if start > end:
-        raise ValueError(
-            "활동 파일의 시작일이 종료일보다 늦습니다."
-        )
 
-    members = data.get("members")
-    if not isinstance(members, list) or not members:
-        raise ValueError("활동 파일에 팀원 목록이 없습니다.")
+def format_activity_table(rows):
+    widths = [max(map(terminal_width, column)) for column in zip(*rows)]
+    lines = []
 
-    results = []
+    for index, row in enumerate(rows):
+        cells = [cell + " " * (width - terminal_width(cell)) for cell, width in zip(row, widths)]
+        lines.append(" | ".join(cells).rstrip())
+        if index == 0:
+            lines.append("-+-".join("-" * width for width in widths))
 
-    for member in members:
-        if not isinstance(member, dict):
-            raise ValueError(
-                "활동 파일의 팀원 정보 형식을 확인하세요."
-            )
+    return lines
 
-        name = member.get("name")
-        login = member.get("github")
 
-        if not isinstance(name, str) or not name.strip():
-            raise ValueError("팀원 이름이 없습니다.")
+def format_activity_results(data, show_links=False, last_7_days=False):
+    start = date.fromisoformat(data["start"])
+    end = date.fromisoformat(data["end"])
+    title = "[최근 7일 활동]" if last_7_days else "[이번 주 활동 점검]"
+    lines = [title, f"저장소: {data['repository']}", f"조회 기간: {start}~{end} (한국 시간)", ""]
+    rows = [("팀원", "커밋", "PR 생성·병합", "이슈")]
+    details = []
 
-        if not isinstance(login, str) or not login.strip():
-            raise ValueError(
-                f"{name} 팀원의 GitHub ID가 없습니다."
-            )
+    for member in data["members"]:
+        name = member["name"]
+        cells = {}
 
-        categories = member.get("categories")
-        if not isinstance(categories, dict):
-            categories = {}
+        for key, label, minimum, starts_on in ACTIVITY_RULES:
+            category = member["categories"][key]
+            cells[key] = activity_cell(category, start, end, starts_on, minimum)
 
-        counts = {}
+            if category["error"]:
+                details.append(f"- {name} · {label}: {category['error']}")
+            elif show_links:
+                details.extend(f"- {name} · {label}: {link}" for link in category["links"])
 
-        for key in (
-            "commits",
-            "prs_created",
-            "prs_merged",
-            "issues",
-        ):
-            counts[key] = summarize_activity_category(
-                categories.get(key)
-            )
+        prs = f"{cells['prs_created']} · {cells['prs_merged']}"
+        rows.append((name, cells["commits"], prs, cells["issues"]))
 
-        results.append({
-            "name": name,
-            "github": login,
-            "categories": counts,
-        })
-
-    return {
-        "repository": repository,
-        "start": start.isoformat(),
-        "end": end.isoformat(),
-        "members": results,
-    }
+    lines.extend(format_activity_table(rows))
+    lines.append("\n표기: 실적/기준 · PR은 생성, 병합 순서")
+    if details:
+        lines.extend(["", *details])
+    lines.append("수동 확인: 활동의 실질성, 이슈의 작업 전 등록 여부, PR의 병합 전 승인 여부")
+    return "\n".join(lines)

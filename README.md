@@ -124,6 +124,25 @@ python main.py check --help             # 옵션 확인
 파일이 존재하더라도 문서 내용, 기능 동작, 실행 재현 및 협업 절차는 직접 확인해야 합니다.
 존재하지 않는 폴더나 파일 경로를 지정하면 오류가 출력됩니다.
 
+### 6. GitHub 활동 확인
+
+프로젝트 폴더에서 실행합니다. 활동을 조회하려면 GitHub CLI(`gh`)를 설치하고 `gh auth login`으로 로그인합니다.
+
+```bash
+python main.py check activity                 # 이번 주 팀원별 활동 확인
+python main.py check activity --rules         # 주간 최소 기준 확인
+python main.py check activity --last-7-days   # 오늘을 포함한 최근 7일 활동 확인
+python main.py check activity --show-links    # 집계에 포함된 활동 링크 확인
+```
+
+`check activity`는 이번 주 월요일부터 오늘까지의 활동을 조회합니다.
+팀원별 커밋, PR 생성·병합, 이슈 작성 건수를 표로 표시합니다. `1/2`는 최소 기준 2건 중 1건을 했다는 뜻입니다.
+`--rules`는 GitHub에 접속하지 않고 기준과 적용 기간을 보여줍니다.
+`--last-7-days`는 오늘을 포함해 지난 7일을 조회합니다. 
+지난 회의록처럼 시작일과 종료일이 정해진 기간의 활동을 저장하려면 `activity --start xxxx-xx-xx(시작일) --end xxxx-xx-xx(종료일)`를 사용합니다.
+
+커밋과 이슈가 실질적인 활동인지, 이슈를 작업 전에 등록했는지, PR이 병합 전에 승인됐는지는 직접 확인합니다.
+
 ### 검증
 
 ```bash
