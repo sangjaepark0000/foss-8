@@ -55,6 +55,17 @@ class MinutesTests(unittest.TestCase):
         self.assertIn('회의록 제출 일정', content)
         self.assertIn('개인 점검표', content)
 
+    def test_carry_previous_actions_preserves_source_without_inference(self):
+        source = ROOT / 'docs/meetings/2026-10-07.md'
+        before = source.read_text(encoding='utf-8')
+        content = minutes.carry_previous(minutes.draft('2026-10-14', config=self.config), source)
+        self.assertIn('| 현재 수업 주차 계산 구현 | 양하윤 | 10.14 | #11 | 확인 필요 |', content)
+        self.assertIn(source.as_uri(), content)
+        self.assertEqual(minutes.carry_previous(content, source), content)
+        self.assertEqual(source.read_text(encoding='utf-8'), before)
+        missing = minutes.carry_previous(minutes.draft('2026-10-14', config=self.config), self.root / 'missing.md')
+        self.assertIn('이전 회의록을 읽지 못했습니다', missing)
+
     def test_meeting_date_and_submission_week_are_separate(self):
         content = minutes.draft('2026-10-30', week='9', config=self.config)
         self.assertIn('WEEK9', content)

@@ -254,3 +254,28 @@ def create(on=None, week=None, config=None, output=None, force=False):
     if path.suffix.lower() not in ('.md', '.markdown'):
         raise ValueError('초안 저장 경로는 .md 또는 .markdown 파일로 지정하세요.')
     return save_file(path, content, force)
+
+
+def carry_previous(content, path):
+    """Copy only the previous meeting's next-action table; never infer status."""
+    if '<!-- foss8-previous-actions -->' in content:
+        return content
+    path = Path(path).expanduser().resolve()
+    try:
+        source = path.read_text(encoding='utf-8')
+    except (OSError, UnicodeError) as exc:
+        return content.replace('## 1. 지난주 결정 사항 점검',
+            '## 1. 지난주 결정 사항 점검\n\n> 이전 회의록을 읽지 못했습니다: ' + str(exc), 1)
+    section = re.search(r'(?ms)^##\s*4\.\s*다음 주 할 일[^\n]*\n(.*?)(?=^##\s|\Z)', source)
+    table = re.search(r'(?m)^\|\s*할 일\s*\|\s*담당\s*\|\s*마감\s*\|\s*이슈\s*\|\s*\n\|[- :|]+\|\s*\n((?:\|[^\n]*\|\s*\n?)+)', section.group(1)) if section else None
+    if not table:
+        note = '> 이전 회의록에 읽을 수 있는 다음 주 할 일 표가 없습니다: ' + path.as_uri()
+    else:
+        rows = []
+        for line in table.group(1).splitlines():
+            cells = [cell.strip() for cell in line.strip().strip('|').split('|')]
+            if len(cells) == 4 and any(cells):
+                rows.append('| ' + ' | '.join(cells) + ' | 확인 필요 |')
+        note = ('> 이전 회의록에서 가져온 초안입니다. 상태와 결정은 직접 확인하세요. [출처](' + path.as_uri() + ')\n\n'
+                '| 할 일 | 담당 | 마감 | 이슈 | 상태 |\n|---|---|---|---|---|\n' + '\n'.join(rows)) if rows else '> 이전 할 일 표에 항목이 없습니다: ' + path.as_uri()
+    return content.replace('## 1. 지난주 결정 사항 점검', '## 1. 지난주 결정 사항 점검\n\n<!-- foss8-previous-actions -->\n' + note, 1)
