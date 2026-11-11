@@ -33,7 +33,7 @@ def parser():
     form = commands.add_parser("format", help="회의록·보고서 빈 양식 출력")
     form.add_argument("name", nargs="?", choices=tuple(templates.TITLES),
                       help="minutes: 회의록, proposal: 제안서, midterm: 중간보고서, final: 최종보고서")
-    form.add_argument("--activity", help="수집한 활동 JSON 경로")
+    form.add_argument("--activity", action="append", help="수집한 활동 JSON 경로 (여러 번 지정 가능)")
     form.add_argument("--previous", help="이전 회의록 Markdown 경로")
     form.add_argument("--date", help="회의 날짜 (YYYY-MM-DD), 회의록 초안 기본값 오늘")
     form.add_argument("--week", help="회의록 제출 회차 (예: 9), 보강: makeup")
@@ -114,10 +114,14 @@ def main(argv=None):
                     if args.name != "minutes" and (args.team or args.team_file or args.output):
                         from . import minutes
                         content = templates.fill_report(content, minutes.load_config(args.team_file, args.team))
-                if args.activity and args.name == "minutes":
+                if args.activity:
                     from . import activity
-                    data = json.loads(Path(args.activity).read_text(encoding="utf-8"))
-                    content += "\n## GitHub 활동 근거 초안 (확인 필요)\n\n" + activity.markdown(data) + "\n"
+                    if args.name not in ("minutes", "midterm", "final"):
+                        raise ValueError("--activity는 회의록·중간·최종 보고서에서 사용하세요.")
+                    content += "\n## GitHub 활동 근거 초안 (확인 필요)\n\n"
+                    for activity_path in args.activity:
+                        data = json.loads(Path(activity_path).read_text(encoding="utf-8"))
+                        content += (activity.markdown(data) if args.name == "minutes" else activity.report_markdown(data)) + "\n"
                 if args.output:
                     from .minutes import save_file
                     if not args.output.lower().endswith((".md", ".markdown")):

@@ -23,6 +23,7 @@ class ActivityTests(unittest.TestCase):
         self.assertEqual(categories['reviews']['error'], '권한 없음')
         self.assertEqual(categories['issues']['links'], ['https://example/issue'])
         self.assertIn('조회 실패: 권한 없음', activity.markdown(data))
+        self.assertIn('- [ ] https://example/pr', activity.report_markdown(data))
 
     def test_invalid_range_rejected(self):
         with self.assertRaises(ValueError):

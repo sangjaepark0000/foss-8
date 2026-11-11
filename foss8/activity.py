@@ -64,7 +64,16 @@ def collect(repo, start, end, members):
                 review_error = error
                 break
             reviews.extend(batch)
-    result = {'repository': repo, 'start': start, 'end': end, 'members': []}
+    releases, release_error = fetch(base + '/releases?per_page=100')
+    meeting_files, meeting_error = fetch(base + '/contents/docs/meetings?per_page=100')
+    meeting_links = []
+    for item in meeting_files:
+        match = re.match(r'(\d{4}-\d{2}-\d{2})\.md$', item.get('name', ''))
+        if match and start <= match[1] <= end and item.get('html_url'):
+            meeting_links.append(item['html_url'])
+    result = {'repository': repo, 'start': start, 'end': end, 'members': [],
+              'releases': {'error': release_error, 'links': [r['html_url'] for r in releases if inside(r.get('published_at'))]},
+              'meetings': {'error': meeting_error, 'links': meeting_links}}
     for member in members:
         login = member.get('github', '').lower()
         def authored(item):
@@ -97,4 +106,16 @@ def markdown(data):
             item = member['categories'][key]
             lines.append(f"- {label}: " + (f"조회 실패: {item['error']}" if item['error'] else f"{len(item['links'])}건" + (' — ' + ', '.join(f'[근거 {n}]({url})' for n, url in enumerate(item['links'], 1)) if item['links'] else ' (자료 없음)')))
         lines.append('')
+    return '\n'.join(lines)
+
+
+def report_markdown(data):
+    lines = [markdown(data), '### 릴리스와 회의록']
+    for key, label in [('releases', '릴리스'), ('meetings', '회의록')]:
+        entry = data.get(key, {'error': '수집된 자료가 없습니다. 다시 조회하세요.', 'links': []})
+        lines.append('- ' + label + ': ' + (('조회 실패: ' + entry['error']) if entry['error'] else (', '.join(f'[근거 {i}]({url})' for i, url in enumerate(entry['links'], 1)) or '자료 없음')))
+    lines += ['', '### 대표 PR 후보 (직접 선택)', '']
+    candidates = list(dict.fromkeys(url for m in data['members'] for key in ('prs_created', 'prs_merged') for url in m['categories'][key]['links']))
+    lines += [f'- [ ] {url}' for url in candidates] if candidates else ['- 후보 없음 또는 조회 실패: 위 결과를 확인하세요.']
+    lines += ['', '스크린샷, 시연, 기능 완성도, 문제 해결과 회고는 직접 작성합니다.']
     return '\n'.join(lines)
