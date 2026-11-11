@@ -77,7 +77,14 @@ python main.py format minutes --date 2026-10-28 --week 9 --team foss-8 -o 회의
 팀원별 빈 행과 안내서의 해당 주차 할 일·점검표를 넣습니다. 실제 참석·서기·진행 상황·결정·활동 횟수·완료 체크는 비워 둡니다.
 `-o`를 생략하면 화면에 출력합니다. 기존 파일은 보호하고 `--force`를 함께 지정했을 때만 교체합니다.
 보고서도 `python main.py format midterm -o 중간보고서.md`처럼 저장하면 같은 팀 정보로 표지를 채웁니다. `--team-file`로 보고서에 사용할 설정을 직접 선택할 수 있습니다.
-이전 회의록의 할 일은 `--previous docs/meetings/2026-10-07.md`로 점검 초안에 복사할 수 있습니다. 원본은 수정하지 않으며 상태는 직접 확인합니다. 활동 로그 수집은 후속 작업입니다.
+이전 회의록의 할 일은 `--previous docs/meetings/2026-10-07.md`로 점검 초안에 복사할 수 있습니다. 원본은 수정하지 않으며 상태는 직접 확인합니다. GitHub 활동은 `gh` 로그인 후 수집하고, 생성한 JSON을 회의록에 첨부할 수 있습니다.
+
+```bash
+python main.py activity --repo owner/repo --start 2026-10-08 --end 2026-10-14 -o 활동.json
+python main.py format minutes --date 2026-10-14 --activity 활동.json -o 회의록.md
+```
+
+기간은 한국 시간 날짜를 포함합니다. 커밋은 접근 가능한 브랜치 전체에서 SHA 중복과 병합 커밋을 제외하며, PR 생성·병합은 PR 작성자, 리뷰는 제출자를 기준으로 합니다. 일반 댓글은 제외합니다. 조회 실패와 0건을 구분하며 링크와 결과는 직접 확인해야 합니다.
 
 ### 4. 완성한 회의록을 제출용 PDF로 변환
 
