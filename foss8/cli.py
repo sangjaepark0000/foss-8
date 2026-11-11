@@ -7,6 +7,7 @@ from .guide import ALIASES, Catalog, display_markdown
 from . import templates
 from . import check
 from . import weeks
+from pathlib import Path
 
 class RequestError(ValueError):
     def __init__(self, message, help_text):
@@ -29,8 +30,31 @@ def parser():
     root.add_argument("--version", action="version", version=__version__)
     commands = root.add_subparsers(dest="command")
     commands.add_parser("help", help="CLI 전체 명령·사용 예시 보기")
-    form = commands.add_parser("format", help="양식 출력·UTF-8 파일 저장")
+    form = commands.add_parser("format", help="회의록·보고서 빈 양식 출력")
+    form.add_argument("name", nargs="?", choices=tuple(templates.TITLES),
+                      help="minutes: 회의록, proposal: 제안서, midterm: 중간보고서, final: 최종보고서")
+    form.add_argument("--activity", action="append", help="수집한 활동 JSON 경로 (여러 번 지정 가능)")
+    form.add_argument("--previous", help="이전 회의록 Markdown 경로")
+    form.add_argument("--date", help="회의 날짜 (YYYY-MM-DD), 회의록 초안 기본값 오늘")
+    form.add_argument("--week", help="회의록 제출 회차 (예: 9), 보강: makeup")
+    form.add_argument("--team", help="회의록 팀 이름")
+    form.add_argument("--team-file", help="팀 기본정보 JSON 파일 (name·repository·members)")
+    form.add_argument("-o", "--output", help="Markdown 서식 또는 제출용 PDF 저장 경로")
+    form.add_argument("--force", action="store_true", help="기존 출력 파일 덮어쓰기")
+    form.add_argument("--pdf", metavar="MARKDOWN", help="작성한 회의록을 제출 파일명의 PDF로 변환")
+    form.add_argument("--browser", help="PDF 변환에 사용할 Chrome/Chromium 실행 파일")
+    activity = commands.add_parser("activity", help="GitHub 활동 근거 수집")
+    activity.add_argument("--repo", required=True, help="owner/repository")
+    activity.add_argument("--start", required=True, help="시작일 YYYY-MM-DD (한국 시간)")
+    activity.add_argument("--end", required=True, help="종료일 YYYY-MM-DD (한국 시간)")
+    activity.add_argument("--team-file", help="팀 기본정보 JSON")
+    activity.add_argument("-o", "--output", required=True, help="활동 JSON 저장 경로")
     check = commands.add_parser("check", help="완성 기준 배점표 불러오기, 저장소 상태와 비교" )
+    check.add_argument(
+    "--path",
+    default=".",
+    help="기본 파일을 검사할 폴더를 지정. 기본값은 현재 폴더",
+    )
     week = commands.add_parser("week", help="주차별 할 일 조회")
     week.add_argument("week", nargs="?", help="조회할 주차 숫자 입력, 생략하면 다가오는 가장 가까운 주차 할 일 출력")
     week.add_argument("--list", action="store_true", help="주차 목록 확인")
@@ -50,11 +74,80 @@ def main(argv=None):
         if args.command == "help":
             command_parser.print_help()
             return 0
+        if args.command == "activity":
+            from . import activity, minutes
+            team = minutes.load_config(args.team_file)
+            if not team['members']:
+                raise ValueError('팀 기본정보에 GitHub ID가 있는 팀원을 등록하세요.')
+            data = activity.collect(args.repo, args.start, args.end, team['members'])
+            path = minutes.save_file(args.output, json.dumps(data, ensure_ascii=False, indent=2) + "\n")
+            print("활동 근거 저장: " + str(path))
+            return 0
         if args.command == "format":
-            print("기능 준비중")
+            if args.pdf:
+                if args.name != "minutes" or args.date or args.team_file:
+                    raise ValueError("PDF 변환은 format minutes --pdf 회의록.md로 실행하세요. --date·--team-file은 초안 생성 옵션입니다.")
+                from .minutes_pdf import export
+                path = export(args.pdf, args.output, args.week, args.team, args.force, args.browser)
+                print("제출용 PDF 저장: " + str(path))
+                return 0
+            if args.browser:
+                raise ValueError("--browser는 --pdf 변환과 함께 지정하세요.")
+            if args.force and not args.output:
+                raise ValueError("--force는 --output 저장 경로와 함께 지정하세요.")
+            filled = any((args.date, args.week, args.team, args.team_file, args.previous, args.activity))
+            if (args.date or args.week or args.previous) and args.name != "minutes":
+                raise ValueError("--date·--week은 format minutes에서 사용하세요.")
+            if args.output and args.name is None:
+                raise ValueError("저장할 양식을 선택하세요. 예: format minutes -o 회의록.md")
+            if args.name is None:
+                print("쓸 수 있는 양식:")
+                for name, title in templates.TITLES.items():
+                    print(f"  {name:12} {title}")
+                print("\n예: python main.py format minutes")
+            else:
+                if args.name == "minutes" and (filled or args.output):
+                    from . import minutes
+                    content = minutes.draft(args.date, args.week, minutes.load_config(args.team_file, args.team))
+                    if args.previous:
+                        content = minutes.carry_previous(content, args.previous)
+                else:
+                    content = templates.get(Catalog(), args.name)["content"]
+                    if args.name != "minutes" and (args.team or args.team_file or args.output):
+                        from . import minutes
+                        content = templates.fill_report(content, minutes.load_config(args.team_file, args.team))
+                if args.activity:
+                    from . import activity
+                    if args.name not in ("minutes", "midterm", "final"):
+                        raise ValueError("--activity는 회의록·중간·최종 보고서에서 사용하세요.")
+                    content += "\n## GitHub 활동 근거 초안 (확인 필요)\n\n"
+                    for activity_path in args.activity:
+                        data = json.loads(Path(activity_path).read_text(encoding="utf-8"))
+                        content += (activity.markdown(data) if args.name == "minutes" else activity.report_markdown(data)) + "\n"
+                if args.output:
+                    from .minutes import save_file
+                    if not args.output.lower().endswith((".md", ".markdown")):
+                        raise ValueError("서식 저장 경로는 .md 또는 .markdown 파일로 지정하세요.")
+                    path = save_file(args.output, content, args.force)
+                    print("서식 저장: " + str(path))
+                else:
+                    print(content, end="")
             return 0
         if args.command == "check":
-            print("기능 준비중")
+            # 기존 평가 기준 출력
+            items = check.load_result_items()
+            print(check.format_result_items(items))
+
+            # 현재 폴더의 기본 파일 검사
+            repository_path = Path(args.path).expanduser().resolve()
+            results = check.check_required_files(repository_path)
+
+            print()
+            print("[기본 파일 검사]")
+            print(f"검사 대상: {repository_path}")
+            print()
+            print(check.format_file_results(results))
+
             return 0
         if args.command == "week":
             catalog = Catalog()
