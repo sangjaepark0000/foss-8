@@ -115,7 +115,7 @@ class Document:
 class Catalog:
     def __init__(self):
         local = Path(__file__).resolve().parents[1] / "docs/guide"
-        self.root = local if (local / "source-map.json").exists() else files("foss8").joinpath("data/guide")
+        self.root = local if (local / "source-map.json").exists() else files("foss8").joinpath("guide_data")
         self.manifest = json.loads(self.root.joinpath("source-map.json").read_text(encoding="utf-8"))
         documents = []
         for path in sorted(self.root.iterdir(), key=lambda item: item.name):

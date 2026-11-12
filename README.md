@@ -20,14 +20,47 @@
 
 ## 실행 방법
 
-### 1. 저장소 클론
+Python 3.12 이상이 필요합니다. 프로그램을 설치한 뒤에는 다른 팀의 프로젝트 폴더에서도 실행할 수 있습니다.
+주차와 평가 기준은 이 수업의 안내서를 따릅니다.
+
+### 설치해서 사용하기
+
+[pipx 설치 안내](https://pipx.pypa.io/stable/installation/)에 따라 pipx를 설치하고 `pipx ensurepath`를 실행합니다.
+필요하면 터미널을 다시 연 뒤 다음 명령으로 도구를 설치합니다. Git도 필요합니다.
+
+```bash
+pipx install git+https://github.com/sangjaepark0000/foss-8.git
+```
+
+설치 후 사용하려는 팀 프로젝트로 이동해 실행합니다.
+
+```bash
+cd 팀-프로젝트
+oss --help
+oss week --list
+oss check                 # 현재 폴더의 기본 파일 검사
+oss format minutes        # 회의록 서식 조회
+```
+
+설치된 `oss` 명령에서는 아래 예시의 `python main.py`를 `oss`로 바꿔 사용하면 됩니다.
+`pipx upgrade foss8`으로 업데이트하고, `pipx uninstall foss8`으로 제거할 수 있습니다.
+
+### 개발용 실행
+
+저장소를 클론해 기존 방식으로 실행하거나 가상환경에 편집 가능 설치를 할 수 있습니다.
 
 ```bash
 git clone https://github.com/sangjaepark0000/foss-8.git
 cd foss-8
+python3 -m venv .venv
+source .venv/bin/activate  # Windows: .venv\Scripts\activate
+python -m pip install -e .
+oss --help
 ```
 
-### 2. 서식 조회
+가상환경을 활성화한 동안 `oss`를 사용할 수 있으며, 설치 없이 `python main.py`로도 실행할 수 있습니다.
+
+### 서식 조회
 
 Python 3.12 이상에서 실행합니다. 서식 조회에는 외부 라이브러리가 필요하지 않습니다.
 
