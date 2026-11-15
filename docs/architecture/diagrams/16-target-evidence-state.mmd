@@ -1,0 +1,20 @@
+stateDiagram-v2
+    [*] --> Missing
+    state "미수집" as Missing
+    state "새 수집 시도" as Fetching
+    state "범위 완전·0건 가능" as Complete
+    state "일부 수집·누락 있음" as Partial
+    state "수집 실패" as Failed
+    state "최신성 재확인 필요" as Stale
+    state "수동 정정 제안" as Correction
+    Missing --> Fetching: collect
+    Fetching --> Complete: 요청 범위와 응답 완전성 확인
+    Fetching --> Partial: 일부 항목 성공
+    Fetching --> Failed: 인증·권한·연결 오류
+    Complete --> Stale: 정책의 최신성 기준 초과
+    Partial --> Fetching: 누락 범위 재수집
+    Failed --> Fetching: 원인 해결 후 재시도
+    Stale --> Fetching: 재수집
+    Complete --> Correction: 다른 사실을 관측함
+    Partial --> Correction: 수동 근거 보완
+    Correction --> Complete: 정정 근거·확인자·범위 검증

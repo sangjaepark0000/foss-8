@@ -1,0 +1,14 @@
+flowchart TB
+    pdf["원문 PDF와 source-map"] --> document["Document · id / title / markdown / pages"]
+    document --> roadmap["로드맵 dict · 주차 / 수업일 / tasks / turnin"]
+    document --> cycle["Cycle · period_id / WEEK / 기록기간 / due_at"]
+    document --> result["결과물 기준 dict · 배점 / 부분점수 / status=미확인"]
+    document --> template["서식 dict · content / source"]
+    config["팀 정보 dict · name / repository / members"] --> draft["회의록·보고서 Markdown"]
+    cycle --> draft
+    roadmap --> draft
+    template --> draft
+    evidence["활동 JSON · 사람별 categories / error / links"] --> draft
+    draft --> submission["제출용 PDF"]
+    result --> terminal["터미널 표시"]
+    files["파일 존재 검사 결과"] --> terminal

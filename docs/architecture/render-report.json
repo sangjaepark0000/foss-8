@@ -1,0 +1,116 @@
+[
+  {
+    "id": "00-repository-scopes",
+    "exit_code": 0,
+    "seconds": 1.05,
+    "error": ""
+  },
+  {
+    "id": "01-main-modules",
+    "exit_code": 0,
+    "seconds": 0.96,
+    "error": ""
+  },
+  {
+    "id": "02-main-information-model",
+    "exit_code": 0,
+    "seconds": 0.96,
+    "error": ""
+  },
+  {
+    "id": "03-main-cli-flow",
+    "exit_code": 0,
+    "seconds": 0.94,
+    "error": ""
+  },
+  {
+    "id": "04-main-evidence-document-sequence",
+    "exit_code": 0,
+    "seconds": 0.64,
+    "error": ""
+  },
+  {
+    "id": "05-prototype-modules",
+    "exit_code": 0,
+    "seconds": 0.98,
+    "error": ""
+  },
+  {
+    "id": "06-prototype-information-model",
+    "exit_code": 0,
+    "seconds": 0.96,
+    "error": ""
+  },
+  {
+    "id": "07-prototype-user-flow",
+    "exit_code": 0,
+    "seconds": 0.99,
+    "error": ""
+  },
+  {
+    "id": "08-prototype-sync-state",
+    "exit_code": 0,
+    "seconds": 1.0,
+    "error": ""
+  },
+  {
+    "id": "09-target-domain",
+    "exit_code": 0,
+    "seconds": 0.93,
+    "error": ""
+  },
+  {
+    "id": "10-target-erd",
+    "exit_code": 0,
+    "seconds": 1.14,
+    "error": ""
+  },
+  {
+    "id": "11-target-modules",
+    "exit_code": 0,
+    "seconds": 1.03,
+    "error": ""
+  },
+  {
+    "id": "12-target-check-sequence",
+    "exit_code": 0,
+    "seconds": 0.62,
+    "error": ""
+  },
+  {
+    "id": "13-target-cli-flow",
+    "exit_code": 0,
+    "seconds": 0.99,
+    "error": ""
+  },
+  {
+    "id": "14-target-tui-flow",
+    "exit_code": 0,
+    "seconds": 0.96,
+    "error": ""
+  },
+  {
+    "id": "15-target-submission-state",
+    "exit_code": 0,
+    "seconds": 0.98,
+    "error": ""
+  },
+  {
+    "id": "16-target-evidence-state",
+    "exit_code": 0,
+    "seconds": 1.02,
+    "error": ""
+  },
+  {
+    "id": "17-target-decision-flow",
+    "exit_code": 0,
+    "seconds": 0.97,
+    "error": ""
+  },
+  {
+    "id": "18-migration-map",
+    "exit_code": 0,
+    "seconds": 0.98,
+    "error": ""
+  }
+]

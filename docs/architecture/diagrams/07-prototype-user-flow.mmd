@@ -1,0 +1,19 @@
+flowchart TB
+    entry["main.py 또는 week"] --> tty{"TTY이며 대화형 요청인가"}
+    tty -->|"아니오"| text["텍스트 또는 JSON 조회"]
+    tty -->|"예"| week["오늘의 화~월 학사 주차 선택"]
+    week --> tabs{"curses 화면"}
+    tabs --> tasks["할 일 · 주차 작업과 상세"]
+    tabs --> eval["평가 · 주간 실적과 설명"]
+    tabs --> settings["팀 설정 · 사람·역할·승인"]
+    tasks -->|"Space"| done["수동 완료 표시·취소"]
+    tasks -->|"회의록 Enter"| minutes["초안 만들기 / PDF 만들기"]
+    tasks -->|"횟수 항목"| edit["Space·Backspace·Enter로 횟수 수정"]
+    eval --> edit
+    settings --> detect["로컬·GitHub 후보 검토·적용"]
+    settings --> save["설정 저장"]
+    save --> sync["현재 진행 주차 GitHub 백그라운드 집계"]
+    tasks -->|"r"| sync
+    eval -->|"r"| sync
+    sync --> eval
+    tabs -->|"기간 선택"| week

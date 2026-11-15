@@ -1,0 +1,18 @@
+flowchart LR
+    entry["main.py / python -m foss8"] --> cli["cli.py · main"]
+    cli --> templates["templates.py · 서식 추출"]
+    cli --> minutes["minutes.py · 팀 정보와 회의록 조립"]
+    cli --> pdf["minutes_pdf.py · PDF 변환"]
+    cli --> activity["activity.py · 활동 수집·근거 문장"]
+    cli --> check["check.py · 기준 표·파일 검사"]
+    cli --> weeks["weeks.py · 로드맵 조회"]
+    minutes --> templates
+    pdf --> minutes
+    templates --> catalog["guide.py · Catalog"]
+    minutes --> catalog
+    check --> catalog
+    weeks --> catalog
+    catalog --> docs[("docs/guide · Markdown와 source-map")]
+    activity --> gh["gh api → GitHub"]
+    pdf --> browser["Chrome / Chromium"]
+    minutes --> local[("team.json / Git remote / README")]

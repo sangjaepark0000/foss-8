@@ -1,0 +1,14 @@
+flowchart TB
+    start["python main.py"] --> choose{"하위 명령"}
+    choose -->|"없음"| banner["도구 이름 출력 후 종료"]
+    choose -->|"week"| period["입력 주차 또는 다가오는 수업 선택"]
+    period --> list["할 일과 제출 문구 출력"]
+    choose -->|"check"| criteria["결과물 기준은 미확인으로 출력"]
+    criteria --> files["로컬 필수 파일 존재 검사"]
+    choose -->|"activity"| collect["저장소·기간·팀원으로 수집"]
+    collect --> activityFile["활동 JSON 파일"]
+    choose -->|"format"| draft["빈 서식 또는 팀·기간을 채운 초안"]
+    activityFile -.->|"사용자가 --activity로 전달"| draft
+    draft --> edit["사용자가 실제 내용을 작성"]
+    edit --> pdf["format minutes --pdf 로 PDF 생성"]
+    pdf --> submit["사용자가 LMS 또는 이메일 제출"]

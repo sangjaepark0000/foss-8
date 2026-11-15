@@ -1,0 +1,608 @@
+{
+  "date": "2026-11-15",
+  "commits": {
+    "main": "8e6ea27b07c7f287aa12d3b927ba3e9acae23732",
+    "prototype": "8fc2ae6e6bf3e340067887fbeeb023ec7af65931",
+    "guide-tool": "d1a5a39c963e6ef1f38f2341e3c42259e1ae12a6"
+  },
+  "diagrams": [
+    {
+      "slug": "00-repository-scopes",
+      "title": "현재 저장소의 세 구현 범위",
+      "group": "current",
+      "question": "어느 브랜치의 기능을 현재 구현이라고 부르는가?",
+      "conclusion": "main, prototype, guide-tool은 서로 다른 실행 제품이다. 이 문서는 셋을 합쳐 이미 구현된 하나의 앱처럼 표시하지 않는다.",
+      "syntax": "flowchart TB\n    repo[\"foss-8 저장소\"]\n    repo --> mainBranch[\"main · 8e6ea27\"]\n    repo --> protoBranch[\"prototype · 8fc2ae6\"]\n    repo --> toolBranch[\"feature/guide-tool · d1a5a39\"]\n    mainBranch --> mainProduct[\"CLI · 서식 · 활동 JSON · 회의록 PDF · 파일 검사\"]\n    protoBranch --> protoProduct[\"curses TUI · 주차 작업 · 수동 완료 · 주간 활동 집계 · 팀 설정\"]\n    toolBranch --> toolProduct[\"Textual TUI · 안내서 탐색 · 검색 · 양식 저장\"]\n    proposal[\"이 대화의 목표 설계 · 미구현\"] -.-> mainProduct\n    proposal -.-> protoProduct\n    proposal -.-> toolProduct\n",
+      "sources": [
+        [
+          "main",
+          "foss8/cli.py",
+          "parser"
+        ],
+        [
+          "prototype",
+          "foss8/cli.py",
+          "parser"
+        ],
+        [
+          "guide-tool",
+          "foss8/cli.py",
+          "parser"
+        ]
+      ],
+      "caveat": "세 선은 기능 범위의 분기이며 Git ancestry·병합 관계를 뜻하지 않는다. 원격 조회일은 2026-11-15이다.",
+      "source_links": [
+        {
+          "label": "main: foss8/cli.py:23 · parser",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/cli.py#L23"
+        },
+        {
+          "label": "prototype: foss8/cli.py:23 · parser",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/cli.py#L23"
+        },
+        {
+          "label": "guide-tool: foss8/cli.py:30 · parser",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/d1a5a39c963e6ef1f38f2341e3c42259e1ae12a6/foss8/cli.py#L30"
+        }
+      ]
+    },
+    {
+      "slug": "01-main-modules",
+      "title": "main의 실제 모듈과 의존성",
+      "group": "current",
+      "question": "현재 CLI 기능은 어떤 모듈을 호출하는가?",
+      "conclusion": "CLI main()에 명령 분기와 조립이 모인다. 공통 원문은 Catalog가 읽고, 일정·평가·서식이 각자 표를 해석한다.",
+      "syntax": "flowchart LR\n    entry[\"main.py / python -m foss8\"] --> cli[\"cli.py · main\"]\n    cli --> templates[\"templates.py · 서식 추출\"]\n    cli --> minutes[\"minutes.py · 팀 정보와 회의록 조립\"]\n    cli --> pdf[\"minutes_pdf.py · PDF 변환\"]\n    cli --> activity[\"activity.py · 활동 수집·근거 문장\"]\n    cli --> check[\"check.py · 기준 표·파일 검사\"]\n    cli --> weeks[\"weeks.py · 로드맵 조회\"]\n    minutes --> templates\n    pdf --> minutes\n    templates --> catalog[\"guide.py · Catalog\"]\n    minutes --> catalog\n    check --> catalog\n    weeks --> catalog\n    catalog --> docs[(\"docs/guide · Markdown와 source-map\")]\n    activity --> gh[\"gh api → GitHub\"]\n    pdf --> browser[\"Chrome / Chromium\"]\n    minutes --> local[(\"team.json / Git remote / README\")]\n",
+      "sources": [
+        [
+          "main",
+          "foss8/cli.py",
+          "main"
+        ],
+        [
+          "main",
+          "foss8/guide.py",
+          "Catalog"
+        ],
+        [
+          "main",
+          "foss8/minutes.py",
+          "load_config"
+        ],
+        [
+          "main",
+          "foss8/minutes_pdf.py",
+          "export"
+        ]
+      ],
+      "caveat": "main에는 TUI 실행 분기가 없다. Catalog의 검색 메서드가 존재하는 것과 CLI에 guide search 명령이 노출되는 것은 별개다.",
+      "source_links": [
+        {
+          "label": "main: foss8/cli.py:68 · main",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/cli.py#L68"
+        },
+        {
+          "label": "main: foss8/guide.py:115 · Catalog",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/guide.py#L115"
+        },
+        {
+          "label": "main: foss8/minutes.py:124 · load_config",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/minutes.py#L124"
+        },
+        {
+          "label": "main: foss8/minutes_pdf.py:141 · export",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/minutes_pdf.py#L141"
+        }
+      ]
+    },
+    {
+      "slug": "02-main-information-model",
+      "title": "main의 실제 정보 모델",
+      "group": "current",
+      "question": "문서에서 추출한 정보가 어떤 형태로 기능별로 흘러가는가?",
+      "conclusion": "Document와 Cycle은 명시적 타입이지만 활동·평가·주차는 대부분 기능별 dict이다. 공통 RequirementInstance나 판정 이력 모델은 없다.",
+      "syntax": "flowchart TB\n    pdf[\"원문 PDF와 source-map\"] --> document[\"Document · id / title / markdown / pages\"]\n    document --> roadmap[\"로드맵 dict · 주차 / 수업일 / tasks / turnin\"]\n    document --> cycle[\"Cycle · period_id / WEEK / 기록기간 / due_at\"]\n    document --> result[\"결과물 기준 dict · 배점 / 부분점수 / status=미확인\"]\n    document --> template[\"서식 dict · content / source\"]\n    config[\"팀 정보 dict · name / repository / members\"] --> draft[\"회의록·보고서 Markdown\"]\n    cycle --> draft\n    roadmap --> draft\n    template --> draft\n    evidence[\"활동 JSON · 사람별 categories / error / links\"] --> draft\n    draft --> submission[\"제출용 PDF\"]\n    result --> terminal[\"터미널 표시\"]\n    files[\"파일 존재 검사 결과\"] --> terminal\n",
+      "sources": [
+        [
+          "main",
+          "foss8/guide.py",
+          "Document"
+        ],
+        [
+          "main",
+          "foss8/minutes.py",
+          "Cycle"
+        ],
+        [
+          "main",
+          "foss8/weeks.py",
+          "roadmap"
+        ],
+        [
+          "main",
+          "foss8/check.py",
+          "load_result_items"
+        ],
+        [
+          "main",
+          "foss8/activity.py",
+          "collect"
+        ]
+      ],
+      "caveat": "개념적 데이터 흐름도다. 저장된 관계형 DB나 이 이름의 테이블이 있다는 뜻이 아니다.",
+      "source_links": [
+        {
+          "label": "main: foss8/guide.py:108 · Document",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/guide.py#L108"
+        },
+        {
+          "label": "main: foss8/minutes.py:21 · Cycle",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/minutes.py#L21"
+        },
+        {
+          "label": "main: foss8/weeks.py:10 · roadmap",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/weeks.py#L10"
+        },
+        {
+          "label": "main: foss8/check.py:38 · load_result_items",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/check.py#L38"
+        },
+        {
+          "label": "main: foss8/activity.py:30 · collect",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/activity.py#L30"
+        }
+      ]
+    },
+    {
+      "slug": "03-main-cli-flow",
+      "title": "main의 현재 사용자 흐름",
+      "group": "current",
+      "question": "사용자는 현재 무엇을 입력하고 어떤 결과를 받는가?",
+      "conclusion": "문서 조회·활동 파일 생성·문서 작성·PDF 변환이 명령별로 나뉘며, 활동 JSON 전달과 실제 제출 확인은 사용자가 이어 붙인다.",
+      "syntax": "flowchart TB\n    start[\"python main.py\"] --> choose{\"하위 명령\"}\n    choose -->|\"없음\"| banner[\"도구 이름 출력 후 종료\"]\n    choose -->|\"week\"| period[\"입력 주차 또는 다가오는 수업 선택\"]\n    period --> list[\"할 일과 제출 문구 출력\"]\n    choose -->|\"check\"| criteria[\"결과물 기준은 미확인으로 출력\"]\n    criteria --> files[\"로컬 필수 파일 존재 검사\"]\n    choose -->|\"activity\"| collect[\"저장소·기간·팀원으로 수집\"]\n    collect --> activityFile[\"활동 JSON 파일\"]\n    choose -->|\"format\"| draft[\"빈 서식 또는 팀·기간을 채운 초안\"]\n    activityFile -.->|\"사용자가 --activity로 전달\"| draft\n    draft --> edit[\"사용자가 실제 내용을 작성\"]\n    edit --> pdf[\"format minutes --pdf 로 PDF 생성\"]\n    pdf --> submit[\"사용자가 LMS 또는 이메일 제출\"]\n",
+      "sources": [
+        [
+          "main",
+          "foss8/cli.py",
+          "parser"
+        ],
+        [
+          "main",
+          "foss8/cli.py",
+          "main"
+        ],
+        [
+          "main",
+          "foss8/weeks.py",
+          "get_this_week"
+        ]
+      ],
+      "caveat": "파일 생성 성공은 LMS 제출 성공이나 규칙 충족으로 저장되지 않는다. main의 week는 현재 학사 주차보다 가까운 이후 수업일을 고른다.",
+      "source_links": [
+        {
+          "label": "main: foss8/cli.py:23 · parser",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/cli.py#L23"
+        },
+        {
+          "label": "main: foss8/cli.py:68 · main",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/cli.py#L68"
+        },
+        {
+          "label": "main: foss8/weeks.py:38 · get_this_week",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/weeks.py#L38"
+        }
+      ]
+    },
+    {
+      "slug": "04-main-evidence-document-sequence",
+      "title": "main의 활동 수집·문서 생성 시퀀스",
+      "group": "current",
+      "question": "한 번의 활동 수집과 회의록 생성에서 무엇이 자동이고 무엇이 수동인가?",
+      "conclusion": "수집 실패는 항목의 error로 보존한다. 결과는 활동 근거 초안이며 평가 엔진으로 전달되지는 않는다.",
+      "syntax": "sequenceDiagram\n    actor user as 사용자\n    participant cli as CLI\n    participant config as minutes.load_config\n    participant collector as activity.collect\n    participant gh as gh / GitHub\n    participant disk as 로컬 파일\n    user->>cli: activity --repo --start --end -o 활동.json\n    cli->>config: 팀 정보 읽기\n    config-->>cli: members\n    cli->>collector: collect(repo, start, end, members)\n    collector->>gh: 브랜치·커밋·PR·리뷰·이슈·릴리스·회의록 조회\n    gh-->>collector: 페이지 또는 항목별 오류\n    collector-->>cli: 사람별 링크와 오류\n    cli->>disk: 활동 JSON 저장\n    user->>cli: format minutes --activity 활동.json -o 회의록.md\n    cli->>config: 제출 회차와 팀 정보로 초안 작성\n    disk-->>cli: 활동 JSON\n    cli->>disk: 근거 초안을 붙인 Markdown 저장\n    user->>disk: 실제 회의 내용 작성\n    user->>cli: format minutes --pdf 회의록.md\n    cli->>disk: Chrome 변환 후 PDF 저장\n",
+      "sources": [
+        [
+          "main",
+          "foss8/activity.py",
+          "collect"
+        ],
+        [
+          "main",
+          "foss8/cli.py",
+          "main"
+        ],
+        [
+          "main",
+          "foss8/minutes.py",
+          "draft"
+        ],
+        [
+          "main",
+          "foss8/minutes_pdf.py",
+          "export"
+        ]
+      ],
+      "caveat": "",
+      "source_links": [
+        {
+          "label": "main: foss8/activity.py:30 · collect",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/activity.py#L30"
+        },
+        {
+          "label": "main: foss8/cli.py:68 · main",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/cli.py#L68"
+        },
+        {
+          "label": "main: foss8/minutes.py:202 · draft",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/minutes.py#L202"
+        },
+        {
+          "label": "main: foss8/minutes_pdf.py:141 · export",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/minutes_pdf.py#L141"
+        }
+      ]
+    },
+    {
+      "slug": "05-prototype-modules",
+      "title": "prototype의 실제 모듈 구조",
+      "group": "current",
+      "question": "키보드 TUI의 화면·저장·수집은 어디에서 조립되는가?",
+      "conclusion": "tui.App이 화면 상태와 팀 설정, 활동 수집 스레드, 저장 갱신을 함께 조정한다. weeks.py에는 데이터 선택과 텍스트 렌더링·TUI 진입이 함께 있다.",
+      "syntax": "flowchart LR\n    cli[\"cli.py\"] --> weeks[\"weeks.py · 선택·치환·텍스트 출력\"]\n    cli --> team[\"team.py · 검증·설정 저장\"]\n    cli --> minutes[\"minutes.py / minutes_pdf.py\"]\n    weeks --> data[(\"data/weeks.json · 주차 작업 트리\")]\n    weeks --> tui[\"tui.py · curses App\"]\n    tui --> team\n    tui --> discovery[\"discovery.py · 후보 읽기·비교\"]\n    tui --> progress[\"progress.py · 수동 완료\"]\n    tui --> assessments[\"assessments.py · 주간 기준·횟수\"]\n    tui --> github[\"github_activity.py · 주간 집계\"]\n    tui --> minutes\n    github --> assessments\n    github --> discovery\n    discovery --> external[\"로컬 문서·Git·gh / GitHub\"]\n    github --> external\n    team --> state[(\".foss8 · team / progress / assessments JSON\")]\n    progress --> state\n    assessments --> state\n    design[\"data/course-project.json · 설계 초안\"] -.->|\"실행 경로의 입력으로 미사용\"| data\n",
+      "sources": [
+        [
+          "prototype",
+          "foss8/weeks.py",
+          "run"
+        ],
+        [
+          "prototype",
+          "foss8/tui.py",
+          "App"
+        ],
+        [
+          "prototype",
+          "foss8/tui.py",
+          "start_activity"
+        ],
+        [
+          "prototype",
+          "foss8/team.py",
+          "save"
+        ],
+        [
+          "prototype",
+          "foss8/github_activity.py",
+          "collect"
+        ]
+      ],
+      "caveat": "course-project.json은 문서화된 설계 초안이다. 점선은 실행 연결이 없다는 표시다. 현재 check 명령은 준비중을 출력한다.",
+      "source_links": [
+        {
+          "label": "prototype: foss8/weeks.py:268 · run",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/weeks.py#L268"
+        },
+        {
+          "label": "prototype: foss8/tui.py:100 · App",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/tui.py#L100"
+        },
+        {
+          "label": "prototype: foss8/tui.py:297 · start_activity",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/tui.py#L297"
+        },
+        {
+          "label": "prototype: foss8/team.py:126 · save",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/team.py#L126"
+        },
+        {
+          "label": "prototype: foss8/github_activity.py:32 · collect",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/github_activity.py#L32"
+        }
+      ]
+    },
+    {
+      "slug": "06-prototype-information-model",
+      "title": "prototype의 현재 데이터·식별 모델",
+      "group": "current",
+      "question": "완료 표시와 활동 횟수는 무엇을 키로 저장되는가?",
+      "conclusion": "주차별 화면 데이터와 수동 완료, 주간 횟수는 분리되어 있다. 다만 기준·작업의 정의는 트리 JSON·코드 상수·원문에 나뉘고 판정 스냅샷은 없다.",
+      "syntax": "flowchart TB\n    team[\"team.json · repository / me / members / roles / approved_changes\"]\n    scope[\"context · repository와 me 또는 local\"]\n    team --> scope\n    tree[\"weeks.json · period / tasks / children / details / evaluation\"]\n    tree --> task[\"task.id와 progress_period\"]\n    task --> mark[\"progress.json · context → 작업 키 → completed\"]\n    scope --> mark\n    tree --> period[\"화~월 period.start / end\"]\n    constants[\"CRITERIA 상수 · commits / issues / prs\"] --> bundle[\"WeeklyAssessment · 기간과 counts\"]\n    period --> bundle\n    scope --> counts[\"assessments.json · context → 시작일 → counts\"]\n    counts --> bundle\n    github[\"GitHub Result · counts / evidence / errors\"] --> counts\n    manual[\"횟수 수동 입력\"] --> counts\n    counts --> metadata[\"sources / evidence / synced_at / updated_at\"]\n    carry[\"바로 다음 주의 이월 항목\"] -->|\"같은 작업 키 재사용\"| task\n",
+      "sources": [
+        [
+          "prototype",
+          "foss8/weeks.py",
+          "load"
+        ],
+        [
+          "prototype",
+          "foss8/progress.py",
+          "context"
+        ],
+        [
+          "prototype",
+          "foss8/progress.py",
+          "Progress"
+        ],
+        [
+          "prototype",
+          "foss8/assessments.py",
+          "WeeklyAssessment"
+        ],
+        [
+          "prototype",
+          "foss8/assessments.py",
+          "Store"
+        ]
+      ],
+      "caveat": "Task 체크는 사용자의 수동 표시다. WeeklyAssessment.status는 주간 횟수 상태이며 학기 점수나 LMS 제출 판정이 아니다. 서로 다른 집계 구간을 자동 재배분하지 않는다.",
+      "source_links": [
+        {
+          "label": "prototype: foss8/weeks.py:11 · load",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/weeks.py#L11"
+        },
+        {
+          "label": "prototype: foss8/progress.py:8 · context",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/progress.py#L8"
+        },
+        {
+          "label": "prototype: foss8/progress.py:45 · Progress",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/progress.py#L45"
+        },
+        {
+          "label": "prototype: foss8/assessments.py:58 · WeeklyAssessment",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/assessments.py#L58"
+        },
+        {
+          "label": "prototype: foss8/assessments.py:126 · Store",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/assessments.py#L126"
+        }
+      ]
+    },
+    {
+      "slug": "07-prototype-user-flow",
+      "title": "prototype의 현재 사용자 흐름",
+      "group": "current",
+      "question": "주차 선택부터 완료 표시·활동 집계·회의록 작성까지 어떻게 이동하는가?",
+      "conclusion": "진입점과 작업 목록의 중심이 선택한 주차다. 사용자는 할 일·평가·팀 설정 탭을 오가며 서로 다른 종류의 상태를 편집한다.",
+      "syntax": "flowchart TB\n    entry[\"main.py 또는 week\"] --> tty{\"TTY이며 대화형 요청인가\"}\n    tty -->|\"아니오\"| text[\"텍스트 또는 JSON 조회\"]\n    tty -->|\"예\"| week[\"오늘의 화~월 학사 주차 선택\"]\n    week --> tabs{\"curses 화면\"}\n    tabs --> tasks[\"할 일 · 주차 작업과 상세\"]\n    tabs --> eval[\"평가 · 주간 실적과 설명\"]\n    tabs --> settings[\"팀 설정 · 사람·역할·승인\"]\n    tasks -->|\"Space\"| done[\"수동 완료 표시·취소\"]\n    tasks -->|\"회의록 Enter\"| minutes[\"초안 만들기 / PDF 만들기\"]\n    tasks -->|\"횟수 항목\"| edit[\"Space·Backspace·Enter로 횟수 수정\"]\n    eval --> edit\n    settings --> detect[\"로컬·GitHub 후보 검토·적용\"]\n    settings --> save[\"설정 저장\"]\n    save --> sync[\"현재 진행 주차 GitHub 백그라운드 집계\"]\n    tasks -->|\"r\"| sync\n    eval -->|\"r\"| sync\n    sync --> eval\n    tabs -->|\"기간 선택\"| week\n",
+      "sources": [
+        [
+          "prototype",
+          "foss8/weeks.py",
+          "run"
+        ],
+        [
+          "prototype",
+          "foss8/tui.py",
+          "items"
+        ],
+        [
+          "prototype",
+          "foss8/tui.py",
+          "handle"
+        ],
+        [
+          "prototype",
+          "foss8/tui.py",
+          "minutes_action"
+        ]
+      ],
+      "caveat": "할 일의 개인 담당 필터는 아직 연결되지 않았다. 바로 다음 주 이월과 모든 과거 미완료를 계속 보여주는 backlog는 다르다.",
+      "source_links": [
+        {
+          "label": "prototype: foss8/weeks.py:268 · run",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/weeks.py#L268"
+        },
+        {
+          "label": "prototype: foss8/tui.py:164 · items",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/tui.py#L164"
+        },
+        {
+          "label": "prototype: foss8/tui.py:591 · handle",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/tui.py#L591"
+        },
+        {
+          "label": "prototype: foss8/tui.py:364 · minutes_action",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/tui.py#L364"
+        }
+      ]
+    },
+    {
+      "slug": "08-prototype-sync-state",
+      "title": "prototype의 현재 집계 상태 전이",
+      "group": "current",
+      "question": "수동 수정과 GitHub 갱신·실패가 만날 때 어떻게 처리되는가?",
+      "conclusion": "설정 revision이 바뀐 응답은 버린다. 성공한 항목만 갱신하며 실패 항목의 기존 값은 유지한다. 수동 횟수는 다음 성공 집계에서 바뀔 수 있다.",
+      "syntax": "stateDiagram-v2\n    [*] --> Idle\n    state \"대기\" as Idle\n    state \"집계 중\" as Fetching\n    state \"응답 폐기\" as Discarded\n    state \"성공 항목 저장\" as Saved\n    state \"일부 실패·기존 값 유지\" as Partial\n    state \"횟수 수동 수정\" as Manual\n    Idle --> Fetching: 설정 충족·현재 진행 주차·아직 시도 안 함 또는 r\n    Fetching --> Discarded: 수집 중 config_revision 변경\n    Fetching --> Saved: revision 일치·성공 counts 있음\n    Fetching --> Partial: 항목별 errors\n    Saved --> Idle: 화면 갱신\n    Partial --> Idle: 오류 안내\n    Discarded --> Idle: r 재집계 안내\n    Idle --> Manual: 횟수 입력·증감\n    Manual --> Idle: manual 출처로 저장\n    Idle --> Fetching: r 재시도\n",
+      "sources": [
+        [
+          "prototype",
+          "foss8/tui.py",
+          "start_activity"
+        ],
+        [
+          "prototype",
+          "foss8/tui.py",
+          "poll_activity"
+        ],
+        [
+          "prototype",
+          "foss8/assessments.py",
+          "save"
+        ],
+        [
+          "prototype",
+          "foss8/github_activity.py",
+          "collect"
+        ]
+      ],
+      "caveat": "구현에서 보이는 동작을 추출한 상태도이며 실제 Enum 선언은 아니다. 성공과 항목별 오류는 한 응답에 공존할 수 있다.",
+      "source_links": [
+        {
+          "label": "prototype: foss8/tui.py:297 · start_activity",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/tui.py#L297"
+        },
+        {
+          "label": "prototype: foss8/tui.py:319 · poll_activity",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/tui.py#L319"
+        },
+        {
+          "label": "prototype: foss8/assessments.py:150 · save",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/assessments.py#L150"
+        },
+        {
+          "label": "prototype: foss8/github_activity.py:32 · collect",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/github_activity.py#L32"
+        }
+      ]
+    },
+    {
+      "slug": "09-target-domain",
+      "title": "목표 도메인: 기준을 적용하고 근거로 설명하기",
+      "group": "target",
+      "question": "사용자가 원하는 점검을 표현하려면 어떤 개념을 분리해야 하는가?",
+      "conclusion": "핵심은 주차 트리에서 기준을 복사하는 대신, 기준 정의를 사람·팀·기간에 적용해 생성한 적용 건에 증거와 판정을 연결하는 것이다.",
+      "syntax": "flowchart LR\n    source[\"원문·버전·절·쪽수\"] --> rule[\"기준 정의\"]\n    approval[\"승인된 팀 변경·근거\"] --> binding[\"적용 정책 확정\"]\n    rule --> binding\n    context[\"프로젝트·대상 개인 또는 팀\"] --> binding\n    period[\"활동 구간·면제·마감\"] --> binding\n    binding --> obligation[\"적용 건 · 안정 ID\"]\n    observation[\"GitHub 관측·수동 확인·제출 증거\"] --> snapshot[\"증거 스냅샷·수집 범위\"]\n    obligation --> assessment[\"판정 · 이유·증거·버전\"]\n    snapshot --> assessment\n    obligation --> action[\"수행할 작업·담당·선행 조건\"]\n    assessment --> views[\"지금 할 일·주차·개인·제출물별 뷰\"]\n    action --> views\n",
+      "sources": [],
+      "caveat": "이 대화에서 제안한 미구현 모델이다. 승인된 3인·3기능 변경이 곧 배점의 비례 환산을 뜻하지 않는다.",
+      "source_links": []
+    },
+    {
+      "slug": "10-target-erd",
+      "title": "목표 ERD: 적용 건·증거·판정의 식별",
+      "group": "target",
+      "question": "과거 판정을 재현하고 여러 뷰에서 같은 기준을 보려면 어떤 관계가 필요한가?",
+      "conclusion": "기준과 적용 건을 분리하고 판정은 사용한 정책·증거 버전을 고정한다. 기간 변경이나 재수집으로 과거 판정을 덮어쓰지 않는다.",
+      "syntax": "erDiagram\n    SOURCE_REVISION ||--o{ RULE_SET : supports\n    RULE_SET ||--|{ REQUIREMENT : defines\n    PROJECT ||--o{ APPROVED_CHANGE : records\n    PROJECT ||--|{ SUBJECT : scopes\n    REQUIREMENT ||--o{ OBLIGATION : instantiates\n    SUBJECT ||--o{ OBLIGATION : owes\n    PERIOD ||--o{ OBLIGATION : bounds\n    OBLIGATION ||--o{ ACTION : requires\n    OBLIGATION ||--o{ ARTIFACT : produces\n    ARTIFACT ||--o{ SUBMISSION : records\n    OBLIGATION ||--o{ ASSESSMENT : evaluated\n    EVIDENCE_BATCH ||--o{ EVIDENCE : contains\n    ASSESSMENT ||--o{ ASSESSMENT_EVIDENCE : cites\n    EVIDENCE ||--o{ ASSESSMENT_EVIDENCE : supports\n    APPROVED_CHANGE ||--o{ OBLIGATION : adjusts\n    SOURCE_REVISION {\n        string id PK\n        string sha256\n        string citation\n    }\n    RULE_SET {\n        string id PK\n        string version\n    }\n    REQUIREMENT {\n        string id PK\n        string ruleset_id FK\n        string predicate\n        string source_locator\n    }\n    PROJECT {\n        string id PK\n        string repository\n    }\n    SUBJECT {\n        string id PK\n        string project_id FK\n        string kind\n        string external_identity\n    }\n    PERIOD {\n        string id PK\n        datetime starts_at\n        datetime ends_at_exclusive\n        string timezone\n    }\n    OBLIGATION {\n        string id PK\n        string requirement_id FK\n        string subject_id FK\n        string period_id FK\n        datetime due_at\n        string policy_digest\n    }\n    APPROVED_CHANGE {\n        string id PK\n        string project_id FK\n        string scope\n        string approval_source\n    }\n    ACTION {\n        string id PK\n        string obligation_id FK\n        string owner_subject_id\n        string execution_state\n    }\n    ARTIFACT {\n        string id PK\n        string obligation_id FK\n        string revision\n        string path\n    }\n    SUBMISSION {\n        string id PK\n        string artifact_id FK\n        string destination\n        datetime submitted_at\n        string confirmation_evidence_id\n    }\n    EVIDENCE_BATCH {\n        string id PK\n        string coverage\n        string collection_status\n        datetime fetched_at\n    }\n    EVIDENCE {\n        string id PK\n        string batch_id FK\n        string source_key\n        datetime occurred_at\n    }\n    ASSESSMENT {\n        string id PK\n        string obligation_id FK\n        string policy_digest\n        string evidence_snapshot_digest\n        datetime evaluated_at\n        string verdict\n        string reasons\n    }\n    ASSESSMENT_EVIDENCE {\n        string assessment_id FK\n        string evidence_id FK\n    }\n",
+      "sources": [],
+      "caveat": "개념 ERD이며 DB 선택이나 최종 물리 스키마를 확정하지 않는다. predicate·coverage는 검증된 구조여야 하며 사용자 문자열을 eval하지 않는다. 관계 일부와 보조 조인 테이블은 가독성을 위해 생략했다.",
+      "source_links": []
+    },
+    {
+      "slug": "11-target-modules",
+      "title": "목표 모듈과 네 레이어",
+      "group": "target",
+      "question": "CLI와 TUI가 어떤 인터페이스를 공유해야 모델이 화면에 종속되지 않는가?",
+      "conclusion": "UI는 요청·출력과 포커스를 담당하고 collect/check/explain이 조립을 담당한다. 판정 모듈은 관측 저장이나 터미널 조작 없이 결과를 반환한다.",
+      "syntax": "flowchart TB\n    subgraph presentation[\"표현 · 같은 결과를 다른 방식으로 보기\"]\n        cli[\"CLI · 텍스트 / JSON\"]\n        tui[\"TUI · 선택 / 상세 / 근거\"]\n    end\n    subgraph usage[\"사용 사례 · 입력 검증과 실행 조립\"]\n        query[\"조회 · now / week / explain\"]\n        collect[\"수집 · collect\"]\n        check[\"점검 · check\"]\n        artifact[\"문서 · draft / export / 제출 기록\"]\n    end\n    subgraph domain[\"도메인 · 기준과 방법\"]\n        policy[\"기준·승인·기간 → 적용 건\"]\n        evaluator[\"적용 건·증거 → 판정·이유\"]\n        workflow[\"작업·산출물·제출 흐름\"]\n    end\n    subgraph infrastructure[\"근거·저장 · 구체 구현\"]\n        sources[\"원문과 기준 파일\"]\n        store[\"프로젝트·증거·판정 저장\"]\n        github[\"GitHub 수집 어댑터\"]\n        local[\"수동 증거·파일 어댑터\"]\n        pdf[\"PDF 출력 어댑터\"]\n    end\n    cli --> query\n    cli --> collect\n    cli --> check\n    cli --> artifact\n    tui --> query\n    tui --> collect\n    tui --> check\n    tui --> artifact\n    query --> store\n    collect --> github\n    collect --> local\n    collect --> store\n    check --> policy\n    check --> evaluator\n    check --> store\n    policy --> sources\n    artifact --> workflow\n    artifact --> pdf\n    artifact --> store\n",
+      "sources": [],
+      "caveat": "미구현 설계안. 단일 로컬 프로그램 내부의 모듈 관계다. 별도 웹 서버·백그라운드 데몬·마이크로서비스 배포를 요구하지 않는다.",
+      "source_links": []
+    },
+    {
+      "slug": "12-target-check-sequence",
+      "title": "목표 수집·점검·설명 시퀀스",
+      "group": "target",
+      "question": "수집이 실패해도 사용자가 왜 확인이 필요한지 추적할 수 있는가?",
+      "conclusion": "collect와 check는 분리한다. check는 고정된 증거 스냅샷으로 판정하고 explain은 같은 판정의 기준·이유·근거를 다시 읽는다.",
+      "syntax": "sequenceDiagram\n    actor user as 사용자\n    participant ui as CLI 또는 TUI\n    participant use as 사용 사례 모듈\n    participant collector as 수집 어댑터\n    participant store as 기록 저장\n    participant policy as 적용 정책\n    participant eval as 판정 모듈\n    user->>ui: collect(project, period)\n    ui->>use: 수집 요청\n    use->>collector: 대상·범위·작성자·시각\n    collector-->>use: 관측과 범위별 성공·누락·오류\n    use->>store: 새 evidence batch 저장\n    use-->>ui: 수집 상태와 기존 증거의 최신성\n    user->>ui: check(project, period)\n    ui->>use: 점검 요청\n    use->>policy: 기준 버전·승인·기간으로 적용 건 해석\n    policy-->>use: 적용 건 또는 미확정 정책\n    use->>store: 사용할 증거 스냅샷 읽기\n    store-->>use: 증거와 coverage\n    use->>eval: 적용 건·정책·증거·기준 시각\n    eval-->>use: 결과·이유·미확정 사항\n    use->>store: 판정과 사용 버전 저장\n    use-->>ui: 판정 목록과 assessment_id\n    user->>ui: explain(assessment_id)\n    ui->>store: 판정·정책·근거 조회\n    store-->>ui: 재현 가능한 설명\n",
+      "sources": [],
+      "caveat": "네트워크 자동 갱신을 check 내부에 숨기지 않는 초기 인터페이스안이다. collect 실패 시 이전 batch와 실패한 새 시도를 함께 보존한다.",
+      "source_links": []
+    },
+    {
+      "slug": "13-target-cli-flow",
+      "title": "목표 CLI의 작업 흐름",
+      "group": "target",
+      "question": "명령을 외우는 사람과 자동화가 같은 도메인 작업을 수행할 수 있는가?",
+      "conclusion": "프로젝트 문맥을 고른 뒤 조회·수집·점검·설명·문서 작업을 독립 명령으로 수행한다. 읽기 작업은 상태를 암묵적으로 변경하지 않는다.",
+      "syntax": "flowchart TB\n    start[\"프로젝트 선택 또는 현재 폴더에서 문맥 확인\"] --> read{\"사용 목적\"}\n    read -->|\"지금 할 일\"| now[\"oss now / oss week\"]\n    read -->|\"새 활동 기록\"| collect[\"oss collect --period\"]\n    read -->|\"기준 점검\"| check[\"oss check --period\"]\n    read -->|\"이유 확인\"| explain[\"oss explain 판정ID\"]\n    read -->|\"문서 작업\"| draft[\"oss minutes draft / pdf\"]\n    collect --> evidence[\"수집 범위·성공·실패·최신성\"]\n    evidence --> check\n    check --> result[\"충족·진행 중·미충족·확인 필요·해당 없음\"]\n    result --> explain\n    explain --> action[\"부족한 작업·근거 보완·정책 확인\"]\n    draft --> submit[\"제출은 별도 수행·증거 기록\"]\n    now --> action\n    action --> now\n    read -->|\"키보드 탐색\"| tui[\"oss tui · 같은 조회·명령 사용\"]\n",
+      "sources": [],
+      "caveat": "명령 이름은 제안이다. main의 기존 check와 prototype의 week 동작을 이미 바꿨다는 뜻이 아니다. 모든 CLI 결과에는 텍스트와 JSON 표현을 함께 설계한다.",
+      "source_links": []
+    },
+    {
+      "slug": "14-target-tui-flow",
+      "title": "목표 TUI: 사용자 목적에서 근거까지",
+      "group": "target",
+      "question": "주차를 바꿔도 남은 작업·원래 기한·판정 근거를 잃지 않는가?",
+      "conclusion": "첫 화면은 현재 실행 가능한 일·막힘·마감·이월을 보여준다. 주차는 여러 조회 축 중 하나이며 같은 적용 건을 계속 참조한다.",
+      "syntax": "flowchart TB\n    context[\"프로젝트·개인·기준 시각 선택\"] --> home[\"지금 · 실행 가능 / 막힘 / 기한 임박 / 이월\"]\n    home --> item[\"작업 또는 기준 선택\"]\n    item --> detail[\"상세 · 담당 / 원래 기한 / 다음 행동\"]\n    detail --> basis[\"원문·팀 승인·적용 정책\"]\n    detail --> evidence[\"증거·수집 범위·최신성\"]\n    detail --> assessment[\"판정 이유·부족한 것\"]\n    detail --> operation{\"명시적 작업\"}\n    operation --> collect[\"다시 수집\"]\n    operation --> manual[\"수동 관측·정정 기록\"]\n    operation --> document[\"초안·PDF·제출 기록\"]\n    collect --> detail\n    manual --> detail\n    document --> detail\n    home --> views[\"주차 / 개인·팀 / 제출물별 조회\"]\n    views -->|\"동일한 적용 건\"| item\n    home --> settings[\"프로젝트 설정·미확정 정책\"]\n    settings --> context\n",
+      "sources": [],
+      "caveat": "텍스트 화면 이동 설계이며 완성된 TUI 스크린샷이 아니다. 사용자 체크, 수집 성공, 문서 생성, LMS 제출, 규칙 충족은 각각 별도의 표시다.",
+      "source_links": []
+    },
+    {
+      "slug": "15-target-submission-state",
+      "title": "목표 산출물·제출 상태",
+      "group": "target",
+      "question": "PDF를 만들었다는 사실과 제출 완료·기한 준수를 어떻게 구분하는가?",
+      "conclusion": "산출물 준비와 외부 제출 확인을 분리한다. 기한 준수는 제출 시각과 고정 마감의 비교값이며 상태를 되돌리는 조건이 아니다.",
+      "syntax": "stateDiagram-v2\n    [*] --> Planned\n    state \"준비 전\" as Planned\n    state \"초안 생성\" as Draft\n    state \"내용 작성\" as Editing\n    state \"검토 완료\" as Reviewed\n    state \"제출본 준비\" as Ready\n    state \"제출 사실 확인 필요\" as Awaiting\n    state \"제출 확인\" as Confirmed\n    Planned --> Draft: 초안 생성\n    Draft --> Editing: 실제 내용 작성\n    Editing --> Reviewed: 담당자 검토 기록\n    Reviewed --> Editing: 수정 요청\n    Reviewed --> Ready: PDF 등 제출본 생성\n    Ready --> Awaiting: 사용자가 외부 제출했다고 기록\n    Awaiting --> Confirmed: 제출처·시각·접수 증거 확인\n    Awaiting --> Ready: 미접수 확인\n    Confirmed --> Editing: 수정본 준비가 필요함\n",
+      "sources": [],
+      "caveat": "재제출 시 기존 제출 이력은 보존하고 새 산출물 revision·제출 건을 만든다. 파일 생성·체크 표시만으로 Confirmed로 이동하지 않는다. 지각 여부는 별도 속성이다.",
+      "source_links": []
+    },
+    {
+      "slug": "16-target-evidence-state",
+      "title": "목표 증거 수집·정정 상태",
+      "group": "target",
+      "question": "실패·누락·오래된 근거·수동 정정을 어떻게 보존할 것인가?",
+      "conclusion": "성공한 0건과 미수집을 구분하며 실패로 기존 증거를 덮어쓰지 않는다. 수동 정정도 원래 관측과 나란히 기록한다.",
+      "syntax": "stateDiagram-v2\n    [*] --> Missing\n    state \"미수집\" as Missing\n    state \"새 수집 시도\" as Fetching\n    state \"범위 완전·0건 가능\" as Complete\n    state \"일부 수집·누락 있음\" as Partial\n    state \"수집 실패\" as Failed\n    state \"최신성 재확인 필요\" as Stale\n    state \"수동 정정 제안\" as Correction\n    Missing --> Fetching: collect\n    Fetching --> Complete: 요청 범위와 응답 완전성 확인\n    Fetching --> Partial: 일부 항목 성공\n    Fetching --> Failed: 인증·권한·연결 오류\n    Complete --> Stale: 정책의 최신성 기준 초과\n    Partial --> Fetching: 누락 범위 재수집\n    Failed --> Fetching: 원인 해결 후 재시도\n    Stale --> Fetching: 재수집\n    Complete --> Correction: 다른 사실을 관측함\n    Partial --> Correction: 수동 근거 보완\n    Correction --> Complete: 정정 근거·확인자·범위 검증\n",
+      "sources": [],
+      "caveat": "batch마다 새 기록을 만든다는 개념 상태도다. 재수집 중 이전 성공 batch는 계속 남는다. 증거 수집 상태와 규칙 판정값은 별도다. 최신성 기간은 아직 미확정이다.",
+      "source_links": []
+    },
+    {
+      "slug": "17-target-decision-flow",
+      "title": "목표 판정 결정 흐름",
+      "group": "target",
+      "question": "어떤 조건에서 충족·미충족·확인 필요라고 설명할 수 있는가?",
+      "conclusion": "적용 정책과 증거의 충분성을 먼저 확인한다. 횟수만으로 의미 있는 변경·승인된 리뷰·최종 점수를 자동 확정하지 않는다.",
+      "syntax": "flowchart TB\n    request[\"적용 건과 기준 시각\"] --> policy{\"규칙·승인·기간 정책이 확정됐나\"}\n    policy -->|\"아니오\"| unclear[\"기준 확인 필요 · 질문과 근거\"]\n    policy -->|\"예\"| applies{\"이 대상·기간에 적용되나\"}\n    applies -->|\"아니오\"| na[\"해당 없음 · 사유\"]\n    applies -->|\"예\"| coverage{\"증거 범위·최신성·필수 수동 확인이 충분한가\"}\n    coverage -->|\"아니오\"| unknown[\"확인 필요 · 부족한 증거\"]\n    coverage -->|\"예\"| satisfied{\"완료 조건을 만족하나\"}\n    satisfied -->|\"예\"| pass[\"충족 · 근거 목록\"]\n    satisfied -->|\"아니오\"| open{\"수행·평가 구간이 남았나\"}\n    open -->|\"예\"| ongoing[\"진행 중 · 남은 행동\"]\n    open -->|\"아니오\"| fail[\"미충족 · 미달 조건\"]\n    pass --> record[\"판정·이유·정책 버전·증거 스냅샷 저장\"]\n    ongoing --> record\n    fail --> record\n    unknown --> record\n    na --> record\n    unclear --> record\n",
+      "sources": [],
+      "caveat": "부분 충족·점수 환산은 이 흐름 다음의 별도 정책이며, 원문과 승인 근거가 충분한 항목에만 적용한다. 진행 중에도 충족 조건이 취소될 수 있는 규칙은 평가 시점 정책이 필요하다.",
+      "source_links": []
+    },
+    {
+      "slug": "18-migration-map",
+      "title": "현재 구현에서 목표 모델로 옮기는 지도",
+      "group": "comparison",
+      "question": "무엇을 살리고 무엇의 책임을 이동시켜야 하는가?",
+      "conclusion": "화면 라이브러리 교체보다 기준·기간·적용 건·증거·판정을 먼저 공통 인터페이스로 모은다. 원문·문서 생성·기존 기록은 단계적으로 연결한다.",
+      "syntax": "flowchart LR\n    subgraph current[\"현재 자산\"]\n        guide[\"Catalog·원문·source-map\"]\n        week[\"주차 JSON·기간 계산·이월 키\"]\n        criteria[\"평가표 파서·CRITERIA 상수\"]\n        collect[\"두 GitHub 수집 구현\"]\n        records[\"progress / assessments JSON\"]\n        docs[\"templates·minutes·PDF\"]\n        ui[\"CLI 분기·curses·Textual\"]\n    end\n    subgraph target[\"이동할 책임\"]\n        source[\"버전 있는 기준·근거\"]\n        binding[\"일정 정책·적용 건\"]\n        evidence[\"수집 범위가 있는 증거 스냅샷\"]\n        state[\"수동 실행 기록·판정 이력\"]\n        artifact[\"산출물·제출 흐름\"]\n        cases[\"공통 사용 사례와 조회 뷰\"]\n    end\n    guide --> source\n    criteria --> source\n    week --> binding\n    source --> binding\n    collect --> evidence\n    records --> state\n    evidence --> state\n    docs --> artifact\n    binding --> cases\n    state --> cases\n    artifact --> cases\n    ui -->|\"입출력·포커스만 남김\"| cases\n",
+      "sources": [
+        [
+          "main",
+          "foss8/guide.py",
+          "Catalog"
+        ],
+        [
+          "main",
+          "foss8/activity.py",
+          "collect"
+        ],
+        [
+          "prototype",
+          "foss8/assessments.py",
+          "Store"
+        ],
+        [
+          "prototype",
+          "foss8/tui.py",
+          "App"
+        ]
+      ],
+      "caveat": "리팩터링 실행 계획의 초안이다. 오래된 횟수·수동 체크를 새 모델의 검증된 증거로 승격시키지 않는다. GitHub 두 구현은 집계 의미가 달라 그대로 합치지 않는다.",
+      "source_links": [
+        {
+          "label": "main: foss8/guide.py:115 · Catalog",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/guide.py#L115"
+        },
+        {
+          "label": "main: foss8/activity.py:30 · collect",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/activity.py#L30"
+        },
+        {
+          "label": "prototype: foss8/assessments.py:126 · Store",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/assessments.py#L126"
+        },
+        {
+          "label": "prototype: foss8/tui.py:100 · App",
+          "url": "https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/tui.py#L100"
+        }
+      ]
+    }
+  ]
+}

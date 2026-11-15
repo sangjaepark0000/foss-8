@@ -1,0 +1,18 @@
+stateDiagram-v2
+    [*] --> Idle
+    state "대기" as Idle
+    state "집계 중" as Fetching
+    state "응답 폐기" as Discarded
+    state "성공 항목 저장" as Saved
+    state "일부 실패·기존 값 유지" as Partial
+    state "횟수 수동 수정" as Manual
+    Idle --> Fetching: 설정 충족·현재 진행 주차·아직 시도 안 함 또는 r
+    Fetching --> Discarded: 수집 중 config_revision 변경
+    Fetching --> Saved: revision 일치·성공 counts 있음
+    Fetching --> Partial: 항목별 errors
+    Saved --> Idle: 화면 갱신
+    Partial --> Idle: 오류 안내
+    Discarded --> Idle: r 재집계 안내
+    Idle --> Manual: 횟수 입력·증감
+    Manual --> Idle: manual 출처로 저장
+    Idle --> Fetching: r 재시도

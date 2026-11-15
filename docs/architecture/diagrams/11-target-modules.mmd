@@ -1,0 +1,42 @@
+flowchart TB
+    subgraph presentation["표현 · 같은 결과를 다른 방식으로 보기"]
+        cli["CLI · 텍스트 / JSON"]
+        tui["TUI · 선택 / 상세 / 근거"]
+    end
+    subgraph usage["사용 사례 · 입력 검증과 실행 조립"]
+        query["조회 · now / week / explain"]
+        collect["수집 · collect"]
+        check["점검 · check"]
+        artifact["문서 · draft / export / 제출 기록"]
+    end
+    subgraph domain["도메인 · 기준과 방법"]
+        policy["기준·승인·기간 → 적용 건"]
+        evaluator["적용 건·증거 → 판정·이유"]
+        workflow["작업·산출물·제출 흐름"]
+    end
+    subgraph infrastructure["근거·저장 · 구체 구현"]
+        sources["원문과 기준 파일"]
+        store["프로젝트·증거·판정 저장"]
+        github["GitHub 수집 어댑터"]
+        local["수동 증거·파일 어댑터"]
+        pdf["PDF 출력 어댑터"]
+    end
+    cli --> query
+    cli --> collect
+    cli --> check
+    cli --> artifact
+    tui --> query
+    tui --> collect
+    tui --> check
+    tui --> artifact
+    query --> store
+    collect --> github
+    collect --> local
+    collect --> store
+    check --> policy
+    check --> evaluator
+    check --> store
+    policy --> sources
+    artifact --> workflow
+    artifact --> pdf
+    artifact --> store

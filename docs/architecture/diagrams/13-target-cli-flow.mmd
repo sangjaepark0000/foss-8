@@ -1,0 +1,16 @@
+flowchart TB
+    start["프로젝트 선택 또는 현재 폴더에서 문맥 확인"] --> read{"사용 목적"}
+    read -->|"지금 할 일"| now["oss now / oss week"]
+    read -->|"새 활동 기록"| collect["oss collect --period"]
+    read -->|"기준 점검"| check["oss check --period"]
+    read -->|"이유 확인"| explain["oss explain 판정ID"]
+    read -->|"문서 작업"| draft["oss minutes draft / pdf"]
+    collect --> evidence["수집 범위·성공·실패·최신성"]
+    evidence --> check
+    check --> result["충족·진행 중·미충족·확인 필요·해당 없음"]
+    result --> explain
+    explain --> action["부족한 작업·근거 보완·정책 확인"]
+    draft --> submit["제출은 별도 수행·증거 기록"]
+    now --> action
+    action --> now
+    read -->|"키보드 탐색"| tui["oss tui · 같은 조회·명령 사용"]
