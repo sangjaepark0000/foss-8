@@ -58,7 +58,7 @@ def parser():
     week = commands.add_parser("week", help="주차별 할 일 조회")
     week.add_argument("selector", nargs="?", help="조회할 주차 숫자 입력, 생략하면 다가오는 가장 가까운 주차 할 일 출력")
     week.add_argument("--done", help="할 일 번호를 선택해 할 일 완료 표시, 다시 실행시 미완료 상태로 전환")
-    week.add_argument("--memo", nargs="*", help="해당 주에 메모 추가")
+    week.add_argument("--memo", nargs="*", help="해당 주 메모 수정, 내용을 입력하지 않을 시 메모 삭제")
     week.add_argument("--list", action="store_true", help="주차 목록 확인")
     return root
 
@@ -164,7 +164,7 @@ def main(argv=None):
             if args.done:
                 from .week_progress import change_completed
                 change_completed(progress_data, data['id'], args.done)
-            if args.memo:
+            if args.memo is not None:
                 memo = " ".join(args.memo)
                 from .week_progress import change_memo
                 change_memo(progress_data, data['id'], memo)
