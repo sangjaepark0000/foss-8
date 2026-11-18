@@ -238,6 +238,9 @@ def format_activity_results(data, show_links=False, last_7_days=False):
 
     lines.extend(format_activity_table(rows))
     lines.append("\n표기: 실적/기준 · PR은 생성, 병합 순서")
+    if last_7_days:
+        lines.append(
+            "참고: 최근 7일 집계 결과는 주간 최소 기준 집계 기간과 다를 수 있습니다. 월요일부터 집계되는 이번 주 실적은 --last-7-days 없이 조회하세요.")
     if details:
         lines.extend(["", *details])
     lines.append("수동 확인: 활동의 실질성, 이슈의 작업 전 등록 여부, PR의 병합 전 승인 여부")

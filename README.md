@@ -117,6 +117,14 @@ python main.py activity --repo owner/repo --start 2026-10-08 --end 2026-10-14 -o
 python main.py format minutes --date 2026-10-14 --activity 활동.json -o 회의록.md
 ```
 
+`gh`에 로그인한 뒤 `--fetch-activity`를 지정하면 회의록의 기록기간으로 GitHub 활동을 조회해 팀원별 활동 로그 표를 채웁니다. 문서 끝에서 근거 링크와 조회 실패 이유를 확인할 수 있습니다.
+
+```bash
+python main.py format minutes --date 2026-10-14 --fetch-activity
+```
+
+위 명령은 초안을 화면에 출력합니다. 파일로 저장하려면 `-o 회의록.md`를 추가합니다. `--fetch-activity`와 `--activity`는 한 번에 하나만 지정할 수 있습니다.
+
 기간은 한국 시간 날짜를 포함합니다. 커밋은 접근 가능한 브랜치 전체에서 SHA 중복과 병합 커밋을 제외하며, PR 생성·병합은 PR 작성자, 리뷰는 제출자를 기준으로 합니다. 일반 댓글은 제외합니다. 조회 실패와 0건을 구분하며 링크와 결과는 직접 확인해야 합니다.
 중간·최종 보고서에도 `--activity 활동.json`을 지정하면 릴리스·회의록 링크와 대표 PR 후보를 포함한 근거 초안이 추가됩니다. 다른 저장소의 활동 JSON도 만들어 `--activity`를 여러 번 지정할 수 있습니다. 기존 파일은 덮어쓰지 않습니다.
 

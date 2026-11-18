@@ -33,7 +33,9 @@ def parser():
     form = commands.add_parser("format", help="회의록·보고서 빈 양식 출력")
     form.add_argument("name", nargs="?", choices=tuple(templates.TITLES),
                       help="minutes: 회의록, proposal: 제안서, midterm: 중간보고서, final: 최종보고서")
-    form.add_argument("--activity", action="append", help="수집한 활동 JSON 경로 (여러 번 지정 가능)")
+    form_activity = form.add_mutually_exclusive_group()
+    form_activity.add_argument("--fetch-activity", action="store_true", help="회의록 기록기간의 GitHub 활동 자동 조회")
+    form_activity.add_argument("--activity", action="append", help="수집한 활동 JSON 경로 (여러 번 지정 가능)")
     form.add_argument("--previous", help="이전 회의록 Markdown 경로")
     form.add_argument("--date", help="회의 날짜 (YYYY-MM-DD), 회의록 초안 기본값 오늘")
     form.add_argument("--week", help="회의록 제출 회차 (예: 9), 보강: makeup")
@@ -84,6 +86,8 @@ def main(argv=None):
             print("활동 근거 저장: " + str(path))
             return 0
         if args.command == "format":
+            if args.fetch_activity and (args.name != "minutes" or args.pdf):
+                raise ValueError("--fetch-activity는 회의록 초안 생성에서 사용하세요.")
             if args.pdf:
                 if args.name != "minutes" or args.date or args.team_file:
                     raise ValueError("PDF 변환은 format minutes --pdf 회의록.md로 실행하세요. --date·--team-file은 초안 생성 옵션입니다.")
@@ -95,7 +99,7 @@ def main(argv=None):
                 raise ValueError("--browser는 --pdf 변환과 함께 지정하세요.")
             if args.force and not args.output:
                 raise ValueError("--force는 --output 저장 경로와 함께 지정하세요.")
-            filled = any((args.date, args.week, args.team, args.team_file, args.previous, args.activity))
+            filled = any((args.date, args.week, args.team, args.team_file, args.previous, args.activity, args.fetch_activity))
             if (args.date or args.week or args.previous) and args.name != "minutes":
                 raise ValueError("--date·--week은 format minutes에서 사용하세요.")
             if args.output and args.name is None:
@@ -108,7 +112,8 @@ def main(argv=None):
             else:
                 if args.name == "minutes" and (filled or args.output):
                     from . import minutes
-                    content = minutes.draft(args.date, args.week, minutes.load_config(args.team_file, args.team))
+                    team = minutes.load_config(args.team_file, args.team)
+                    content = minutes.draft(args.date, args.week, team, fetch_activity=args.fetch_activity)
                     if args.previous:
                         content = minutes.carry_previous(content, args.previous)
                 else:
