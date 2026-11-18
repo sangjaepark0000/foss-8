@@ -1,0 +1,20 @@
+{
+  "date": "2026-11-15",
+  "diagram_count": 19,
+  "rendered_svgs": 19,
+  "checked_code_files": 15,
+  "checked_local_links": 170,
+  "issues": [],
+  "browser_inspection": {
+    "all_19_images_loaded": true,
+    "page_errors": [],
+    "target_filter_count": 9,
+    "current_filter_count": 9,
+    "comparison_filter_count": 1,
+    "mobile_overflow": false,
+    "inspected_widths": [
+      1440,
+      390
+    ]
+  }
+}

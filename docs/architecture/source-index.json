@@ -1,0 +1,1931 @@
+{
+  "main": {
+    "foss8/__init__.py": {
+      "lines": 3,
+      "definitions": []
+    },
+    "foss8/__main__.py": {
+      "lines": 3,
+      "definitions": []
+    },
+    "foss8/activity.py": {
+      "lines": 121,
+      "definitions": [
+        {
+          "name": "bounds",
+          "line": 11,
+          "end": 16
+        },
+        {
+          "name": "api",
+          "line": 19,
+          "end": 27
+        },
+        {
+          "name": "collect",
+          "line": 30,
+          "end": 95
+        },
+        {
+          "name": "markdown",
+          "line": 98,
+          "end": 109
+        },
+        {
+          "name": "report_markdown",
+          "line": 112,
+          "end": 121
+        },
+        {
+          "name": "inside",
+          "line": 34,
+          "end": 35
+        },
+        {
+          "name": "fetch",
+          "line": 36,
+          "end": 40
+        },
+        {
+          "name": "authored",
+          "line": 79,
+          "end": 80
+        }
+      ]
+    },
+    "foss8/check.py": {
+      "lines": 145,
+      "definitions": [
+        {
+          "name": "load_result_items",
+          "line": 38,
+          "end": 80
+        },
+        {
+          "name": "format_result_items",
+          "line": 83,
+          "end": 104
+        },
+        {
+          "name": "check_required_files",
+          "line": 106,
+          "end": 134
+        },
+        {
+          "name": "format_file_results",
+          "line": 136,
+          "end": 145
+        }
+      ]
+    },
+    "foss8/cli.py": {
+      "lines": 176,
+      "definitions": [
+        {
+          "name": "RequestError",
+          "line": 12,
+          "end": 15
+        },
+        {
+          "name": "Arguments",
+          "line": 18,
+          "end": 20
+        },
+        {
+          "name": "parser",
+          "line": 23,
+          "end": 61
+        },
+        {
+          "name": "emit",
+          "line": 64,
+          "end": 65
+        },
+        {
+          "name": "main",
+          "line": 68,
+          "end": 176
+        },
+        {
+          "name": "__init__",
+          "line": 13,
+          "end": 15
+        },
+        {
+          "name": "error",
+          "line": 19,
+          "end": 20
+        }
+      ]
+    },
+    "foss8/guide.py": {
+      "lines": 201,
+      "definitions": [
+        {
+          "name": "plain",
+          "line": 28,
+          "end": 30
+        },
+        {
+          "name": "folded",
+          "line": 33,
+          "end": 34
+        },
+        {
+          "name": "Table",
+          "line": 37,
+          "end": 76
+        },
+        {
+          "name": "display_markdown",
+          "line": 79,
+          "end": 104
+        },
+        {
+          "name": "Document",
+          "line": 108,
+          "end": 112
+        },
+        {
+          "name": "Catalog",
+          "line": 115,
+          "end": 201
+        },
+        {
+          "name": "__init__",
+          "line": 39,
+          "end": 41
+        },
+        {
+          "name": "handle_starttag",
+          "line": 43,
+          "end": 52
+        },
+        {
+          "name": "handle_endtag",
+          "line": 54,
+          "end": 63
+        },
+        {
+          "name": "handle_data",
+          "line": 65,
+          "end": 67
+        },
+        {
+          "name": "markdown",
+          "line": 69,
+          "end": 76
+        },
+        {
+          "name": "narrative",
+          "line": 82,
+          "end": 90
+        },
+        {
+          "name": "__init__",
+          "line": 116,
+          "end": 128
+        },
+        {
+          "name": "resolve",
+          "line": 130,
+          "end": 140
+        },
+        {
+          "name": "reference",
+          "line": 142,
+          "end": 149
+        },
+        {
+          "name": "show",
+          "line": 151,
+          "end": 157
+        },
+        {
+          "name": "listing",
+          "line": 159,
+          "end": 160
+        },
+        {
+          "name": "search",
+          "line": 162,
+          "end": 201
+        },
+        {
+          "name": "table",
+          "line": 83,
+          "end": 86
+        },
+        {
+          "name": "rank",
+          "line": 196,
+          "end": 199
+        }
+      ]
+    },
+    "foss8/minutes.py": {
+      "lines": 281,
+      "definitions": [
+        {
+          "name": "today",
+          "line": 16,
+          "end": 17
+        },
+        {
+          "name": "Cycle",
+          "line": 21,
+          "end": 26
+        },
+        {
+          "name": "cycles",
+          "line": 29,
+          "end": 52
+        },
+        {
+          "name": "select_cycle",
+          "line": 55,
+          "end": 68
+        },
+        {
+          "name": "filename_part",
+          "line": 71,
+          "end": 74
+        },
+        {
+          "name": "save_file",
+          "line": 77,
+          "end": 93
+        },
+        {
+          "name": "project_root",
+          "line": 96,
+          "end": 98
+        },
+        {
+          "name": "normalize_config",
+          "line": 101,
+          "end": 121
+        },
+        {
+          "name": "load_config",
+          "line": 124,
+          "end": 157
+        },
+        {
+          "name": "calendar_period",
+          "line": 160,
+          "end": 179
+        },
+        {
+          "name": "checklist",
+          "line": 182,
+          "end": 199
+        },
+        {
+          "name": "draft",
+          "line": 202,
+          "end": 247
+        },
+        {
+          "name": "create",
+          "line": 250,
+          "end": 256
+        },
+        {
+          "name": "carry_previous",
+          "line": 259,
+          "end": 281
+        }
+      ]
+    },
+    "foss8/minutes_pdf.py": {
+      "lines": 171,
+      "definitions": [
+        {
+          "name": "inline",
+          "line": 44,
+          "end": 61
+        },
+        {
+          "name": "cells",
+          "line": 64,
+          "end": 65
+        },
+        {
+          "name": "to_html",
+          "line": 68,
+          "end": 112
+        },
+        {
+          "name": "submission_info",
+          "line": 115,
+          "end": 128
+        },
+        {
+          "name": "browser_path",
+          "line": 131,
+          "end": 138
+        },
+        {
+          "name": "export",
+          "line": 141,
+          "end": 171
+        },
+        {
+          "name": "stash",
+          "line": 47,
+          "end": 49
+        },
+        {
+          "name": "link",
+          "line": 52,
+          "end": 56
+        }
+      ]
+    },
+    "foss8/templates.py": {
+      "lines": 143,
+      "definitions": [
+        {
+          "name": "cell",
+          "line": 20,
+          "end": 23
+        },
+        {
+          "name": "code_blocks",
+          "line": 26,
+          "end": 39
+        },
+        {
+          "name": "blank_minutes",
+          "line": 42,
+          "end": 68
+        },
+        {
+          "name": "minutes",
+          "line": 71,
+          "end": 80
+        },
+        {
+          "name": "report",
+          "line": 83,
+          "end": 126
+        },
+        {
+          "name": "get",
+          "line": 129,
+          "end": 133
+        },
+        {
+          "name": "fill_report",
+          "line": 136,
+          "end": 143
+        },
+        {
+          "name": "portable_links",
+          "line": 92,
+          "end": 95
+        }
+      ]
+    },
+    "foss8/weeks.py": {
+      "lines": 66,
+      "definitions": [
+        {
+          "name": "cell",
+          "line": 5,
+          "end": 8
+        },
+        {
+          "name": "roadmap",
+          "line": 10,
+          "end": 36
+        },
+        {
+          "name": "get_this_week",
+          "line": 38,
+          "end": 41
+        },
+        {
+          "name": "get_weekly_item",
+          "line": 43,
+          "end": 60
+        },
+        {
+          "name": "result_line",
+          "line": 62,
+          "end": 66
+        }
+      ]
+    }
+  },
+  "prototype": {
+    "foss8/__init__.py": {
+      "lines": 3,
+      "definitions": []
+    },
+    "foss8/__main__.py": {
+      "lines": 3,
+      "definitions": []
+    },
+    "foss8/assessments.py": {
+      "lines": 167,
+      "definitions": [
+        {
+          "name": "Criterion",
+          "line": 11,
+          "end": 17
+        },
+        {
+          "name": "monday",
+          "line": 29,
+          "end": 30
+        },
+        {
+          "name": "read",
+          "line": 33,
+          "end": 47
+        },
+        {
+          "name": "validate_counts",
+          "line": 50,
+          "end": 54
+        },
+        {
+          "name": "WeeklyAssessment",
+          "line": 58,
+          "end": 123
+        },
+        {
+          "name": "Store",
+          "line": 126,
+          "end": 167
+        },
+        {
+          "name": "end",
+          "line": 65,
+          "end": 66
+        },
+        {
+          "name": "exempt",
+          "line": 69,
+          "end": 70
+        },
+        {
+          "name": "exam_overlap",
+          "line": 73,
+          "end": 74
+        },
+        {
+          "name": "active_ranges",
+          "line": 76,
+          "end": 88
+        },
+        {
+          "name": "scheduled_criteria",
+          "line": 91,
+          "end": 94
+        },
+        {
+          "name": "criteria",
+          "line": 97,
+          "end": 98
+        },
+        {
+          "name": "lifecycle",
+          "line": 100,
+          "end": 101
+        },
+        {
+          "name": "status",
+          "line": 103,
+          "end": 115
+        },
+        {
+          "name": "line",
+          "line": 117,
+          "end": 123
+        },
+        {
+          "name": "__init__",
+          "line": 127,
+          "end": 134
+        },
+        {
+          "name": "bundle",
+          "line": 136,
+          "end": 138
+        },
+        {
+          "name": "for_period",
+          "line": 140,
+          "end": 145
+        },
+        {
+          "name": "record",
+          "line": 147,
+          "end": 148
+        },
+        {
+          "name": "save",
+          "line": 150,
+          "end": 167
+        }
+      ]
+    },
+    "foss8/check.py": {
+      "lines": 0,
+      "definitions": []
+    },
+    "foss8/cli.py": {
+      "lines": 126,
+      "definitions": [
+        {
+          "name": "RequestError",
+          "line": 12,
+          "end": 15
+        },
+        {
+          "name": "Arguments",
+          "line": 18,
+          "end": 20
+        },
+        {
+          "name": "parser",
+          "line": 23,
+          "end": 77
+        },
+        {
+          "name": "emit",
+          "line": 80,
+          "end": 81
+        },
+        {
+          "name": "main",
+          "line": 84,
+          "end": 126
+        },
+        {
+          "name": "__init__",
+          "line": 13,
+          "end": 15
+        },
+        {
+          "name": "error",
+          "line": 19,
+          "end": 20
+        }
+      ]
+    },
+    "foss8/discovery.py": {
+      "lines": 306,
+      "definitions": [
+        {
+          "name": "Result",
+          "line": 15,
+          "end": 18
+        },
+        {
+          "name": "clean",
+          "line": 21,
+          "end": 24
+        },
+        {
+          "name": "repository_url",
+          "line": 27,
+          "end": 40
+        },
+        {
+          "name": "table_members",
+          "line": 43,
+          "end": 76
+        },
+        {
+          "name": "detect",
+          "line": 79,
+          "end": 231
+        },
+        {
+          "name": "merge",
+          "line": 234,
+          "end": 256
+        },
+        {
+          "name": "differences",
+          "line": 263,
+          "end": 271
+        },
+        {
+          "name": "apply_changes",
+          "line": 274,
+          "end": 282
+        },
+        {
+          "name": "describe",
+          "line": 285,
+          "end": 306
+        },
+        {
+          "name": "command",
+          "line": 83,
+          "end": 100
+        },
+        {
+          "name": "field",
+          "line": 59,
+          "end": 61
+        }
+      ]
+    },
+    "foss8/github_activity.py": {
+      "lines": 120,
+      "definitions": [
+        {
+          "name": "Result",
+          "line": 15,
+          "end": 18
+        },
+        {
+          "name": "requirements",
+          "line": 21,
+          "end": 29
+        },
+        {
+          "name": "collect",
+          "line": 32,
+          "end": 120
+        },
+        {
+          "name": "bounds",
+          "line": 48,
+          "end": 49
+        },
+        {
+          "name": "api",
+          "line": 52,
+          "end": 71
+        },
+        {
+          "name": "listing",
+          "line": 73,
+          "end": 77
+        },
+        {
+          "name": "search",
+          "line": 79,
+          "end": 92
+        }
+      ]
+    },
+    "foss8/guide.py": {
+      "lines": 201,
+      "definitions": [
+        {
+          "name": "plain",
+          "line": 28,
+          "end": 30
+        },
+        {
+          "name": "folded",
+          "line": 33,
+          "end": 34
+        },
+        {
+          "name": "Table",
+          "line": 37,
+          "end": 76
+        },
+        {
+          "name": "display_markdown",
+          "line": 79,
+          "end": 104
+        },
+        {
+          "name": "Document",
+          "line": 108,
+          "end": 112
+        },
+        {
+          "name": "Catalog",
+          "line": 115,
+          "end": 201
+        },
+        {
+          "name": "__init__",
+          "line": 39,
+          "end": 41
+        },
+        {
+          "name": "handle_starttag",
+          "line": 43,
+          "end": 52
+        },
+        {
+          "name": "handle_endtag",
+          "line": 54,
+          "end": 63
+        },
+        {
+          "name": "handle_data",
+          "line": 65,
+          "end": 67
+        },
+        {
+          "name": "markdown",
+          "line": 69,
+          "end": 76
+        },
+        {
+          "name": "narrative",
+          "line": 82,
+          "end": 90
+        },
+        {
+          "name": "__init__",
+          "line": 116,
+          "end": 128
+        },
+        {
+          "name": "resolve",
+          "line": 130,
+          "end": 140
+        },
+        {
+          "name": "reference",
+          "line": 142,
+          "end": 149
+        },
+        {
+          "name": "show",
+          "line": 151,
+          "end": 157
+        },
+        {
+          "name": "listing",
+          "line": 159,
+          "end": 160
+        },
+        {
+          "name": "search",
+          "line": 162,
+          "end": 201
+        },
+        {
+          "name": "table",
+          "line": 83,
+          "end": 86
+        },
+        {
+          "name": "rank",
+          "line": 196,
+          "end": 199
+        }
+      ]
+    },
+    "foss8/minutes.py": {
+      "lines": 160,
+      "definitions": [
+        {
+          "name": "Cycle",
+          "line": 15,
+          "end": 20
+        },
+        {
+          "name": "cycles",
+          "line": 23,
+          "end": 30
+        },
+        {
+          "name": "select_cycle",
+          "line": 33,
+          "end": 45
+        },
+        {
+          "name": "filename_part",
+          "line": 48,
+          "end": 51
+        },
+        {
+          "name": "save_file",
+          "line": 54,
+          "end": 70
+        },
+        {
+          "name": "checklist",
+          "line": 73,
+          "end": 86
+        },
+        {
+          "name": "draft",
+          "line": 89,
+          "end": 139
+        },
+        {
+          "name": "create",
+          "line": 142,
+          "end": 148
+        },
+        {
+          "name": "run",
+          "line": 151,
+          "end": 160
+        }
+      ]
+    },
+    "foss8/minutes_pdf.py": {
+      "lines": 171,
+      "definitions": [
+        {
+          "name": "inline",
+          "line": 44,
+          "end": 61
+        },
+        {
+          "name": "cells",
+          "line": 64,
+          "end": 65
+        },
+        {
+          "name": "to_html",
+          "line": 68,
+          "end": 112
+        },
+        {
+          "name": "submission_info",
+          "line": 115,
+          "end": 128
+        },
+        {
+          "name": "browser_path",
+          "line": 131,
+          "end": 138
+        },
+        {
+          "name": "export",
+          "line": 141,
+          "end": 171
+        },
+        {
+          "name": "stash",
+          "line": 47,
+          "end": 49
+        },
+        {
+          "name": "link",
+          "line": 52,
+          "end": 56
+        }
+      ]
+    },
+    "foss8/progress.py": {
+      "lines": 68,
+      "definitions": [
+        {
+          "name": "context",
+          "line": 8,
+          "end": 11
+        },
+        {
+          "name": "read",
+          "line": 14,
+          "end": 26
+        },
+        {
+          "name": "write",
+          "line": 29,
+          "end": 42
+        },
+        {
+          "name": "Progress",
+          "line": 45,
+          "end": 68
+        },
+        {
+          "name": "__init__",
+          "line": 46,
+          "end": 53
+        },
+        {
+          "name": "done",
+          "line": 55,
+          "end": 56
+        },
+        {
+          "name": "toggle",
+          "line": 58,
+          "end": 68
+        }
+      ]
+    },
+    "foss8/team.py": {
+      "lines": 278,
+      "definitions": [
+        {
+          "name": "config_path",
+          "line": 23,
+          "end": 29
+        },
+        {
+          "name": "text",
+          "line": 32,
+          "end": 38
+        },
+        {
+          "name": "validate",
+          "line": 41,
+          "end": 118
+        },
+        {
+          "name": "load",
+          "line": 121,
+          "end": 123
+        },
+        {
+          "name": "save",
+          "line": 126,
+          "end": 140
+        },
+        {
+          "name": "bindings",
+          "line": 143,
+          "end": 156
+        },
+        {
+          "name": "apply",
+          "line": 159,
+          "end": 169
+        },
+        {
+          "name": "setup",
+          "line": 172,
+          "end": 202
+        },
+        {
+          "name": "run",
+          "line": 205,
+          "end": 278
+        },
+        {
+          "name": "visit",
+          "line": 161,
+          "end": 168
+        },
+        {
+          "name": "ask",
+          "line": 174,
+          "end": 178
+        }
+      ]
+    },
+    "foss8/templates.py": {
+      "lines": 146,
+      "definitions": [
+        {
+          "name": "cell",
+          "line": 20,
+          "end": 23
+        },
+        {
+          "name": "code_blocks",
+          "line": 26,
+          "end": 39
+        },
+        {
+          "name": "blank_minutes",
+          "line": 42,
+          "end": 68
+        },
+        {
+          "name": "minutes",
+          "line": 71,
+          "end": 80
+        },
+        {
+          "name": "report",
+          "line": 83,
+          "end": 125
+        },
+        {
+          "name": "get",
+          "line": 128,
+          "end": 146
+        },
+        {
+          "name": "portable_links",
+          "line": 92,
+          "end": 95
+        }
+      ]
+    },
+    "foss8/tui.py": {
+      "lines": 942,
+      "definitions": [
+        {
+          "name": "clip",
+          "line": 19,
+          "end": 25
+        },
+        {
+          "name": "put",
+          "line": 28,
+          "end": 35
+        },
+        {
+          "name": "evaluation_groups",
+          "line": 38,
+          "end": 44
+        },
+        {
+          "name": "task_detail",
+          "line": 47,
+          "end": 88
+        },
+        {
+          "name": "Setting",
+          "line": 92,
+          "end": 97
+        },
+        {
+          "name": "App",
+          "line": 100,
+          "end": 787
+        },
+        {
+          "name": "choose",
+          "line": 793,
+          "end": 818
+        },
+        {
+          "name": "edit_text",
+          "line": 821,
+          "end": 867
+        },
+        {
+          "name": "edit_form",
+          "line": 870,
+          "end": 911
+        },
+        {
+          "name": "run",
+          "line": 914,
+          "end": 942
+        },
+        {
+          "name": "add",
+          "line": 52,
+          "end": 53
+        },
+        {
+          "name": "walk",
+          "line": 68,
+          "end": 83
+        },
+        {
+          "name": "__init__",
+          "line": 101,
+          "end": 126
+        },
+        {
+          "name": "period",
+          "line": 129,
+          "end": 130
+        },
+        {
+          "name": "selection_key",
+          "line": 133,
+          "end": 134
+        },
+        {
+          "name": "settings",
+          "line": 136,
+          "end": 162
+        },
+        {
+          "name": "items",
+          "line": 164,
+          "end": 185
+        },
+        {
+          "name": "index",
+          "line": 187,
+          "end": 190
+        },
+        {
+          "name": "move",
+          "line": 192,
+          "end": 194
+        },
+        {
+          "name": "done",
+          "line": 196,
+          "end": 199
+        },
+        {
+          "name": "toggle_completion",
+          "line": 201,
+          "end": 210
+        },
+        {
+          "name": "assessment_detail",
+          "line": 212,
+          "end": 235
+        },
+        {
+          "name": "edit_assessment",
+          "line": 237,
+          "end": 265
+        },
+        {
+          "name": "adjust_assessment",
+          "line": 267,
+          "end": 288
+        },
+        {
+          "name": "change_period",
+          "line": 290,
+          "end": 292
+        },
+        {
+          "name": "activity_key",
+          "line": 294,
+          "end": 295
+        },
+        {
+          "name": "start_activity",
+          "line": 297,
+          "end": 317
+        },
+        {
+          "name": "poll_activity",
+          "line": 319,
+          "end": 337
+        },
+        {
+          "name": "open_required_setting",
+          "line": 339,
+          "end": 346
+        },
+        {
+          "name": "choose_period",
+          "line": 348,
+          "end": 353
+        },
+        {
+          "name": "create_minutes",
+          "line": 355,
+          "end": 362
+        },
+        {
+          "name": "minutes_action",
+          "line": 364,
+          "end": 389
+        },
+        {
+          "name": "save",
+          "line": 391,
+          "end": 396
+        },
+        {
+          "name": "start_discovery",
+          "line": 398,
+          "end": 410
+        },
+        {
+          "name": "poll_discovery",
+          "line": 412,
+          "end": 430
+        },
+        {
+          "name": "setting_detail",
+          "line": 432,
+          "end": 467
+        },
+        {
+          "name": "draw",
+          "line": 469,
+          "end": 589
+        },
+        {
+          "name": "handle",
+          "line": 591,
+          "end": 658
+        },
+        {
+          "name": "mouse",
+          "line": 660,
+          "end": 683
+        },
+        {
+          "name": "edit_setting",
+          "line": 685,
+          "end": 768
+        },
+        {
+          "name": "delete_setting",
+          "line": 770,
+          "end": 787
+        },
+        {
+          "name": "main",
+          "line": 918,
+          "end": 938
+        },
+        {
+          "name": "submit",
+          "line": 257,
+          "end": 264
+        },
+        {
+          "name": "work",
+          "line": 311,
+          "end": 316
+        },
+        {
+          "name": "submit",
+          "line": 356,
+          "end": 361
+        },
+        {
+          "name": "work",
+          "line": 405,
+          "end": 409
+        },
+        {
+          "name": "submit",
+          "line": 721,
+          "end": 732
+        },
+        {
+          "name": "submit",
+          "line": 737,
+          "end": 743
+        }
+      ]
+    },
+    "foss8/weeks.py": {
+      "lines": 299,
+      "definitions": [
+        {
+          "name": "load",
+          "line": 11,
+          "end": 29
+        },
+        {
+          "name": "view_tasks",
+          "line": 32,
+          "end": 33
+        },
+        {
+          "name": "timing_marker",
+          "line": 36,
+          "end": 37
+        },
+        {
+          "name": "timing_notes",
+          "line": 40,
+          "end": 49
+        },
+        {
+          "name": "today",
+          "line": 52,
+          "end": 53
+        },
+        {
+          "name": "select",
+          "line": 56,
+          "end": 75
+        },
+        {
+          "name": "entries",
+          "line": 78,
+          "end": 88
+        },
+        {
+          "name": "parse_path",
+          "line": 91,
+          "end": 96
+        },
+        {
+          "name": "resolve",
+          "line": 99,
+          "end": 106
+        },
+        {
+          "name": "plain",
+          "line": 109,
+          "end": 110
+        },
+        {
+          "name": "_width",
+          "line": 113,
+          "end": 114
+        },
+        {
+          "name": "wrapped",
+          "line": 117,
+          "end": 128
+        },
+        {
+          "name": "heading",
+          "line": 131,
+          "end": 134
+        },
+        {
+          "name": "render",
+          "line": 137,
+          "end": 164
+        },
+        {
+          "name": "listing",
+          "line": 167,
+          "end": 172
+        },
+        {
+          "name": "expandable",
+          "line": 175,
+          "end": 176
+        },
+        {
+          "name": "open_path",
+          "line": 179,
+          "end": 181
+        },
+        {
+          "name": "toggle_paths",
+          "line": 184,
+          "end": 194
+        },
+        {
+          "name": "render_tree",
+          "line": 197,
+          "end": 219
+        },
+        {
+          "name": "browse",
+          "line": 222,
+          "end": 265
+        },
+        {
+          "name": "run",
+          "line": 268,
+          "end": 299
+        },
+        {
+          "name": "draw",
+          "line": 200,
+          "end": 214
+        }
+      ]
+    }
+  },
+  "guide-tool": {
+    "foss8/__init__.py": {
+      "lines": 3,
+      "definitions": []
+    },
+    "foss8/__main__.py": {
+      "lines": 3,
+      "definitions": []
+    },
+    "foss8/cli.py": {
+      "lines": 226,
+      "definitions": [
+        {
+          "name": "RequestError",
+          "line": 19,
+          "end": 22
+        },
+        {
+          "name": "Arguments",
+          "line": 25,
+          "end": 27
+        },
+        {
+          "name": "parser",
+          "line": 30,
+          "end": 93
+        },
+        {
+          "name": "emit",
+          "line": 96,
+          "end": 97
+        },
+        {
+          "name": "main",
+          "line": 100,
+          "end": 226
+        },
+        {
+          "name": "__init__",
+          "line": 20,
+          "end": 22
+        },
+        {
+          "name": "error",
+          "line": 26,
+          "end": 27
+        }
+      ]
+    },
+    "foss8/completion.py": {
+      "lines": 56,
+      "definitions": [
+        {
+          "name": "forms",
+          "line": 13,
+          "end": 14
+        },
+        {
+          "name": "documents",
+          "line": 17,
+          "end": 27
+        },
+        {
+          "name": "week_choices",
+          "line": 30,
+          "end": 36
+        },
+        {
+          "name": "script",
+          "line": 39,
+          "end": 40
+        },
+        {
+          "name": "install",
+          "line": 43,
+          "end": 56
+        }
+      ]
+    },
+    "foss8/focus.py": {
+      "lines": 44,
+      "definitions": [
+        {
+          "name": "next_submissions",
+          "line": 8,
+          "end": 30
+        },
+        {
+          "name": "markdown",
+          "line": 33,
+          "end": 44
+        }
+      ]
+    },
+    "foss8/guide.py": {
+      "lines": 201,
+      "definitions": [
+        {
+          "name": "plain",
+          "line": 28,
+          "end": 30
+        },
+        {
+          "name": "folded",
+          "line": 33,
+          "end": 34
+        },
+        {
+          "name": "Table",
+          "line": 37,
+          "end": 76
+        },
+        {
+          "name": "display_markdown",
+          "line": 79,
+          "end": 104
+        },
+        {
+          "name": "Document",
+          "line": 108,
+          "end": 112
+        },
+        {
+          "name": "Catalog",
+          "line": 115,
+          "end": 201
+        },
+        {
+          "name": "__init__",
+          "line": 39,
+          "end": 41
+        },
+        {
+          "name": "handle_starttag",
+          "line": 43,
+          "end": 52
+        },
+        {
+          "name": "handle_endtag",
+          "line": 54,
+          "end": 63
+        },
+        {
+          "name": "handle_data",
+          "line": 65,
+          "end": 67
+        },
+        {
+          "name": "markdown",
+          "line": 69,
+          "end": 76
+        },
+        {
+          "name": "narrative",
+          "line": 82,
+          "end": 90
+        },
+        {
+          "name": "__init__",
+          "line": 116,
+          "end": 128
+        },
+        {
+          "name": "resolve",
+          "line": 130,
+          "end": 140
+        },
+        {
+          "name": "reference",
+          "line": 142,
+          "end": 149
+        },
+        {
+          "name": "show",
+          "line": 151,
+          "end": 157
+        },
+        {
+          "name": "listing",
+          "line": 159,
+          "end": 160
+        },
+        {
+          "name": "search",
+          "line": 162,
+          "end": 201
+        },
+        {
+          "name": "table",
+          "line": 83,
+          "end": 86
+        },
+        {
+          "name": "rank",
+          "line": 196,
+          "end": 199
+        }
+      ]
+    },
+    "foss8/templates.py": {
+      "lines": 133,
+      "definitions": [
+        {
+          "name": "report",
+          "line": 9,
+          "end": 45
+        },
+        {
+          "name": "code_blocks",
+          "line": 48,
+          "end": 59
+        },
+        {
+          "name": "blank_minutes",
+          "line": 62,
+          "end": 86
+        },
+        {
+          "name": "listing",
+          "line": 89,
+          "end": 115
+        },
+        {
+          "name": "plain_heading",
+          "line": 118,
+          "end": 119
+        },
+        {
+          "name": "get",
+          "line": 122,
+          "end": 126
+        },
+        {
+          "name": "save",
+          "line": 129,
+          "end": 133
+        },
+        {
+          "name": "portable_links",
+          "line": 17,
+          "end": 18
+        }
+      ]
+    },
+    "foss8/tui.py": {
+      "lines": 482,
+      "definitions": [
+        {
+          "name": "HelpHint",
+          "line": 46,
+          "end": 56
+        },
+        {
+          "name": "HelpScreen",
+          "line": 59,
+          "end": 90
+        },
+        {
+          "name": "StartScreen",
+          "line": 93,
+          "end": 132
+        },
+        {
+          "name": "WeekScreen",
+          "line": 135,
+          "end": 197
+        },
+        {
+          "name": "FocusScreen",
+          "line": 200,
+          "end": 230
+        },
+        {
+          "name": "SaveScreen",
+          "line": 233,
+          "end": 276
+        },
+        {
+          "name": "GuideApp",
+          "line": 279,
+          "end": 482
+        },
+        {
+          "name": "__init__",
+          "line": 52,
+          "end": 53
+        },
+        {
+          "name": "show_hint",
+          "line": 55,
+          "end": 56
+        },
+        {
+          "name": "compose",
+          "line": 68,
+          "end": 86
+        },
+        {
+          "name": "action_close",
+          "line": 89,
+          "end": 90
+        },
+        {
+          "name": "compose",
+          "line": 102,
+          "end": 106
+        },
+        {
+          "name": "on_mount",
+          "line": 108,
+          "end": 109
+        },
+        {
+          "name": "action_stay",
+          "line": 111,
+          "end": 112
+        },
+        {
+          "name": "highlight",
+          "line": 115,
+          "end": 116
+        },
+        {
+          "name": "choose",
+          "line": 119,
+          "end": 132
+        },
+        {
+          "name": "__init__",
+          "line": 149,
+          "end": 152
+        },
+        {
+          "name": "compose",
+          "line": 154,
+          "end": 164
+        },
+        {
+          "name": "on_mount",
+          "line": 166,
+          "end": 167
+        },
+        {
+          "name": "update_week",
+          "line": 169,
+          "end": 172
+        },
+        {
+          "name": "selected_week",
+          "line": 175,
+          "end": 178
+        },
+        {
+          "name": "show_checklist",
+          "line": 181,
+          "end": 184
+        },
+        {
+          "name": "deadline",
+          "line": 187,
+          "end": 188
+        },
+        {
+          "name": "action_back",
+          "line": 191,
+          "end": 192
+        },
+        {
+          "name": "link",
+          "line": 195,
+          "end": 197
+        },
+        {
+          "name": "compose",
+          "line": 210,
+          "end": 217
+        },
+        {
+          "name": "save",
+          "line": 220,
+          "end": 221
+        },
+        {
+          "name": "action_back",
+          "line": 224,
+          "end": 225
+        },
+        {
+          "name": "link",
+          "line": 228,
+          "end": 230
+        },
+        {
+          "name": "__init__",
+          "line": 244,
+          "end": 246
+        },
+        {
+          "name": "compose",
+          "line": 248,
+          "end": 256
+        },
+        {
+          "name": "on_mount",
+          "line": 258,
+          "end": 259
+        },
+        {
+          "name": "cancel",
+          "line": 262,
+          "end": 263
+        },
+        {
+          "name": "save",
+          "line": 267,
+          "end": 276
+        },
+        {
+          "name": "__init__",
+          "line": 299,
+          "end": 308
+        },
+        {
+          "name": "compose",
+          "line": 310,
+          "end": 323
+        },
+        {
+          "name": "on_mount",
+          "line": 325,
+          "end": 329
+        },
+        {
+          "name": "populate",
+          "line": 331,
+          "end": 352
+        },
+        {
+          "name": "focus_changed",
+          "line": 355,
+          "end": 356
+        },
+        {
+          "name": "refresh_hint",
+          "line": 358,
+          "end": 376
+        },
+        {
+          "name": "action_help",
+          "line": 378,
+          "end": 380
+        },
+        {
+          "name": "search_changed",
+          "line": 383,
+          "end": 384
+        },
+        {
+          "name": "search_submitted",
+          "line": 387,
+          "end": 388
+        },
+        {
+          "name": "category_changed",
+          "line": 391,
+          "end": 394
+        },
+        {
+          "name": "selected",
+          "line": 397,
+          "end": 399
+        },
+        {
+          "name": "navigate",
+          "line": 401,
+          "end": 428
+        },
+        {
+          "name": "follow_link",
+          "line": 431,
+          "end": 451
+        },
+        {
+          "name": "action_search",
+          "line": 453,
+          "end": 455
+        },
+        {
+          "name": "open_browser",
+          "line": 457,
+          "end": 459
+        },
+        {
+          "name": "action_back",
+          "line": 461,
+          "end": 467
+        },
+        {
+          "name": "action_save",
+          "line": 469,
+          "end": 476
+        },
+        {
+          "name": "save_minutes",
+          "line": 478,
+          "end": 482
+        },
+        {
+          "name": "saved",
+          "line": 473,
+          "end": 475
+        },
+        {
+          "name": "saved",
+          "line": 479,
+          "end": 481
+        }
+      ]
+    },
+    "foss8/weeks.py": {
+      "lines": 87,
+      "definitions": [
+        {
+          "name": "cell",
+          "line": 8,
+          "end": 10
+        },
+        {
+          "name": "listing",
+          "line": 13,
+          "end": 55
+        },
+        {
+          "name": "default",
+          "line": 58,
+          "end": 61
+        },
+        {
+          "name": "get",
+          "line": 64,
+          "end": 73
+        },
+        {
+          "name": "markdown",
+          "line": 76,
+          "end": 87
+        }
+      ]
+    }
+  }
+}

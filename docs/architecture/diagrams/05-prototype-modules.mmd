@@ -1,0 +1,20 @@
+flowchart LR
+    cli["cli.py"] --> weeks["weeks.py · 선택·치환·텍스트 출력"]
+    cli --> team["team.py · 검증·설정 저장"]
+    cli --> minutes["minutes.py / minutes_pdf.py"]
+    weeks --> data[("data/weeks.json · 주차 작업 트리")]
+    weeks --> tui["tui.py · curses App"]
+    tui --> team
+    tui --> discovery["discovery.py · 후보 읽기·비교"]
+    tui --> progress["progress.py · 수동 완료"]
+    tui --> assessments["assessments.py · 주간 기준·횟수"]
+    tui --> github["github_activity.py · 주간 집계"]
+    tui --> minutes
+    github --> assessments
+    github --> discovery
+    discovery --> external["로컬 문서·Git·gh / GitHub"]
+    github --> external
+    team --> state[(".foss8 · team / progress / assessments JSON")]
+    progress --> state
+    assessments --> state
+    design["data/course-project.json · 설계 초안"] -.->|"실행 경로의 입력으로 미사용"| data

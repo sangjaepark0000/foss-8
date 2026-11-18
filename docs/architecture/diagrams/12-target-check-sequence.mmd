@@ -1,0 +1,27 @@
+sequenceDiagram
+    actor user as 사용자
+    participant ui as CLI 또는 TUI
+    participant use as 사용 사례 모듈
+    participant collector as 수집 어댑터
+    participant store as 기록 저장
+    participant policy as 적용 정책
+    participant eval as 판정 모듈
+    user->>ui: collect(project, period)
+    ui->>use: 수집 요청
+    use->>collector: 대상·범위·작성자·시각
+    collector-->>use: 관측과 범위별 성공·누락·오류
+    use->>store: 새 evidence batch 저장
+    use-->>ui: 수집 상태와 기존 증거의 최신성
+    user->>ui: check(project, period)
+    ui->>use: 점검 요청
+    use->>policy: 기준 버전·승인·기간으로 적용 건 해석
+    policy-->>use: 적용 건 또는 미확정 정책
+    use->>store: 사용할 증거 스냅샷 읽기
+    store-->>use: 증거와 coverage
+    use->>eval: 적용 건·정책·증거·기준 시각
+    eval-->>use: 결과·이유·미확정 사항
+    use->>store: 판정과 사용 버전 저장
+    use-->>ui: 판정 목록과 assessment_id
+    user->>ui: explain(assessment_id)
+    ui->>store: 판정·정책·근거 조회
+    store-->>ui: 재현 가능한 설명

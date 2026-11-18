@@ -1,0 +1,13 @@
+flowchart LR
+    source["원문·버전·절·쪽수"] --> rule["기준 정의"]
+    approval["승인된 팀 변경·근거"] --> binding["적용 정책 확정"]
+    rule --> binding
+    context["프로젝트·대상 개인 또는 팀"] --> binding
+    period["활동 구간·면제·마감"] --> binding
+    binding --> obligation["적용 건 · 안정 ID"]
+    observation["GitHub 관측·수동 확인·제출 증거"] --> snapshot["증거 스냅샷·수집 범위"]
+    obligation --> assessment["판정 · 이유·증거·버전"]
+    snapshot --> assessment
+    obligation --> action["수행할 작업·담당·선행 조건"]
+    assessment --> views["지금 할 일·주차·개인·제출물별 뷰"]
+    action --> views

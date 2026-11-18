@@ -1,0 +1,30 @@
+flowchart LR
+    subgraph current["현재 자산"]
+        guide["Catalog·원문·source-map"]
+        week["주차 JSON·기간 계산·이월 키"]
+        criteria["평가표 파서·CRITERIA 상수"]
+        collect["두 GitHub 수집 구현"]
+        records["progress / assessments JSON"]
+        docs["templates·minutes·PDF"]
+        ui["CLI 분기·curses·Textual"]
+    end
+    subgraph target["이동할 책임"]
+        source["버전 있는 기준·근거"]
+        binding["일정 정책·적용 건"]
+        evidence["수집 범위가 있는 증거 스냅샷"]
+        state["수동 실행 기록·판정 이력"]
+        artifact["산출물·제출 흐름"]
+        cases["공통 사용 사례와 조회 뷰"]
+    end
+    guide --> source
+    criteria --> source
+    week --> binding
+    source --> binding
+    collect --> evidence
+    records --> state
+    evidence --> state
+    docs --> artifact
+    binding --> cases
+    state --> cases
+    artifact --> cases
+    ui -->|"입출력·포커스만 남김"| cases

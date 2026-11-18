@@ -1,0 +1,11 @@
+flowchart TB
+    repo["foss-8 저장소"]
+    repo --> mainBranch["main · 8e6ea27"]
+    repo --> protoBranch["prototype · 8fc2ae6"]
+    repo --> toolBranch["feature/guide-tool · d1a5a39"]
+    mainBranch --> mainProduct["CLI · 서식 · 활동 JSON · 회의록 PDF · 파일 검사"]
+    protoBranch --> protoProduct["curses TUI · 주차 작업 · 수동 완료 · 주간 활동 집계 · 팀 설정"]
+    toolBranch --> toolProduct["Textual TUI · 안내서 탐색 · 검색 · 양식 저장"]
+    proposal["이 대화의 목표 설계 · 미구현"] -.-> mainProduct
+    proposal -.-> protoProduct
+    proposal -.-> toolProduct

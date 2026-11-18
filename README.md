@@ -163,3 +163,7 @@ python main.py check --help             # 옵션 확인
 python -m unittest discover -s tests -v
 python scripts/check_guide.py
 ```
+
+## 모델과 사용 흐름 다이어그램
+
+[현재 구현·목표 설계 다이어그램 지도](docs/architecture/README.md)에서 브랜치별 구조, 도메인 모델, CLI/TUI 흐름, 증거·판정·제출 상태와 이동 계획을 확인할 수 있습니다. 현재 구현과 미구현 제안을 구분하며 [그림 모음](docs/architecture/index.html)은 로컬에서 열 수 있습니다.

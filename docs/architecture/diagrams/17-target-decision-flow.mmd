@@ -1,0 +1,18 @@
+flowchart TB
+    request["적용 건과 기준 시각"] --> policy{"규칙·승인·기간 정책이 확정됐나"}
+    policy -->|"아니오"| unclear["기준 확인 필요 · 질문과 근거"]
+    policy -->|"예"| applies{"이 대상·기간에 적용되나"}
+    applies -->|"아니오"| na["해당 없음 · 사유"]
+    applies -->|"예"| coverage{"증거 범위·최신성·필수 수동 확인이 충분한가"}
+    coverage -->|"아니오"| unknown["확인 필요 · 부족한 증거"]
+    coverage -->|"예"| satisfied{"완료 조건을 만족하나"}
+    satisfied -->|"예"| pass["충족 · 근거 목록"]
+    satisfied -->|"아니오"| open{"수행·평가 구간이 남았나"}
+    open -->|"예"| ongoing["진행 중 · 남은 행동"]
+    open -->|"아니오"| fail["미충족 · 미달 조건"]
+    pass --> record["판정·이유·정책 버전·증거 스냅샷 저장"]
+    ongoing --> record
+    fail --> record
+    unknown --> record
+    na --> record
+    unclear --> record

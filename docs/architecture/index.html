@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>foss-8 · 모델과 사용 흐름</title>
+<style>
+:root { color-scheme:light; --paper:#f7f8fa; --ink:#182334; --muted:#536277; --line:#d9e0e8; --accent:#2458a4; }
+* {box-sizing:border-box} html {scroll-behavior:smooth} body {margin:0;background:var(--paper);color:var(--ink);font:16px/1.65 system-ui,'Noto Sans CJK KR',sans-serif}
+a {color:var(--accent);text-underline-offset:3px} header {padding:48px clamp(20px,5vw,64px) 28px;border-bottom:1px solid var(--line)}
+h1 {font-size:clamp(28px,4vw,44px);line-height:1.2;margin:8px 0 18px;letter-spacing:-.045em} h2 {font-size:25px;line-height:1.4;margin:0 0 10px;letter-spacing:-.025em}
+header p {max-width:820px;margin:10px 0}.eyebrow {font-size:12px;font-weight:700;letter-spacing:.08em;color:var(--muted);margin:0 0 10px}
+.filters {display:flex;gap:8px;flex-wrap:wrap;margin:22px 0 0} button {font:inherit;border:1px solid var(--line);background:transparent;padding:8px 15px;border-radius:6px;cursor:pointer}button[aria-pressed=true] {background:var(--ink);color:white;border-color:var(--ink)}
+.layout {display:grid;grid-template-columns:240px minmax(0,1fr);max-width:1600px;margin:auto} nav {padding:28px 20px;position:sticky;top:0;align-self:start;max-height:100vh;overflow:auto;font-size:13px}nav a {display:block;text-decoration:none;padding:7px 3px;border-bottom:1px solid var(--line)}
+main {min-width:0;padding:0 38px 60px}section {padding:40px 0;border-bottom:1px solid var(--line);scroll-margin-top:18px}section[hidden],nav a[hidden] {display:none}
+.question {color:var(--muted);margin-top:0} figure {background:white;margin:22px 0;padding:20px 12px;overflow:auto}figure img {display:block;max-width:100%;height:auto;margin:auto}section[id="10-target-erd"] figure img {min-height:520px}
+.caveat {font-size:14px;color:var(--muted)} .links {font-size:14px}details {font-size:13px}summary {cursor:pointer}code {font-size:.88em}footer {padding:24px;color:var(--muted);font-size:13px}
+@media(max-width:850px){.layout{grid-template-columns:1fr}nav{position:static;max-height:none;display:flex;flex-wrap:wrap;gap:6px;padding:16px}nav a{border:1px solid var(--line);padding:5px 8px}main{padding:0 20px 40px}figure{padding:10px 0}section{padding:26px 0}section[id="10-target-erd"] figure img{min-height:0}}
+@media print {nav,.filters,.links{display:none}.layout{display:block}main{padding:0}header{padding:10px}section{break-inside:avoid}section[hidden]{display:block}}
+</style></head><body>
+<header><p class="eyebrow">FOSS-8 · ARCHITECTURE ATLAS · 2026-11-15</p><h1>모델과 사용 흐름</h1>
+<p>현재의 main·prototype과 대화에서 논의한 목표 설계를 함께 본다. 그림은 실제 구현과 미구현 제안을 구분한다.</p>
+<p><strong>추천 순서:</strong> 09 목표 도메인 → 06 현재 모델 → 10 목표 ERD → 07 현재 흐름 → 14 목표 흐름 → 17 판정 → 18 이동 지도.</p>
+<p><a href="README.md">전체 문서</a> · <a href="COMPARISON.md">모델·사용 흐름 비교와 결정표</a></p>
+<div class="filters" role="group" aria-label="도표 범위"><button type="button" data-filter="all" aria-pressed="true">전체 19개</button><button type="button" data-filter="current" aria-pressed="false">현재 구현</button><button type="button" data-filter="target" aria-pressed="false">목표 설계</button><button type="button" data-filter="comparison" aria-pressed="false">비교·이동</button></div></header>
+<div class="layout"><nav aria-label="다이어그램 목차"><a href="#00-repository-scopes" data-group="current">현재 저장소의 세 구현 범위</a><a href="#01-main-modules" data-group="current">main의 실제 모듈과 의존성</a><a href="#02-main-information-model" data-group="current">main의 실제 정보 모델</a><a href="#03-main-cli-flow" data-group="current">main의 현재 사용자 흐름</a><a href="#04-main-evidence-document-sequence" data-group="current">main의 활동 수집·문서 생성 시퀀스</a><a href="#05-prototype-modules" data-group="current">prototype의 실제 모듈 구조</a><a href="#06-prototype-information-model" data-group="current">prototype의 현재 데이터·식별 모델</a><a href="#07-prototype-user-flow" data-group="current">prototype의 현재 사용자 흐름</a><a href="#08-prototype-sync-state" data-group="current">prototype의 현재 집계 상태 전이</a><a href="#09-target-domain" data-group="target">목표 도메인: 기준을 적용하고 근거로 설명하기</a><a href="#10-target-erd" data-group="target">목표 ERD: 적용 건·증거·판정의 식별</a><a href="#11-target-modules" data-group="target">목표 모듈과 네 레이어</a><a href="#12-target-check-sequence" data-group="target">목표 수집·점검·설명 시퀀스</a><a href="#13-target-cli-flow" data-group="target">목표 CLI의 작업 흐름</a><a href="#14-target-tui-flow" data-group="target">목표 TUI: 사용자 목적에서 근거까지</a><a href="#15-target-submission-state" data-group="target">목표 산출물·제출 상태</a><a href="#16-target-evidence-state" data-group="target">목표 증거 수집·정정 상태</a><a href="#17-target-decision-flow" data-group="target">목표 판정 결정 흐름</a><a href="#18-migration-map" data-group="comparison">현재 구현에서 목표 모델로 옮기는 지도</a></nav><main><section id="00-repository-scopes" data-group="current">
+<p class="eyebrow">현재 구현 · 00</p>
+<h2>현재 저장소의 세 구현 범위</h2><p class="question">어느 브랜치의 기능을 현재 구현이라고 부르는가?</p>
+<figure><a href="rendered/00-repository-scopes.svg" target="_blank" aria-label="현재 저장소의 세 구현 범위 크게 보기"><img src="rendered/00-repository-scopes.svg" alt="현재 저장소의 세 구현 범위" loading="lazy"></a></figure>
+<p>main, prototype, guide-tool은 서로 다른 실행 제품이다. 이 문서는 셋을 합쳐 이미 구현된 하나의 앱처럼 표시하지 않는다.</p>
+<p class="caveat">세 선은 기능 범위의 분기이며 Git ancestry·병합 관계를 뜻하지 않는다. 원격 조회일은 2026-11-15이다.</p>
+<p class="links"><a href="rendered/00-repository-scopes.svg" target="_blank">SVG 크게 보기</a> · <a href="diagrams/00-repository-scopes.mmd">Mermaid 원본</a></p>
+<details><summary>구현 근거</summary><ul><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/cli.py#L23" target="_blank" rel="noreferrer">main: foss8/cli.py:23 · parser</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/cli.py#L23" target="_blank" rel="noreferrer">prototype: foss8/cli.py:23 · parser</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/d1a5a39c963e6ef1f38f2341e3c42259e1ae12a6/foss8/cli.py#L30" target="_blank" rel="noreferrer">guide-tool: foss8/cli.py:30 · parser</a></li></ul></details></section>
+<section id="01-main-modules" data-group="current">
+<p class="eyebrow">현재 구현 · 01</p>
+<h2>main의 실제 모듈과 의존성</h2><p class="question">현재 CLI 기능은 어떤 모듈을 호출하는가?</p>
+<figure><a href="rendered/01-main-modules.svg" target="_blank" aria-label="main의 실제 모듈과 의존성 크게 보기"><img src="rendered/01-main-modules.svg" alt="main의 실제 모듈과 의존성" loading="lazy"></a></figure>
+<p>CLI main()에 명령 분기와 조립이 모인다. 공통 원문은 Catalog가 읽고, 일정·평가·서식이 각자 표를 해석한다.</p>
+<p class="caveat">main에는 TUI 실행 분기가 없다. Catalog의 검색 메서드가 존재하는 것과 CLI에 guide search 명령이 노출되는 것은 별개다.</p>
+<p class="links"><a href="rendered/01-main-modules.svg" target="_blank">SVG 크게 보기</a> · <a href="diagrams/01-main-modules.mmd">Mermaid 원본</a></p>
+<details><summary>구현 근거</summary><ul><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/cli.py#L68" target="_blank" rel="noreferrer">main: foss8/cli.py:68 · main</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/guide.py#L115" target="_blank" rel="noreferrer">main: foss8/guide.py:115 · Catalog</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/minutes.py#L124" target="_blank" rel="noreferrer">main: foss8/minutes.py:124 · load_config</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/minutes_pdf.py#L141" target="_blank" rel="noreferrer">main: foss8/minutes_pdf.py:141 · export</a></li></ul></details></section>
+<section id="02-main-information-model" data-group="current">
+<p class="eyebrow">현재 구현 · 02</p>
+<h2>main의 실제 정보 모델</h2><p class="question">문서에서 추출한 정보가 어떤 형태로 기능별로 흘러가는가?</p>
+<figure><a href="rendered/02-main-information-model.svg" target="_blank" aria-label="main의 실제 정보 모델 크게 보기"><img src="rendered/02-main-information-model.svg" alt="main의 실제 정보 모델" loading="lazy"></a></figure>
+<p>Document와 Cycle은 명시적 타입이지만 활동·평가·주차는 대부분 기능별 dict이다. 공통 RequirementInstance나 판정 이력 모델은 없다.</p>
+<p class="caveat">개념적 데이터 흐름도다. 저장된 관계형 DB나 이 이름의 테이블이 있다는 뜻이 아니다.</p>
+<p class="links"><a href="rendered/02-main-information-model.svg" target="_blank">SVG 크게 보기</a> · <a href="diagrams/02-main-information-model.mmd">Mermaid 원본</a></p>
+<details><summary>구현 근거</summary><ul><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/guide.py#L108" target="_blank" rel="noreferrer">main: foss8/guide.py:108 · Document</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/minutes.py#L21" target="_blank" rel="noreferrer">main: foss8/minutes.py:21 · Cycle</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/weeks.py#L10" target="_blank" rel="noreferrer">main: foss8/weeks.py:10 · roadmap</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/check.py#L38" target="_blank" rel="noreferrer">main: foss8/check.py:38 · load_result_items</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/activity.py#L30" target="_blank" rel="noreferrer">main: foss8/activity.py:30 · collect</a></li></ul></details></section>
+<section id="03-main-cli-flow" data-group="current">
+<p class="eyebrow">현재 구현 · 03</p>
+<h2>main의 현재 사용자 흐름</h2><p class="question">사용자는 현재 무엇을 입력하고 어떤 결과를 받는가?</p>
+<figure><a href="rendered/03-main-cli-flow.svg" target="_blank" aria-label="main의 현재 사용자 흐름 크게 보기"><img src="rendered/03-main-cli-flow.svg" alt="main의 현재 사용자 흐름" loading="lazy"></a></figure>
+<p>문서 조회·활동 파일 생성·문서 작성·PDF 변환이 명령별로 나뉘며, 활동 JSON 전달과 실제 제출 확인은 사용자가 이어 붙인다.</p>
+<p class="caveat">파일 생성 성공은 LMS 제출 성공이나 규칙 충족으로 저장되지 않는다. main의 week는 현재 학사 주차보다 가까운 이후 수업일을 고른다.</p>
+<p class="links"><a href="rendered/03-main-cli-flow.svg" target="_blank">SVG 크게 보기</a> · <a href="diagrams/03-main-cli-flow.mmd">Mermaid 원본</a></p>
+<details><summary>구현 근거</summary><ul><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/cli.py#L23" target="_blank" rel="noreferrer">main: foss8/cli.py:23 · parser</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/cli.py#L68" target="_blank" rel="noreferrer">main: foss8/cli.py:68 · main</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/weeks.py#L38" target="_blank" rel="noreferrer">main: foss8/weeks.py:38 · get_this_week</a></li></ul></details></section>
+<section id="04-main-evidence-document-sequence" data-group="current">
+<p class="eyebrow">현재 구현 · 04</p>
+<h2>main의 활동 수집·문서 생성 시퀀스</h2><p class="question">한 번의 활동 수집과 회의록 생성에서 무엇이 자동이고 무엇이 수동인가?</p>
+<figure><a href="rendered/04-main-evidence-document-sequence.svg" target="_blank" aria-label="main의 활동 수집·문서 생성 시퀀스 크게 보기"><img src="rendered/04-main-evidence-document-sequence.svg" alt="main의 활동 수집·문서 생성 시퀀스" loading="lazy"></a></figure>
+<p>수집 실패는 항목의 error로 보존한다. 결과는 활동 근거 초안이며 평가 엔진으로 전달되지는 않는다.</p>
+
+<p class="links"><a href="rendered/04-main-evidence-document-sequence.svg" target="_blank">SVG 크게 보기</a> · <a href="diagrams/04-main-evidence-document-sequence.mmd">Mermaid 원본</a></p>
+<details><summary>구현 근거</summary><ul><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/activity.py#L30" target="_blank" rel="noreferrer">main: foss8/activity.py:30 · collect</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/cli.py#L68" target="_blank" rel="noreferrer">main: foss8/cli.py:68 · main</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/minutes.py#L202" target="_blank" rel="noreferrer">main: foss8/minutes.py:202 · draft</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/minutes_pdf.py#L141" target="_blank" rel="noreferrer">main: foss8/minutes_pdf.py:141 · export</a></li></ul></details></section>
+<section id="05-prototype-modules" data-group="current">
+<p class="eyebrow">현재 구현 · 05</p>
+<h2>prototype의 실제 모듈 구조</h2><p class="question">키보드 TUI의 화면·저장·수집은 어디에서 조립되는가?</p>
+<figure><a href="rendered/05-prototype-modules.svg" target="_blank" aria-label="prototype의 실제 모듈 구조 크게 보기"><img src="rendered/05-prototype-modules.svg" alt="prototype의 실제 모듈 구조" loading="lazy"></a></figure>
+<p>tui.App이 화면 상태와 팀 설정, 활동 수집 스레드, 저장 갱신을 함께 조정한다. weeks.py에는 데이터 선택과 텍스트 렌더링·TUI 진입이 함께 있다.</p>
+<p class="caveat">course-project.json은 문서화된 설계 초안이다. 점선은 실행 연결이 없다는 표시다. 현재 check 명령은 준비중을 출력한다.</p>
+<p class="links"><a href="rendered/05-prototype-modules.svg" target="_blank">SVG 크게 보기</a> · <a href="diagrams/05-prototype-modules.mmd">Mermaid 원본</a></p>
+<details><summary>구현 근거</summary><ul><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/weeks.py#L268" target="_blank" rel="noreferrer">prototype: foss8/weeks.py:268 · run</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/tui.py#L100" target="_blank" rel="noreferrer">prototype: foss8/tui.py:100 · App</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/tui.py#L297" target="_blank" rel="noreferrer">prototype: foss8/tui.py:297 · start_activity</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/team.py#L126" target="_blank" rel="noreferrer">prototype: foss8/team.py:126 · save</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/github_activity.py#L32" target="_blank" rel="noreferrer">prototype: foss8/github_activity.py:32 · collect</a></li></ul></details></section>
+<section id="06-prototype-information-model" data-group="current">
+<p class="eyebrow">현재 구현 · 06</p>
+<h2>prototype의 현재 데이터·식별 모델</h2><p class="question">완료 표시와 활동 횟수는 무엇을 키로 저장되는가?</p>
+<figure><a href="rendered/06-prototype-information-model.svg" target="_blank" aria-label="prototype의 현재 데이터·식별 모델 크게 보기"><img src="rendered/06-prototype-information-model.svg" alt="prototype의 현재 데이터·식별 모델" loading="lazy"></a></figure>
+<p>주차별 화면 데이터와 수동 완료, 주간 횟수는 분리되어 있다. 다만 기준·작업의 정의는 트리 JSON·코드 상수·원문에 나뉘고 판정 스냅샷은 없다.</p>
+<p class="caveat">Task 체크는 사용자의 수동 표시다. WeeklyAssessment.status는 주간 횟수 상태이며 학기 점수나 LMS 제출 판정이 아니다. 서로 다른 집계 구간을 자동 재배분하지 않는다.</p>
+<p class="links"><a href="rendered/06-prototype-information-model.svg" target="_blank">SVG 크게 보기</a> · <a href="diagrams/06-prototype-information-model.mmd">Mermaid 원본</a></p>
+<details><summary>구현 근거</summary><ul><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/weeks.py#L11" target="_blank" rel="noreferrer">prototype: foss8/weeks.py:11 · load</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/progress.py#L8" target="_blank" rel="noreferrer">prototype: foss8/progress.py:8 · context</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/progress.py#L45" target="_blank" rel="noreferrer">prototype: foss8/progress.py:45 · Progress</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/assessments.py#L58" target="_blank" rel="noreferrer">prototype: foss8/assessments.py:58 · WeeklyAssessment</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/assessments.py#L126" target="_blank" rel="noreferrer">prototype: foss8/assessments.py:126 · Store</a></li></ul></details></section>
+<section id="07-prototype-user-flow" data-group="current">
+<p class="eyebrow">현재 구현 · 07</p>
+<h2>prototype의 현재 사용자 흐름</h2><p class="question">주차 선택부터 완료 표시·활동 집계·회의록 작성까지 어떻게 이동하는가?</p>
+<figure><a href="rendered/07-prototype-user-flow.svg" target="_blank" aria-label="prototype의 현재 사용자 흐름 크게 보기"><img src="rendered/07-prototype-user-flow.svg" alt="prototype의 현재 사용자 흐름" loading="lazy"></a></figure>
+<p>진입점과 작업 목록의 중심이 선택한 주차다. 사용자는 할 일·평가·팀 설정 탭을 오가며 서로 다른 종류의 상태를 편집한다.</p>
+<p class="caveat">할 일의 개인 담당 필터는 아직 연결되지 않았다. 바로 다음 주 이월과 모든 과거 미완료를 계속 보여주는 backlog는 다르다.</p>
+<p class="links"><a href="rendered/07-prototype-user-flow.svg" target="_blank">SVG 크게 보기</a> · <a href="diagrams/07-prototype-user-flow.mmd">Mermaid 원본</a></p>
+<details><summary>구현 근거</summary><ul><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/weeks.py#L268" target="_blank" rel="noreferrer">prototype: foss8/weeks.py:268 · run</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/tui.py#L164" target="_blank" rel="noreferrer">prototype: foss8/tui.py:164 · items</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/tui.py#L591" target="_blank" rel="noreferrer">prototype: foss8/tui.py:591 · handle</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/tui.py#L364" target="_blank" rel="noreferrer">prototype: foss8/tui.py:364 · minutes_action</a></li></ul></details></section>
+<section id="08-prototype-sync-state" data-group="current">
+<p class="eyebrow">현재 구현 · 08</p>
+<h2>prototype의 현재 집계 상태 전이</h2><p class="question">수동 수정과 GitHub 갱신·실패가 만날 때 어떻게 처리되는가?</p>
+<figure><a href="rendered/08-prototype-sync-state.svg" target="_blank" aria-label="prototype의 현재 집계 상태 전이 크게 보기"><img src="rendered/08-prototype-sync-state.svg" alt="prototype의 현재 집계 상태 전이" loading="lazy"></a></figure>
+<p>설정 revision이 바뀐 응답은 버린다. 성공한 항목만 갱신하며 실패 항목의 기존 값은 유지한다. 수동 횟수는 다음 성공 집계에서 바뀔 수 있다.</p>
+<p class="caveat">구현에서 보이는 동작을 추출한 상태도이며 실제 Enum 선언은 아니다. 성공과 항목별 오류는 한 응답에 공존할 수 있다.</p>
+<p class="links"><a href="rendered/08-prototype-sync-state.svg" target="_blank">SVG 크게 보기</a> · <a href="diagrams/08-prototype-sync-state.mmd">Mermaid 원본</a></p>
+<details><summary>구현 근거</summary><ul><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/tui.py#L297" target="_blank" rel="noreferrer">prototype: foss8/tui.py:297 · start_activity</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/tui.py#L319" target="_blank" rel="noreferrer">prototype: foss8/tui.py:319 · poll_activity</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/assessments.py#L150" target="_blank" rel="noreferrer">prototype: foss8/assessments.py:150 · save</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/github_activity.py#L32" target="_blank" rel="noreferrer">prototype: foss8/github_activity.py:32 · collect</a></li></ul></details></section>
+<section id="09-target-domain" data-group="target">
+<p class="eyebrow">목표 설계 · 미구현 · 09</p>
+<h2>목표 도메인: 기준을 적용하고 근거로 설명하기</h2><p class="question">사용자가 원하는 점검을 표현하려면 어떤 개념을 분리해야 하는가?</p>
+<figure><a href="rendered/09-target-domain.svg" target="_blank" aria-label="목표 도메인: 기준을 적용하고 근거로 설명하기 크게 보기"><img src="rendered/09-target-domain.svg" alt="목표 도메인: 기준을 적용하고 근거로 설명하기" loading="lazy"></a></figure>
+<p>핵심은 주차 트리에서 기준을 복사하는 대신, 기준 정의를 사람·팀·기간에 적용해 생성한 적용 건에 증거와 판정을 연결하는 것이다.</p>
+<p class="caveat">이 대화에서 제안한 미구현 모델이다. 승인된 3인·3기능 변경이 곧 배점의 비례 환산을 뜻하지 않는다.</p>
+<p class="links"><a href="rendered/09-target-domain.svg" target="_blank">SVG 크게 보기</a> · <a href="diagrams/09-target-domain.mmd">Mermaid 원본</a></p>
+<p class="caveat">이 대화의 목표 설계이며 현재 미구현.</p></section>
+<section id="10-target-erd" data-group="target">
+<p class="eyebrow">목표 설계 · 미구현 · 10</p>
+<h2>목표 ERD: 적용 건·증거·판정의 식별</h2><p class="question">과거 판정을 재현하고 여러 뷰에서 같은 기준을 보려면 어떤 관계가 필요한가?</p>
+<figure><a href="rendered/10-target-erd.svg" target="_blank" aria-label="목표 ERD: 적용 건·증거·판정의 식별 크게 보기"><img src="rendered/10-target-erd.svg" alt="목표 ERD: 적용 건·증거·판정의 식별" loading="lazy"></a></figure>
+<p>기준과 적용 건을 분리하고 판정은 사용한 정책·증거 버전을 고정한다. 기간 변경이나 재수집으로 과거 판정을 덮어쓰지 않는다.</p>
+<p class="caveat">개념 ERD이며 DB 선택이나 최종 물리 스키마를 확정하지 않는다. predicate·coverage는 검증된 구조여야 하며 사용자 문자열을 eval하지 않는다. 관계 일부와 보조 조인 테이블은 가독성을 위해 생략했다.</p>
+<p class="links"><a href="rendered/10-target-erd.svg" target="_blank">SVG 크게 보기</a> · <a href="diagrams/10-target-erd.mmd">Mermaid 원본</a></p>
+<p class="caveat">이 대화의 목표 설계이며 현재 미구현.</p></section>
+<section id="11-target-modules" data-group="target">
+<p class="eyebrow">목표 설계 · 미구현 · 11</p>
+<h2>목표 모듈과 네 레이어</h2><p class="question">CLI와 TUI가 어떤 인터페이스를 공유해야 모델이 화면에 종속되지 않는가?</p>
+<figure><a href="rendered/11-target-modules.svg" target="_blank" aria-label="목표 모듈과 네 레이어 크게 보기"><img src="rendered/11-target-modules.svg" alt="목표 모듈과 네 레이어" loading="lazy"></a></figure>
+<p>UI는 요청·출력과 포커스를 담당하고 collect/check/explain이 조립을 담당한다. 판정 모듈은 관측 저장이나 터미널 조작 없이 결과를 반환한다.</p>
+<p class="caveat">미구현 설계안. 단일 로컬 프로그램 내부의 모듈 관계다. 별도 웹 서버·백그라운드 데몬·마이크로서비스 배포를 요구하지 않는다.</p>
+<p class="links"><a href="rendered/11-target-modules.svg" target="_blank">SVG 크게 보기</a> · <a href="diagrams/11-target-modules.mmd">Mermaid 원본</a></p>
+<p class="caveat">이 대화의 목표 설계이며 현재 미구현.</p></section>
+<section id="12-target-check-sequence" data-group="target">
+<p class="eyebrow">목표 설계 · 미구현 · 12</p>
+<h2>목표 수집·점검·설명 시퀀스</h2><p class="question">수집이 실패해도 사용자가 왜 확인이 필요한지 추적할 수 있는가?</p>
+<figure><a href="rendered/12-target-check-sequence.svg" target="_blank" aria-label="목표 수집·점검·설명 시퀀스 크게 보기"><img src="rendered/12-target-check-sequence.svg" alt="목표 수집·점검·설명 시퀀스" loading="lazy"></a></figure>
+<p>collect와 check는 분리한다. check는 고정된 증거 스냅샷으로 판정하고 explain은 같은 판정의 기준·이유·근거를 다시 읽는다.</p>
+<p class="caveat">네트워크 자동 갱신을 check 내부에 숨기지 않는 초기 인터페이스안이다. collect 실패 시 이전 batch와 실패한 새 시도를 함께 보존한다.</p>
+<p class="links"><a href="rendered/12-target-check-sequence.svg" target="_blank">SVG 크게 보기</a> · <a href="diagrams/12-target-check-sequence.mmd">Mermaid 원본</a></p>
+<p class="caveat">이 대화의 목표 설계이며 현재 미구현.</p></section>
+<section id="13-target-cli-flow" data-group="target">
+<p class="eyebrow">목표 설계 · 미구현 · 13</p>
+<h2>목표 CLI의 작업 흐름</h2><p class="question">명령을 외우는 사람과 자동화가 같은 도메인 작업을 수행할 수 있는가?</p>
+<figure><a href="rendered/13-target-cli-flow.svg" target="_blank" aria-label="목표 CLI의 작업 흐름 크게 보기"><img src="rendered/13-target-cli-flow.svg" alt="목표 CLI의 작업 흐름" loading="lazy"></a></figure>
+<p>프로젝트 문맥을 고른 뒤 조회·수집·점검·설명·문서 작업을 독립 명령으로 수행한다. 읽기 작업은 상태를 암묵적으로 변경하지 않는다.</p>
+<p class="caveat">명령 이름은 제안이다. main의 기존 check와 prototype의 week 동작을 이미 바꿨다는 뜻이 아니다. 모든 CLI 결과에는 텍스트와 JSON 표현을 함께 설계한다.</p>
+<p class="links"><a href="rendered/13-target-cli-flow.svg" target="_blank">SVG 크게 보기</a> · <a href="diagrams/13-target-cli-flow.mmd">Mermaid 원본</a></p>
+<p class="caveat">이 대화의 목표 설계이며 현재 미구현.</p></section>
+<section id="14-target-tui-flow" data-group="target">
+<p class="eyebrow">목표 설계 · 미구현 · 14</p>
+<h2>목표 TUI: 사용자 목적에서 근거까지</h2><p class="question">주차를 바꿔도 남은 작업·원래 기한·판정 근거를 잃지 않는가?</p>
+<figure><a href="rendered/14-target-tui-flow.svg" target="_blank" aria-label="목표 TUI: 사용자 목적에서 근거까지 크게 보기"><img src="rendered/14-target-tui-flow.svg" alt="목표 TUI: 사용자 목적에서 근거까지" loading="lazy"></a></figure>
+<p>첫 화면은 현재 실행 가능한 일·막힘·마감·이월을 보여준다. 주차는 여러 조회 축 중 하나이며 같은 적용 건을 계속 참조한다.</p>
+<p class="caveat">텍스트 화면 이동 설계이며 완성된 TUI 스크린샷이 아니다. 사용자 체크, 수집 성공, 문서 생성, LMS 제출, 규칙 충족은 각각 별도의 표시다.</p>
+<p class="links"><a href="rendered/14-target-tui-flow.svg" target="_blank">SVG 크게 보기</a> · <a href="diagrams/14-target-tui-flow.mmd">Mermaid 원본</a></p>
+<p class="caveat">이 대화의 목표 설계이며 현재 미구현.</p></section>
+<section id="15-target-submission-state" data-group="target">
+<p class="eyebrow">목표 설계 · 미구현 · 15</p>
+<h2>목표 산출물·제출 상태</h2><p class="question">PDF를 만들었다는 사실과 제출 완료·기한 준수를 어떻게 구분하는가?</p>
+<figure><a href="rendered/15-target-submission-state.svg" target="_blank" aria-label="목표 산출물·제출 상태 크게 보기"><img src="rendered/15-target-submission-state.svg" alt="목표 산출물·제출 상태" loading="lazy"></a></figure>
+<p>산출물 준비와 외부 제출 확인을 분리한다. 기한 준수는 제출 시각과 고정 마감의 비교값이며 상태를 되돌리는 조건이 아니다.</p>
+<p class="caveat">재제출 시 기존 제출 이력은 보존하고 새 산출물 revision·제출 건을 만든다. 파일 생성·체크 표시만으로 Confirmed로 이동하지 않는다. 지각 여부는 별도 속성이다.</p>
+<p class="links"><a href="rendered/15-target-submission-state.svg" target="_blank">SVG 크게 보기</a> · <a href="diagrams/15-target-submission-state.mmd">Mermaid 원본</a></p>
+<p class="caveat">이 대화의 목표 설계이며 현재 미구현.</p></section>
+<section id="16-target-evidence-state" data-group="target">
+<p class="eyebrow">목표 설계 · 미구현 · 16</p>
+<h2>목표 증거 수집·정정 상태</h2><p class="question">실패·누락·오래된 근거·수동 정정을 어떻게 보존할 것인가?</p>
+<figure><a href="rendered/16-target-evidence-state.svg" target="_blank" aria-label="목표 증거 수집·정정 상태 크게 보기"><img src="rendered/16-target-evidence-state.svg" alt="목표 증거 수집·정정 상태" loading="lazy"></a></figure>
+<p>성공한 0건과 미수집을 구분하며 실패로 기존 증거를 덮어쓰지 않는다. 수동 정정도 원래 관측과 나란히 기록한다.</p>
+<p class="caveat">batch마다 새 기록을 만든다는 개념 상태도다. 재수집 중 이전 성공 batch는 계속 남는다. 증거 수집 상태와 규칙 판정값은 별도다. 최신성 기간은 아직 미확정이다.</p>
+<p class="links"><a href="rendered/16-target-evidence-state.svg" target="_blank">SVG 크게 보기</a> · <a href="diagrams/16-target-evidence-state.mmd">Mermaid 원본</a></p>
+<p class="caveat">이 대화의 목표 설계이며 현재 미구현.</p></section>
+<section id="17-target-decision-flow" data-group="target">
+<p class="eyebrow">목표 설계 · 미구현 · 17</p>
+<h2>목표 판정 결정 흐름</h2><p class="question">어떤 조건에서 충족·미충족·확인 필요라고 설명할 수 있는가?</p>
+<figure><a href="rendered/17-target-decision-flow.svg" target="_blank" aria-label="목표 판정 결정 흐름 크게 보기"><img src="rendered/17-target-decision-flow.svg" alt="목표 판정 결정 흐름" loading="lazy"></a></figure>
+<p>적용 정책과 증거의 충분성을 먼저 확인한다. 횟수만으로 의미 있는 변경·승인된 리뷰·최종 점수를 자동 확정하지 않는다.</p>
+<p class="caveat">부분 충족·점수 환산은 이 흐름 다음의 별도 정책이며, 원문과 승인 근거가 충분한 항목에만 적용한다. 진행 중에도 충족 조건이 취소될 수 있는 규칙은 평가 시점 정책이 필요하다.</p>
+<p class="links"><a href="rendered/17-target-decision-flow.svg" target="_blank">SVG 크게 보기</a> · <a href="diagrams/17-target-decision-flow.mmd">Mermaid 원본</a></p>
+<p class="caveat">이 대화의 목표 설계이며 현재 미구현.</p></section>
+<section id="18-migration-map" data-group="comparison">
+<p class="eyebrow">비교·이동 · 18</p>
+<h2>현재 구현에서 목표 모델로 옮기는 지도</h2><p class="question">무엇을 살리고 무엇의 책임을 이동시켜야 하는가?</p>
+<figure><a href="rendered/18-migration-map.svg" target="_blank" aria-label="현재 구현에서 목표 모델로 옮기는 지도 크게 보기"><img src="rendered/18-migration-map.svg" alt="현재 구현에서 목표 모델로 옮기는 지도" loading="lazy"></a></figure>
+<p>화면 라이브러리 교체보다 기준·기간·적용 건·증거·판정을 먼저 공통 인터페이스로 모은다. 원문·문서 생성·기존 기록은 단계적으로 연결한다.</p>
+<p class="caveat">리팩터링 실행 계획의 초안이다. 오래된 횟수·수동 체크를 새 모델의 검증된 증거로 승격시키지 않는다. GitHub 두 구현은 집계 의미가 달라 그대로 합치지 않는다.</p>
+<p class="links"><a href="rendered/18-migration-map.svg" target="_blank">SVG 크게 보기</a> · <a href="diagrams/18-migration-map.mmd">Mermaid 원본</a></p>
+<details><summary>구현 근거</summary><ul><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/guide.py#L115" target="_blank" rel="noreferrer">main: foss8/guide.py:115 · Catalog</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8e6ea27b07c7f287aa12d3b927ba3e9acae23732/foss8/activity.py#L30" target="_blank" rel="noreferrer">main: foss8/activity.py:30 · collect</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/assessments.py#L126" target="_blank" rel="noreferrer">prototype: foss8/assessments.py:126 · Store</a></li><li><a href="https://github.com/sangjaepark0000/foss-8/blob/8fc2ae6e6bf3e340067887fbeeb023ec7af65931/foss8/tui.py#L100" target="_blank" rel="noreferrer">prototype: foss8/tui.py:100 · App</a></li></ul></details></section></main></div>
+<footer>현재 구현 기준: main 8e6ea27 · prototype 8fc2ae6 · guide-tool d1a5a39. SVG는 로컬 파일이며 외부 리소스를 불러오지 않는다.</footer>
+<script>
+document.querySelectorAll('button[data-filter]').forEach(button=>button.addEventListener('click',()=>{
+ const group=button.dataset.filter;
+ document.querySelectorAll('button[data-filter]').forEach(b=>b.setAttribute('aria-pressed',String(b===button)));
+ document.querySelectorAll('section[data-group],nav a[data-group]').forEach(node=>node.hidden=group!=='all'&&node.dataset.group!==group);
+}));
+</script></body></html>

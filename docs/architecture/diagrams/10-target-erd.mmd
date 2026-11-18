@@ -1,0 +1,105 @@
+erDiagram
+    SOURCE_REVISION ||--o{ RULE_SET : supports
+    RULE_SET ||--|{ REQUIREMENT : defines
+    PROJECT ||--o{ APPROVED_CHANGE : records
+    PROJECT ||--|{ SUBJECT : scopes
+    REQUIREMENT ||--o{ OBLIGATION : instantiates
+    SUBJECT ||--o{ OBLIGATION : owes
+    PERIOD ||--o{ OBLIGATION : bounds
+    OBLIGATION ||--o{ ACTION : requires
+    OBLIGATION ||--o{ ARTIFACT : produces
+    ARTIFACT ||--o{ SUBMISSION : records
+    OBLIGATION ||--o{ ASSESSMENT : evaluated
+    EVIDENCE_BATCH ||--o{ EVIDENCE : contains
+    ASSESSMENT ||--o{ ASSESSMENT_EVIDENCE : cites
+    EVIDENCE ||--o{ ASSESSMENT_EVIDENCE : supports
+    APPROVED_CHANGE ||--o{ OBLIGATION : adjusts
+    SOURCE_REVISION {
+        string id PK
+        string sha256
+        string citation
+    }
+    RULE_SET {
+        string id PK
+        string version
+    }
+    REQUIREMENT {
+        string id PK
+        string ruleset_id FK
+        string predicate
+        string source_locator
+    }
+    PROJECT {
+        string id PK
+        string repository
+    }
+    SUBJECT {
+        string id PK
+        string project_id FK
+        string kind
+        string external_identity
+    }
+    PERIOD {
+        string id PK
+        datetime starts_at
+        datetime ends_at_exclusive
+        string timezone
+    }
+    OBLIGATION {
+        string id PK
+        string requirement_id FK
+        string subject_id FK
+        string period_id FK
+        datetime due_at
+        string policy_digest
+    }
+    APPROVED_CHANGE {
+        string id PK
+        string project_id FK
+        string scope
+        string approval_source
+    }
+    ACTION {
+        string id PK
+        string obligation_id FK
+        string owner_subject_id
+        string execution_state
+    }
+    ARTIFACT {
+        string id PK
+        string obligation_id FK
+        string revision
+        string path
+    }
+    SUBMISSION {
+        string id PK
+        string artifact_id FK
+        string destination
+        datetime submitted_at
+        string confirmation_evidence_id
+    }
+    EVIDENCE_BATCH {
+        string id PK
+        string coverage
+        string collection_status
+        datetime fetched_at
+    }
+    EVIDENCE {
+        string id PK
+        string batch_id FK
+        string source_key
+        datetime occurred_at
+    }
+    ASSESSMENT {
+        string id PK
+        string obligation_id FK
+        string policy_digest
+        string evidence_snapshot_digest
+        datetime evaluated_at
+        string verdict
+        string reasons
+    }
+    ASSESSMENT_EVIDENCE {
+        string assessment_id FK
+        string evidence_id FK
+    }

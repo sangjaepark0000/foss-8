@@ -1,0 +1,18 @@
+flowchart TB
+    context["프로젝트·개인·기준 시각 선택"] --> home["지금 · 실행 가능 / 막힘 / 기한 임박 / 이월"]
+    home --> item["작업 또는 기준 선택"]
+    item --> detail["상세 · 담당 / 원래 기한 / 다음 행동"]
+    detail --> basis["원문·팀 승인·적용 정책"]
+    detail --> evidence["증거·수집 범위·최신성"]
+    detail --> assessment["판정 이유·부족한 것"]
+    detail --> operation{"명시적 작업"}
+    operation --> collect["다시 수집"]
+    operation --> manual["수동 관측·정정 기록"]
+    operation --> document["초안·PDF·제출 기록"]
+    collect --> detail
+    manual --> detail
+    document --> detail
+    home --> views["주차 / 개인·팀 / 제출물별 조회"]
+    views -->|"동일한 적용 건"| item
+    home --> settings["프로젝트 설정·미확정 정책"]
+    settings --> context

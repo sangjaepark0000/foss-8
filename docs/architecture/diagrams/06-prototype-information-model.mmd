@@ -1,0 +1,17 @@
+flowchart TB
+    team["team.json · repository / me / members / roles / approved_changes"]
+    scope["context · repository와 me 또는 local"]
+    team --> scope
+    tree["weeks.json · period / tasks / children / details / evaluation"]
+    tree --> task["task.id와 progress_period"]
+    task --> mark["progress.json · context → 작업 키 → completed"]
+    scope --> mark
+    tree --> period["화~월 period.start / end"]
+    constants["CRITERIA 상수 · commits / issues / prs"] --> bundle["WeeklyAssessment · 기간과 counts"]
+    period --> bundle
+    scope --> counts["assessments.json · context → 시작일 → counts"]
+    counts --> bundle
+    github["GitHub Result · counts / evidence / errors"] --> counts
+    manual["횟수 수동 입력"] --> counts
+    counts --> metadata["sources / evidence / synced_at / updated_at"]
+    carry["바로 다음 주의 이월 항목"] -->|"같은 작업 키 재사용"| task

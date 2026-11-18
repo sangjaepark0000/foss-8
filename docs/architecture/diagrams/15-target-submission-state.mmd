@@ -1,0 +1,18 @@
+stateDiagram-v2
+    [*] --> Planned
+    state "준비 전" as Planned
+    state "초안 생성" as Draft
+    state "내용 작성" as Editing
+    state "검토 완료" as Reviewed
+    state "제출본 준비" as Ready
+    state "제출 사실 확인 필요" as Awaiting
+    state "제출 확인" as Confirmed
+    Planned --> Draft: 초안 생성
+    Draft --> Editing: 실제 내용 작성
+    Editing --> Reviewed: 담당자 검토 기록
+    Reviewed --> Editing: 수정 요청
+    Reviewed --> Ready: PDF 등 제출본 생성
+    Ready --> Awaiting: 사용자가 외부 제출했다고 기록
+    Awaiting --> Confirmed: 제출처·시각·접수 증거 확인
+    Awaiting --> Ready: 미접수 확인
+    Confirmed --> Editing: 수정본 준비가 필요함
