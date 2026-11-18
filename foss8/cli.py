@@ -50,11 +50,11 @@ def parser():
     activity.add_argument("--team-file", help="팀 기본정보 JSON")
     activity.add_argument("-o", "--output", required=True, help="활동 JSON 저장 경로")
     check = commands.add_parser("check", help="완성 기준 배점표 불러오기, 저장소 상태와 비교" )
-    check.add_argument(
-    "--path",
-    default=".",
-    help="기본 파일을 검사할 폴더를 지정. 기본값은 현재 폴더",
-    )
+    check.add_argument("--path", default=".", help="기본 파일을 검사할 폴더를 지정. 기본값은 현재 폴더")
+    check.add_argument("check_mode", nargs="?", choices=("activity",), help="activity: 이번 주 GitHub 활동 점검")
+    check.add_argument("--rules", action="store_true", help="활동 기준만 표시")
+    check.add_argument("--show-links", action="store_true", help="활동 점검 결과에 근거 링크도 표시")
+    check.add_argument("--last-7-days", action="store_true", help="오늘을 포함한 최근 7일 활동 조회")
     week = commands.add_parser("week", help="주차별 할 일 조회")
     week.add_argument("week", nargs="?", help="조회할 주차 숫자 입력, 생략하면 다가오는 가장 가까운 주차 할 일 출력")
     week.add_argument("--list", action="store_true", help="주차 목록 확인")
@@ -134,11 +134,22 @@ def main(argv=None):
                     print(content, end="")
             return 0
         if args.command == "check":
+            if args.check_mode == "activity":
+                if args.rules:
+                    print(check.format_activity_rules())
+                else:
+                    print("GitHub 조회 중입니다. 잠시만 기다려 주세요.", file=sys.stderr, flush=True)
+                    data = check.collect_activity(last_7_days=args.last_7_days)
+                    print(check.format_activity_results(data, show_links=args.show_links, last_7_days=args.last_7_days))
+                return 0
+
+            if args.rules or args.show_links or args.last_7_days:
+                raise ValueError("활동 옵션은 check activity에서 사용하세요.")
+            
             # 기존 평가 기준 출력
             items = check.load_result_items()
             print(check.format_result_items(items))
-
-            # 현재 폴더의 기본 파일 검사
+            # 기본 파일 검사
             repository_path = Path(args.path).expanduser().resolve()
             results = check.check_required_files(repository_path)
 
