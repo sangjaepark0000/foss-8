@@ -7,9 +7,6 @@ import json
 from .weeks import roadmap
 
 def progress_path() -> Path:
-    override = False
-    if override:
-        return Path(override).expanduser()
     if os.name == "nt":
         root = Path(os.environ.get("APPDATA", Path.home() / "AppData" / "Roaming"))
     elif sys.platform == "darwin":
@@ -19,15 +16,13 @@ def progress_path() -> Path:
     return root / "foss8" / "week_progress.json"
 
 def create_progress(catalog):
-    item = roadmap(catalog)
-    progress_data = {}
-    for week in item:
-        temp = []
-        for task in week.get("tasks", []):
-            task["completed"] = False
-            temp.append(task)
-        progress_data[week["id"]] = {"tasks": temp, "memo": ""}
-    return progress_data
+    return {
+        week["id"]: {
+            "tasks": [{**task, "completed": False} for task in week["tasks"]],
+            "memo": "",
+        }
+        for week in roadmap(catalog)
+    }
 
 def write_progress(progress_data, path) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -53,11 +48,22 @@ def write_progress(progress_data, path) -> None:
 
 def load_progress(catalog) -> dict:
     target = progress_path()
+    progress_data = create_progress(catalog)
     if target.exists():
         with target.open("r", encoding="utf-8") as file:
-            progress_data = json.load(file)
+            saved_progress = json.load(file)
+        for week_id, week in progress_data.items():
+            saved_week = saved_progress.get(week_id, {})
+            week["memo"] = saved_week.get("memo", "")
+            completed_by_task = {}
+            for task in saved_week.get("tasks", []):
+                key = (task["role"], task["text"])
+                completed_by_task.setdefault(key, []).append(task["completed"])
+            for task in week["tasks"]:
+                states = completed_by_task.get((task["role"], task["text"]), [])
+                if states:
+                    task["completed"] = states.pop(0)
     else:
-        progress_data = create_progress(catalog)
         write_progress(progress_data, target)
     return progress_data
 

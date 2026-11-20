@@ -124,6 +124,32 @@ python main.py check --help             # 옵션 확인
 파일이 존재하더라도 문서 내용, 기능 동작, 실행 재현 및 협업 절차는 직접 확인해야 합니다.
 존재하지 않는 폴더나 파일 경로를 지정하면 오류가 출력됩니다.
 
+### 6. 주차별 할 일과 진행 상황
+
+```bash
+python main.py week                      # 다가오는 가장 가까운 주차
+python main.py week --list               # 주차 목록
+python main.py week 2                    # 2주차 할 일
+python main.py week makeup               # 보강 주차 할 일
+python main.py week 2 --done 1           # 출력된 1번 할 일 완료/취소
+python main.py week 2 --memo 회의 전 확인  # 주차 메모 작성/교체
+python main.py week 2 --memo              # 주차 메모 삭제
+python main.py week --help
+```
+
+주차를 생략하면 다가오는 가장 가까운 수업일을 선택합니다. 모든 수업일이 지났으면 마지막 주차를 표시합니다.
+`--done`은 출력된 할 일 번호를 사용하며, 같은 번호로 다시 실행하면 완료를 취소합니다.
+메모는 주차마다 하나씩 저장하며, 새 내용을 입력하면 기존 메모를 교체합니다.
+완료 상태와 메모는 다시 실행해도 유지됩니다.
+
+진행 상황은 현재 사용자 계정의 `foss8/week_progress.json`에 저장됩니다.
+Linux는 `$XDG_DATA_HOME`(미설정 시 `~/.local/share`), macOS는 `~/Library/Application Support`,
+Windows는 `%APPDATA%`(미설정 시 사용자 폴더의 `AppData/Roaming`) 아래에 저장하며,
+같은 사용자 계정에서 실행한 저장소 사본들은 이 파일을 공유합니다.
+
+안내서가 바뀌면 최신 할 일 목록을 표시합니다. 역할과 문구가 같은 항목의 완료 상태와 주차 메모는 유지하고,
+새 항목이나 역할·문구가 수정된 항목은 미완료로 시작합니다.
+
 ### 검증
 
 ```bash

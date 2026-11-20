@@ -34,12 +34,6 @@ def roadmap(catalog):
                 tasks.extend({"role":role.strip(), "text": text.strip()}for role, text in matches)
             else:
                 tasks.append({"role":"공통", "text": line.strip()})
-        # task = columns[3].replace("•","")
-        # matches = re.findall(r"([^:]+):(.+?)(?=\s+[^\s:]+:|$)",task)
-        # if matches:
-        #     tasks.extend({"role":role.strip(), "text": text.strip()}for role, text in matches)
-        # else:
-        #     tasks.append({"role":"공통", "text": task.strip()})
         result.append({"id": id, "week": week, "date":date(year, month, day).isoformat(), "makeup": makeup,
                        "label": f"{week}주차" + (" 보강" if makeup else "") + f" · {date(year, month, day)}",
                        "lesson": columns[2], "tasks": tasks, "turnin": columns[4]})
