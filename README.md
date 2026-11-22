@@ -1,31 +1,36 @@
 **한국어** | [English](README.en.md)
 
-# 소개
+# foss-8
 
 부경대학교 오픈소스소프트웨어 수업의 팀 프로젝트 진행을 돕는 CLI 도구입니다.
 
-프로젝트 안내서에 흩어져 있는 서식, 평가 기준, 주차별 일정을 터미널에서 쉽게 확인할 수 있도록 하는 것을 목표로 합니다.
+프로젝트 안내서에 흩어져 있는 서식, 평가 기준, 주차별 일정, GitHub 활동 기록을 터미널에서 쉽게 확인하고 문서 초안과 제출용 PDF까지 만들 수 있도록 돕습니다.
 
-## 팀원
+![foss-8 CLI 실행 화면](docs/images/cli-overview.png)
 
-| 이름 | 역할 | GitHub | 담당 기능 |
+## 주요 기능
+
+> 승인된 3인 팀 구성에 따라 핵심 기능 3개를 중심으로 구현했습니다. 자세한 팀 적용 기준은 [팀 적용 사항](docs/guide/team-context.md)을 참고하세요.
+
+| 기능 | 주요 명령 | 설명 | 담당 |
 |---|---|---|---|
-| 박상재 | 팀장 | @sangjaepark0000 | 서식 불러오기 |
-| 양하윤 | 개발 리드 | @sheep-ship-it | 현재 주차와 해야 할 일 확인 |
-| 백지훈 | 문서 담당 | @jihun31 | 평가 기준과 완료 여부 확인 |
-
+| 주차별 일정 확인 | `oss week`, `oss week --list` | 안내서 15주 로드맵 기준 현재/특정/보강 주차의 수업 내용·할 일·제출 마감 조회 | 양하윤 |
+| 서식 조회·초안·PDF 변환 | `oss format`, `oss activity` | 회의록·제안서·중간·최종보고서 Markdown 양식 생성, 팀 정보·이전 할 일·GitHub 활동 로그 채움, 제출용 PDF 변환 | 박상재 |
+| 평가 기준·기본 파일·활동 점검 | `oss check`, `oss check activity` | 결과물 평가 기준 4개(30점) 안내, 필수 공개 파일 6종 검사, 주간 최소 활동 기준 대비 팀원별 GitHub 실적 점검 | 백지훈 |
 
 ## 팀프로젝트 안내서
 
 [안내서 전체 목차](docs/guide/README.md)에서 일정·제출물·평가 기준·협업 규칙·양식·FAQ를 확인할 수 있습니다. 원문 전체와 [팀 적용 사항](docs/guide/team-context.md)을 함께 제공합니다.
 
+## 설치 및 실행 방법
 
-## 실행 방법
+- **지원 환경**: Python 3.12 이상 (Python 3.12 / 3.14에서 테스트 완료)
+- **외부 Python 라이브러리**: 없음 (표준 라이브러리만 사용)
+- **선택 도구**: PDF 변환 시 Chrome 또는 Chromium과 한글 글꼴, GitHub 활동 조회 시 GitHub CLI(`gh`)
 
-Python 3.12 이상이 필요합니다. 프로그램을 설치한 뒤에는 다른 팀의 프로젝트 폴더에서도 실행할 수 있습니다.
-주차와 평가 기준은 이 수업의 안내서를 따릅니다.
+프로그램을 설치한 뒤에는 다른 팀의 프로젝트 폴더에서도 실행할 수 있습니다. 주차와 평가 기준은 이 수업의 안내서를 따릅니다.
 
-### 설치해서 사용하기
+### 설치해서 사용하기 (`pipx`)
 
 [pipx 설치 안내](https://pipx.pypa.io/stable/how-to/install-pipx.html)에 따라 pipx를 설치하고 `pipx ensurepath`를 실행합니다.
 필요하면 터미널을 다시 연 뒤 다음 명령으로 도구를 설치합니다. Git도 필요합니다.
@@ -47,22 +52,52 @@ oss format minutes        # 회의록 서식 조회
 설치된 `oss` 명령에서는 아래 예시의 `python main.py`를 `oss`로 바꿔 사용하면 됩니다.
 `pipx upgrade foss8`으로 업데이트하고, `pipx uninstall foss8`으로 제거할 수 있습니다.
 
-### 개발용 실행
+### 개발용 실행 (`git clone`)
 
-저장소를 클론해 기존 방식으로 실행하거나 가상환경에 편집 가능 설치를 할 수 있습니다.
+저장소를 클론해 직접 실행하거나 가상환경에 편집 가능 모드로 설치할 수 있습니다.
 
 ```bash
 git clone https://github.com/sangjaepark0000/foss-8.git
 cd foss-8
 python3 -m venv .venv
 source .venv/bin/activate  # Windows: .venv\Scripts\activate
+pip install -r requirements.txt
+python main.py --help
+```
+
+`oss` 명령으로 실행하려면 가상환경에서 아래 명령으로 설치합니다.
+
+```bash
 python -m pip install -e .
 oss --help
 ```
 
-가상환경을 활성화한 동안 `oss`를 사용할 수 있으며, 설치 없이 `python main.py`로도 실행할 수 있습니다.
+## 사용법
 
-### 서식 조회
+### 1. 주차별 일정 확인 (`week`)
+
+```bash
+python main.py week           # 다가오는 가장 가까운 주차 할 일
+python main.py week --list    # 전체 주차 목록 확인
+python main.py week 13        # 특정 주차(13주차) 조회
+python main.py week makeup    # 4주차 보강(12/11) 일정 조회 (week 보강도 가능)
+```
+
+예시 출력(`python main.py week 13`):
+
+```text
+13주차 · 2026-11-27
+수업 내용:프로젝트 공개 파일, 더 좋은 풀 리퀘스트, 되돌리기, 브랜치 보호
+
+** 할 일 **
+- 팀: 상대 팀 리뷰 반영 → 병합 확인(~12/3). 우리 저장소에 온 풀 리퀘스트 병합
+- 팀: 기능 동결 — 새 기능 금지, 버그 수정·문서만. README·CONTRIBUTING·행동 수칙·LICENSE 최종 정비(14.2)
+
+** 제출 **
+- 회의록 #8: 11/26(목)
+```
+
+### 2. 서식 조회 (`format`)
 
 Python 3.12 이상에서 실행합니다. 서식 조회에는 외부 라이브러리가 필요하지 않습니다.
 
@@ -119,6 +154,8 @@ python main.py activity --repo owner/repo --start 2026-10-08 --end 2026-10-14 -o
 python main.py format minutes --date 2026-10-14 --activity 활동.json -o 회의록.md
 ```
 
+기존 활동 JSON 파일을 덮어쓰려면 `activity` 명령에 `--force`를 함께 지정합니다.
+
 `gh`에 로그인한 뒤 `--fetch-activity`를 지정하면 회의록의 기록기간으로 GitHub 활동을 조회해 팀원별 활동 로그 표를 채웁니다. 문서 끝에서 근거 링크와 조회 실패 이유를 확인할 수 있습니다.
 
 ```bash
@@ -149,7 +186,7 @@ Markdown을 편집해 실제 회의 내용을 작성한 다음 변환합니다. 
 원본 Markdown은 변경하지 않습니다. 기존 PDF는 보호하며 `--force`를 지정했을 때만 교체합니다.
 변환 실패 시 기존 제출본을 보존하고, PDF 생성만으로 LMS 제출을 완료 처리하지 않습니다.
 
-### 5. 평가 기준과 기본 파일 확인
+### 5. 평가 기준과 기본 파일 확인 (`check`)
 
 ```bash
 python main.py check                    # 현재 폴더 검사
@@ -161,13 +198,13 @@ python main.py check --help             # 옵션 확인
 평가 항목의 상태는 `미확인`으로 표시되며, 완료 여부를 자동으로 판정하지 않습니다.
 
 기본 파일 검사는 지정한 폴더의 `README.md`, `LICENSE`, `CONTRIBUTING.md`,
-`CODE_OF_CONDUCT.md`, `requirements.txt`, `main.py`의 존재 여부를 확인합니다.
+`CODE_OF_CONDUCT.md`, `requirements.txt`, `main.py`의 존재 여부를 확인하고 결과 끝에 상태별 개수(`존재 N개 · 누락 M개`)를 요약합니다.
 `--path`를 생략하면 명령을 실행한 현재 폴더를 검사합니다.
 
 파일이 존재하더라도 문서 내용, 기능 동작, 실행 재현 및 협업 절차는 직접 확인해야 합니다.
 존재하지 않는 폴더나 파일 경로를 지정하면 오류가 출력됩니다.
 
-### 6. GitHub 활동 확인
+### 6. GitHub 활동 확인 (`check activity`)
 
 프로젝트 폴더에서 실행합니다. 활동을 조회하려면 GitHub CLI(`gh`)를 설치하고 `gh auth login`으로 로그인합니다.
 
@@ -176,13 +213,14 @@ python main.py check activity                 # 이번 주 팀원별 활동 확�
 python main.py check activity --rules         # 주간 최소 기준 확인
 python main.py check activity --last-7-days   # 오늘을 포함한 최근 7일 활동 확인
 python main.py check activity --show-links    # 집계에 포함된 활동 링크 확인
+python main.py check activity --path "경로"   # 다른 프로젝트 폴더의 활동 확인
 ```
 
 `check activity`는 이번 주 월요일부터 오늘까지의 활동을 조회합니다.
 팀원별 커밋, PR 생성·병합, 이슈 작성 건수를 표로 표시합니다. `1/2`는 최소 기준 2건 중 1건을 했다는 뜻입니다.
 `--rules`는 GitHub에 접속하지 않고 기준과 적용 기간을 보여줍니다.
-`--last-7-days`는 오늘을 포함해 지난 7일을 조회합니다. 
-지난 회의록처럼 시작일과 종료일이 정해진 기간의 활동을 저장하려면 `activity --start xxxx-xx-xx(시작일) --end xxxx-xx-xx(종료일)`를 사용합니다.
+`--last-7-days`는 오늘을 포함해 지난 7일을 조회합니다.
+지난 회의록처럼 시작일과 종료일이 정해진 기간의 활동을 저장하려면 `activity --start YYYY-MM-DD --end YYYY-MM-DD`를 사용합니다.
 
 커밋과 이슈가 실질적인 활동인지, 이슈를 작업 전에 등록했는지, PR이 병합 전에 승인됐는지는 직접 확인합니다.
 
@@ -192,3 +230,17 @@ python main.py check activity --show-links    # 집계에 포함된 활동 링�
 python -m unittest discover -s tests -v
 python scripts/check_guide.py
 ```
+
+## 팀원 및 기여
+
+| 이름 | 역할 | GitHub | 담당 기능 |
+|---|---|---|---|
+| 박상재 | 팀장 | @sangjaepark0000 | 서식 불러오기 |
+| 양하윤 | 개발 리드 | @sheep-ship-it | 현재 주차와 해야 할 일 확인 |
+| 백지훈 | 문서 담당 | @jihun31 | 평가 기준과 완료 여부 확인 |
+
+이 프로젝트에 기여하는 방법과 협업 규칙은 [기여 가이드 (CONTRIBUTING.md)](CONTRIBUTING.md)를, 참여자 행동 기준은 [행동 수칙 (CODE_OF_CONDUCT.md)](CODE_OF_CONDUCT.md)을 참고해 주세요.
+
+## 라이선스
+
+MIT License — see [LICENSE](LICENSE)
