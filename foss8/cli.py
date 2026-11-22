@@ -21,9 +21,13 @@ class Arguments(argparse.ArgumentParser):
 
 
 def parser():
-    root = Arguments(prog="oss", description="OSS 안내서 탐색·전체 검색·양식 저장. 조회는 로그인 없이 오프라인으로 동작합니다.",
+    root = Arguments(prog="oss", description="부경대 OSS 팀프로젝트 일정·서식·평가 기준·GitHub 활동 점검 CLI 도구입니다.",
                      formatter_class=argparse.RawDescriptionHelpFormatter,
                      epilog="""바로 사용:
+  oss week                           다가오는 주차 할 일 조회
+  oss format minutes                 빈 회의록 양식 출력
+  oss check                          평가 기준과 기본 파일 검사
+  oss check activity                 이번 주 팀원별 GitHub 활동 점검
   oss help                           CLI 명령 안내
 
 하위 명령에도 --help를 붙일 수 있습니다.""")
@@ -51,6 +55,7 @@ def parser():
     activity.add_argument("--end", required=True, help="종료일 YYYY-MM-DD (한국 시간)")
     activity.add_argument("--team-file", help="팀 기본정보 JSON")
     activity.add_argument("-o", "--output", required=True, help="활동 JSON 저장 경로")
+    activity.add_argument("--force", action="store_true", help="기존 출력 파일 덮어쓰기")
     check = commands.add_parser("check", help="완성 기준 배점표 불러오기, 저장소 상태와 비교" )
     check.add_argument("--path", default=".", help="기본 파일을 검사할 폴더를 지정. 기본값은 현재 폴더")
     check.add_argument("check_mode", nargs="?", choices=("activity",), help="activity: 이번 주 GitHub 활동 점검")
@@ -82,15 +87,15 @@ def main(argv=None):
             if not team['members']:
                 raise ValueError('팀 기본정보에 GitHub ID가 있는 팀원을 등록하세요.')
             data = activity.collect(args.repo, args.start, args.end, team['members'])
-            path = minutes.save_file(args.output, json.dumps(data, ensure_ascii=False, indent=2) + "\n")
+            path = minutes.save_file(args.output, json.dumps(data, ensure_ascii=False, indent=2) + "\n", args.force)
             print("활동 근거 저장: " + str(path))
             return 0
         if args.command == "format":
             if args.fetch_activity and (args.name != "minutes" or args.pdf):
                 raise ValueError("--fetch-activity는 회의록 초안 생성에서 사용하세요.")
             if args.pdf:
-                if args.name != "minutes" or args.date or args.team_file:
-                    raise ValueError("PDF 변환은 format minutes --pdf 회의록.md로 실행하세요. --date·--team-file은 초안 생성 옵션입니다.")
+                if args.name != "minutes" or args.date or args.team_file or args.previous or args.activity:
+                    raise ValueError("PDF 변환은 format minutes --pdf 회의록.md로 실행하세요. --date·--team-file·--previous·--activity는 초안 생성 옵션입니다.")
                 from .minutes_pdf import export
                 path = export(args.pdf, args.output, args.week, args.team, args.force, args.browser)
                 print("제출용 PDF 저장: " + str(path))
@@ -101,14 +106,14 @@ def main(argv=None):
                 raise ValueError("--force는 --output 저장 경로와 함께 지정하세요.")
             filled = any((args.date, args.week, args.team, args.team_file, args.previous, args.activity, args.fetch_activity))
             if (args.date or args.week or args.previous) and args.name != "minutes":
-                raise ValueError("--date·--week은 format minutes에서 사용하세요.")
+                raise ValueError("--date·--week·--previous는 format minutes에서 사용하세요.")
             if args.output and args.name is None:
                 raise ValueError("저장할 양식을 선택하세요. 예: format minutes -o 회의록.md")
             if args.name is None:
                 print("쓸 수 있는 양식:")
                 for name, title in templates.TITLES.items():
                     print(f"  {name:12} {title}")
-                print("\n예: python main.py format minutes")
+                print("\n예: oss format minutes (또는 python main.py format minutes)")
             else:
                 if args.name == "minutes" and (filled or args.output):
                     from . import minutes
@@ -127,7 +132,11 @@ def main(argv=None):
                         raise ValueError("--activity는 회의록·중간·최종 보고서에서 사용하세요.")
                     content += "\n## GitHub 활동 근거 초안 (확인 필요)\n\n"
                     for activity_path in args.activity:
-                        data = json.loads(Path(activity_path).read_text(encoding="utf-8"))
+                        try:
+                            data = json.loads(Path(activity_path).read_text(encoding="utf-8"))
+                        except json.JSONDecodeError as exc:
+                            raise ValueError(f"활동 JSON 형식을 확인하세요: {activity_path}") from exc
+                        activity.validate_data(data)
                         content += (activity.markdown(data) if args.name == "minutes" else activity.report_markdown(data)) + "\n"
                 if args.output:
                     from .minutes import save_file
@@ -144,7 +153,7 @@ def main(argv=None):
                     print(check.format_activity_rules())
                 else:
                     print("GitHub 조회 중입니다. 잠시만 기다려 주세요.", file=sys.stderr, flush=True)
-                    data = check.collect_activity(last_7_days=args.last_7_days)
+                    data = check.collect_activity(last_7_days=args.last_7_days, path=args.path)
                     print(check.format_activity_results(data, show_links=args.show_links, last_7_days=args.last_7_days))
                 return 0
 
@@ -177,6 +186,7 @@ def main(argv=None):
             return 0
         if args.command is None:
             print("OSS 팀프로젝트 도구")
+            print("사용법을 보려면 'oss --help' 또는 'oss help'를 실행하세요.")
             return 0
         return 0
     except (ValueError, OSError) as error:

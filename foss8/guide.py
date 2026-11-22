@@ -133,7 +133,7 @@ class Catalog:
             name = name[:-3]
         name = ALIASES.get(name, name)
         if name not in self.documents:
-            raise ValueError(f"알 수 없는 문서: {selector}. oss guide list로 ID를 확인하세요.")
+            raise ValueError(f"알 수 없는 문서: {selector}")
         doc = self.documents[name]
         if anchor and f'<a id="{anchor}"></a>' not in doc.markdown:
             raise ValueError(f"알 수 없는 원문 위치: {selector}")

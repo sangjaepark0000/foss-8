@@ -28,3 +28,30 @@ class ActivityTests(unittest.TestCase):
     def test_invalid_range_rejected(self):
         with self.assertRaises(ValueError):
             activity.bounds('2026-10-09', '2026-10-08')
+        with self.assertRaisesRegex(ValueError, 'YYYY-MM-DD'):
+            activity.bounds('2026/10/08', '2026-10-09')
+
+    def test_missing_gh_gives_actionable_korean_error(self):
+        with patch('foss8.activity.subprocess.run', side_effect=FileNotFoundError('gh')):
+            with self.assertRaisesRegex(RuntimeError, 'GitHub CLI'):
+                activity.api('repos/a/b/branches')
+
+    def test_collect_skips_stale_pr_reviews(self):
+        stale_pr = {'number': 1, 'user': {'login': 'alice'}, 'created_at': '2026-09-01T00:00:00Z',
+                    'updated_at': '2026-09-02T00:00:00Z', 'merged_at': None, 'html_url': 'https://example/pr1'}
+        active_pr = {'number': 2, 'user': {'login': 'alice'}, 'created_at': '2026-10-08T01:00:00Z',
+                     'updated_at': '2026-10-08T02:00:00Z', 'merged_at': None, 'html_url': 'https://example/pr2'}
+        called = []
+        def fake(endpoint):
+            called.append(endpoint)
+            if '/branches?' in endpoint: return []
+            if '/pulls?' in endpoint: return [stale_pr, active_pr]
+            return []
+        with patch('foss8.activity.api', side_effect=fake):
+            activity.collect('team/project', '2026-10-08', '2026-10-08', [{'name': 'A', 'github': 'alice'}])
+        self.assertNotIn('repos/team/project/pulls/1/reviews?per_page=100', called)
+        self.assertIn('repos/team/project/pulls/2/reviews?per_page=100', called)
+
+    def test_validate_data_rejects_malformed_activity_json(self):
+        with self.assertRaisesRegex(ValueError, '활동 JSON 형식'):
+            activity.validate_data({'name': 'team'})

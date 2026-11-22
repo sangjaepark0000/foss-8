@@ -9,7 +9,10 @@ KST = timezone(timedelta(hours=9))
 
 
 def bounds(start, end):
-    first, last = date.fromisoformat(start), date.fromisoformat(end)
+    try:
+        first, last = date.fromisoformat(start), date.fromisoformat(end)
+    except ValueError as exc:
+        raise ValueError('날짜는 YYYY-MM-DD 형식으로 입력하세요.') from exc
     if first > last:
         raise ValueError('시작 날짜는 종료 날짜보다 늦을 수 없습니다.')
     return (datetime.combine(first, time.min, KST).astimezone(timezone.utc),
@@ -17,8 +20,11 @@ def bounds(start, end):
 
 
 def api(endpoint):
-    response = subprocess.run(['gh', 'api', '--paginate', '--slurp', endpoint],
-                              capture_output=True, text=True, encoding="utf-8", timeout=120, check=False)
+    try:
+        response = subprocess.run(['gh', 'api', '--paginate', '--slurp', endpoint],
+                                  capture_output=True, text=True, encoding="utf-8", timeout=120, check=False)
+    except FileNotFoundError as exc:
+        raise RuntimeError("GitHub CLI(gh)를 찾을 수 없습니다. gh를 설치하고 'gh auth login'으로 로그인하세요.") from exc
     if response.returncode:
         raise RuntimeError(response.stderr.strip() or 'GitHub 조회 실패')
     pages = json.loads(response.stdout)
@@ -59,6 +65,13 @@ def collect(repo, start, end, members):
     reviews, review_error = [], pull_error
     if not pull_error:
         for pr in pulls:
+            updated = pr.get('updated_at')
+            if updated:
+                try:
+                    if datetime.fromisoformat(updated.replace('Z', '+00:00')) < first:
+                        continue
+                except ValueError:
+                    pass
             batch, error = fetch(base + f'/pulls/{pr["number"]}/reviews?per_page=100')
             if error:
                 review_error = error
@@ -95,7 +108,24 @@ def collect(repo, start, end, members):
     return result
 
 
+def validate_data(data):
+    required = ('commits', 'prs_created', 'prs_merged', 'reviews', 'issues')
+    if not isinstance(data, dict) or not all(k in data for k in ('repository', 'start', 'end', 'members')):
+        raise ValueError('활동 JSON 형식이 올바르지 않습니다. activity 명령으로 생성한 파일을 지정하세요.')
+    if not isinstance(data['members'], list):
+        raise ValueError('활동 JSON의 members 형식이 올바르지 않습니다.')
+    for member in data['members']:
+        if not isinstance(member, dict) or not isinstance(member.get('categories'), dict):
+            raise ValueError('활동 JSON의 팀원 활동 항목 형식이 올바르지 않습니다.')
+        for key in required:
+            cat = member['categories'].get(key)
+            if not isinstance(cat, dict) or 'links' not in cat or 'error' not in cat:
+                raise ValueError('활동 JSON에 필수 활동 항목이 누락되었습니다.')
+    return data
+
+
 def markdown(data):
+    validate_data(data)
     labels = {'commits': '커밋', 'prs_created': 'PR 생성', 'prs_merged': 'PR 병합', 'reviews': '제출 리뷰', 'issues': '이슈 생성'}
     lines = [f"조회: {data['repository']} · {data['start']}~{data['end']} (한국 시간)",
              '접근 가능한 브랜치의 커밋을 SHA로 중복 제거하고 병합 커밋은 제외합니다. PR 병합은 작성자 기준, 리뷰는 제출 시각 기준입니다. 일반 댓글은 제외합니다.',
