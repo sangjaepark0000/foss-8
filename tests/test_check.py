@@ -5,7 +5,8 @@ import sys
 import tempfile
 import unittest
 
-from foss8.check import check_required_files
+from foss8.check import check_required_files, collect_activity, format_file_results
+from unittest.mock import patch
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -29,6 +30,7 @@ class CheckTests(unittest.TestCase):
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertIn(f"검사 대상: {ROOT}", result.stdout)
         self.assertIn("총 배점: 30점", result.stdout)
+        self.assertIn("존재 6개 · 누락 0개", result.stdout)
         self.assertEqual(result.stdout.count("상태: 미확인"), 4)
 
     def test_selected_path_and_missing_files(self):
@@ -47,7 +49,38 @@ class CheckTests(unittest.TestCase):
             )
             self.assertIn("[존재] README.md", result.stdout)
             self.assertIn("[누락] LICENSE", result.stdout)
+            self.assertIn("존재 1개 · 누락 5개", result.stdout)
             self.assertEqual(result.stdout.count("상태: 미확인"), 4)
+
+    def test_status_summary_counts_missing_and_non_file(self):
+        with tempfile.TemporaryDirectory() as directory:
+            folder = Path(directory)
+            for name in ("README.md", "LICENSE", "CONTRIBUTING.md", "CODE_OF_CONDUCT.md", "requirements.txt"):
+                (folder / name).write_text("ok", encoding="utf-8")
+            output = format_file_results(check_required_files(folder))
+            self.assertIn("존재 5개 · 누락 1개", output)
+            self.assertIn("문서 내용은 직접 확인해주세요.", output)
+
+            (folder / "main.py").mkdir()
+            output_with_dir = format_file_results(check_required_files(folder))
+            self.assertIn("존재 5개 · 누락 0개 · 파일 아님 1개", output_with_dir)
+
+    def test_collect_activity_respects_path_and_short_repo(self):
+        with tempfile.TemporaryDirectory() as directory:
+            folder = Path(directory)
+            (folder / ".git").mkdir()
+            (folder / ".foss8").mkdir()
+            (folder / ".foss8" / "team.json").write_text(
+                '{"name": "팀", "repository": "owner/repo", "members": [{"name": "가람", "github": "garam"}]}',
+                encoding="utf-8",
+            )
+            with patch("foss8.activity.collect", return_value={"ok": True}) as mock_collect:
+                result = collect_activity(path=folder)
+            self.assertEqual(result, {"ok": True})
+            self.assertEqual(mock_collect.call_args[0][0], "owner/repo")
+
+            with self.assertRaisesRegex(ValueError, "존재하는 폴더가 아닙니다"):
+                collect_activity(path=folder / "missing")
 
     def test_directory_is_not_a_file(self):
         with tempfile.TemporaryDirectory() as directory:
