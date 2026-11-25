@@ -5,7 +5,7 @@ import sys
 import tempfile
 import unittest
 
-from foss8.check import ACTIVITY_RULES, check_required_files, collect_activity, format_activity_results, format_file_results
+from foss8.check import ACTIVITY_RULES, check_release_tag, check_required_files, collect_activity, format_activity_results, format_file_results
 from unittest.mock import patch
 
 
@@ -50,6 +50,7 @@ class CheckTests(unittest.TestCase):
             self.assertIn("[존재] README.md", result.stdout)
             self.assertIn("[누락] LICENSE", result.stdout)
             self.assertIn("존재 1개 · 누락 5개", result.stdout)
+            self.assertIn("[확인 불가] v1.0.0", result.stdout)
             self.assertEqual(result.stdout.count("상태: 미확인"), 4)
 
     def test_status_summary_counts_missing_and_non_file(self):
@@ -99,6 +100,34 @@ class CheckTests(unittest.TestCase):
         self.assertIn("· 나래: 커밋, PR 생성, PR 병합, 이슈 작성", output)
         self.assertIn("gh auth status", output)
 
+    def test_release_tag_status(self):
+        # 임시 원격 저장소를 만들어 태그 Push 전후를 확인
+        with tempfile.TemporaryDirectory() as directory:
+            remote = Path(directory) / "remote.git"
+            work = Path(directory) / "work"
+
+            def git(*args):
+                subprocess.run(
+                    ["git", "-c", "user.name=test", "-c", "user.email=test@example.com",
+                     "-c", "commit.gpgsign=false", "-c", "tag.gpgsign=false", *args],
+                    cwd=directory,
+                    check=True,
+                    capture_output=True,
+                )
+
+            git("init", "--bare", str(remote))
+            git("init", str(work))
+            self.assertEqual(check_release_tag(work), "확인 불가")  # origin 미설정
+
+            git("-C", str(work), "remote", "add", "origin", str(remote))
+            git("-C", str(work), "commit", "--allow-empty", "-m", "test")
+            self.assertEqual(check_release_tag(work), "없음")
+
+            git("-C", str(work), "tag", "v1.0.0")
+            self.assertEqual(check_release_tag(work), "없음")  # 로컬에만 있는 태그
+
+            git("-C", str(work), "push", "origin", "v1.0.0")
+            self.assertEqual(check_release_tag(work), "존재")
 
     def test_directory_is_not_a_file(self):
         with tempfile.TemporaryDirectory() as directory:

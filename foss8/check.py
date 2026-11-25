@@ -1,3 +1,5 @@
+import os
+import subprocess
 from unicodedata import east_asian_width
 from datetime import date, timedelta
 from pathlib import Path
@@ -23,8 +25,8 @@ CHECK_METHODS = {
     },
     "협업 절차(기준 4·5)": {
         "method": "혼합",
-        "auto_help": "PR·리뷰·병합 기록",
-        "manual_help": "모든 기능이 해당 절차를 거쳤는지와 타 팀 이슈 해결 내용을 확인하세요.",
+        "auto_help": "이번 주 PR 생성·병합 건수 (check activity)",
+        "manual_help": "모든 기능이 리뷰를 거쳐 병합됐는지, 타 팀 이슈 해결과 받은 PR 처리 내용을 확인하세요.",
     },
 }
 
@@ -37,6 +39,8 @@ REQUIRED_FILES = (
     "requirements.txt",
     "main.py",
 )
+
+RELEASE_TAG = "v1.0.0"
 
 def load_result_items():
     # 15.5절의 결과물 평가 항목을 리스트로 반환
@@ -157,6 +161,34 @@ def format_file_results(results):
     lines.append("문서 내용은 직접 확인해주세요.")
 
     return "\n".join(lines)
+
+def check_release_tag(repository_path):
+    # 평가 기준은 GitHub에 올린 태그이므로 로컬 태그가 아닌 origin을 조회
+    try:
+        result = subprocess.run(
+            ["git", "ls-remote", "--exit-code", "origin", f"refs/tags/{RELEASE_TAG}"],
+            cwd=repository_path,
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            env={**os.environ, "GIT_TERMINAL_PROMPT": "0", "GCM_INTERACTIVE": "never"},
+            timeout=10,
+            check=False,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return "확인 불가"
+
+    # 종료 코드 0은 태그 있음, 2는 태그 없음, 그 외는 origin 미설정·접속 실패 등
+    return {0: "존재", 2: "없음"}.get(result.returncode, "확인 불가")
+
+def format_tag_result(status):
+    return "\n".join([
+        "[태그 검사]",
+        f"[{status}] {RELEASE_TAG} (origin 기준)",
+        "",
+        "새 폴더에서 설치·실행되는지는 직접 확인해주세요.",
+    ])
+
 
 ACTIVITY_RULES = (
     ("commits", "커밋", 2, date(2026, 10, 9)),
