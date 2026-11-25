@@ -5,7 +5,7 @@ import sys
 import tempfile
 import unittest
 
-from foss8.check import check_required_files, collect_activity, format_file_results
+from foss8.check import ACTIVITY_RULES, check_required_files, collect_activity, format_activity_results, format_file_results
 from unittest.mock import patch
 
 
@@ -81,6 +81,24 @@ class CheckTests(unittest.TestCase):
 
             with self.assertRaisesRegex(ValueError, "존재하는 폴더가 아닙니다"):
                 collect_activity(path=folder / "missing")
+                
+    def test_activity_errors_are_shown_once(self):
+        error = "To get started with GitHub CLI, please run:  gh auth login"
+        categories = {rule[0]: {"error": error, "links": []} for rule in ACTIVITY_RULES}
+        data = {
+            "repository": "owner/repo",
+            "start": "2026-11-23",
+            "end": "2026-11-26",
+            "members": [{"name": name, "categories": categories} for name in ("가람", "나래")],
+        }
+
+        output = format_activity_results(data)
+
+        self.assertEqual(output.count(error), 1)
+        self.assertIn("· 가람: 커밋, PR 생성, PR 병합, 이슈 작성", output)
+        self.assertIn("· 나래: 커밋, PR 생성, PR 병합, 이슈 작성", output)
+        self.assertIn("gh auth status", output)
+
 
     def test_directory_is_not_a_file(self):
         with tempfile.TemporaryDirectory() as directory:

@@ -235,6 +235,21 @@ def format_activity_table(rows):
     return lines
 
 
+def format_activity_errors(errors):
+    lines = []
+
+    # 같은 오류 메시지는 한 번만 표시하고, 해당하는 팀원과 항목을 모아서 보여줌
+    for error, targets in errors.items():
+        message = error.replace("\n", "\n  ")
+        lines.append(f"- 조회 실패: {message}")
+        for name, labels in targets.items():
+            lines.append(f"  · {name}: {', '.join(labels)}")
+        if "gh auth login" in error:
+            lines.append("  해결: gh 설치와 로그인 상태를 확인하세요. (gh auth status)")
+
+    return lines
+
+
 def format_activity_results(data, show_links=False, last_7_days=False):
     start = date.fromisoformat(data["start"])
     end = date.fromisoformat(data["end"])
@@ -242,6 +257,7 @@ def format_activity_results(data, show_links=False, last_7_days=False):
     lines = [title, f"저장소: {data['repository']}", f"조회 기간: {start}~{end} (한국 시간)", ""]
     rows = [("팀원", "커밋", "PR 생성·병합", "이슈")]
     details = []
+    errors = {}  # {오류 메시지: {팀원 이름: [항목, ...]}}
 
     for member in data["members"]:
         name = member["name"]
@@ -252,7 +268,8 @@ def format_activity_results(data, show_links=False, last_7_days=False):
             cells[key] = activity_cell(category, start, end, starts_on, minimum)
 
             if category["error"]:
-                details.append(f"- {name} · {label}: {category['error']}")
+                targets = errors.setdefault(category["error"], {})
+                targets.setdefault(name, []).append(label)
             elif show_links:
                 details.extend(f"- {name} · {label}: {link}" for link in category["links"])
 
@@ -264,6 +281,7 @@ def format_activity_results(data, show_links=False, last_7_days=False):
     if last_7_days:
         lines.append(
             "참고: 최근 7일 집계 결과는 주간 최소 기준 집계 기간과 다를 수 있습니다. 월요일부터 집계되는 이번 주 실적은 --last-7-days 없이 조회하세요.")
+    details = format_activity_errors(errors) + details
     if details:
         lines.extend(["", *details])
     lines.append("수동 확인: 활동의 실질성, 이슈의 작업 전 등록 여부, PR의 병합 전 승인 여부")
