@@ -115,12 +115,19 @@ def validate_data(data):
     if not isinstance(data['members'], list):
         raise ValueError('활동 JSON의 members 형식이 올바르지 않습니다.')
     for member in data['members']:
-        if not isinstance(member, dict) or not isinstance(member.get('categories'), dict):
+        if (not isinstance(member, dict)
+                or not isinstance(member.get('name'), str)
+                or not isinstance(member.get('github'), str)
+                or not isinstance(member.get('categories'), dict)):
             raise ValueError('활동 JSON의 팀원 활동 항목 형식이 올바르지 않습니다.')
         for key in required:
             cat = member['categories'].get(key)
-            if not isinstance(cat, dict) or 'links' not in cat or 'error' not in cat:
-                raise ValueError('활동 JSON에 필수 활동 항목이 누락되었습니다.')
+            if (not isinstance(cat, dict)
+                    or not isinstance(cat.get('links'), list)
+                    or not all(isinstance(url, str) for url in cat['links'])
+                    or 'error' not in cat
+                    or (cat['error'] is not None and not isinstance(cat['error'], str))):
+                raise ValueError('활동 JSON에 필수 활동 항목이 누락되었거나 형식이 올바르지 않습니다.')
     return data
 
 

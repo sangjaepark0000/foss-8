@@ -55,3 +55,30 @@ class ActivityTests(unittest.TestCase):
     def test_validate_data_rejects_malformed_activity_json(self):
         with self.assertRaisesRegex(ValueError, '활동 JSON 형식'):
             activity.validate_data({'name': 'team'})
+
+        valid_categories = {
+            key: {'links': [], 'error': None}
+            for key in ('commits', 'prs_created', 'prs_merged', 'reviews', 'issues')
+        }
+        base = {'repository': 'team/project', 'start': '2026-10-08', 'end': '2026-10-08'}
+
+        # 팀원 항목에 name 또는 github가 없거나 문자열이 아닌 경우
+        for bad_member in (
+            {'github': 'alice', 'categories': valid_categories},
+            {'name': 'A', 'categories': valid_categories},
+            {'name': 123, 'github': 'alice', 'categories': valid_categories},
+            {'name': 'A', 'github': None, 'categories': valid_categories},
+        ):
+            with self.assertRaisesRegex(ValueError, '팀원 활동 항목'):
+                activity.validate_data({**base, 'members': [bad_member]})
+
+        # 카테고리의 links가 리스트가 아니거나 문자열 목록이 아닌 경우
+        for bad_links in ('https://example/commit', 123, None, [123]):
+            bad_categories = {**valid_categories, 'commits': {'links': bad_links, 'error': None}}
+            with self.assertRaisesRegex(ValueError, '필수 활동 항목'):
+                activity.validate_data({**base, 'members': [{'name': 'A', 'github': 'alice', 'categories': bad_categories}]})
+
+        # 카테고리의 error가 None 또는 문자열이 아닌 경우
+        bad_error_categories = {**valid_categories, 'commits': {'links': [], 'error': 500}}
+        with self.assertRaisesRegex(ValueError, '필수 활동 항목'):
+            activity.validate_data({**base, 'members': [{'name': 'A', 'github': 'alice', 'categories': bad_error_categories}]})
