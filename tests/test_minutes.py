@@ -171,3 +171,33 @@ class MinutesTests(unittest.TestCase):
             git.assert_not_called()
         self.assertEqual(config['name'], '다른 팀')
         self.assertEqual(config['members'], self.config['members'])
+
+    def test_invalid_date_and_malformed_activity_json_show_friendly_errors(self):
+        with self.assertRaisesRegex(ValueError, 'YYYY-MM-DD'):
+            minutes.draft('2026/10/28', config=self.config)
+        bad_team = self.root / 'bad.json'
+        bad_team.write_text('{broken', encoding='utf-8')
+        with self.assertRaisesRegex(ValueError, '팀 기본정보 JSON 형식'):
+            minutes.load_config(bad_team)
+        bad_activity = self.root / 'wrong_activity.json'
+        bad_activity.write_text('{"name": "not-activity"}', encoding='utf-8')
+        result = subprocess.run(
+            [sys.executable, str(ROOT / 'main.py'), 'format', 'minutes', '--date', '2026-10-28', '--activity', str(bad_activity)],
+            cwd=self.root, capture_output=True, text=True,
+        )
+        self.assertEqual(result.returncode, 2)
+        self.assertIn('활동 JSON 형식', result.stderr)
+        self.assertNotIn('Traceback', result.stderr)
+
+    def test_activity_cli_supports_force_overwrite(self):
+        from contextlib import redirect_stderr, redirect_stdout
+        from io import StringIO
+        from foss8 import cli
+        profile = self.root / '팀정보.json'
+        profile.write_text(json.dumps(self.config, ensure_ascii=False), encoding='utf-8')
+        out_path = self.root / 'act.json'
+        sample = {'repository': 'owner/project', 'start': '2026-10-08', 'end': '2026-10-08', 'members': []}
+        with patch('foss8.activity.collect', return_value=sample), redirect_stdout(StringIO()), redirect_stderr(StringIO()):
+            self.assertEqual(cli.main(['activity', '--repo', 'owner/project', '--start', '2026-10-08', '--end', '2026-10-08', '--team-file', str(profile), '-o', str(out_path)]), 0)
+            self.assertEqual(cli.main(['activity', '--repo', 'owner/project', '--start', '2026-10-08', '--end', '2026-10-08', '--team-file', str(profile), '-o', str(out_path)]), 2)
+            self.assertEqual(cli.main(['activity', '--repo', 'owner/project', '--start', '2026-10-08', '--end', '2026-10-08', '--team-file', str(profile), '-o', str(out_path), '--force']), 0)

@@ -3,9 +3,9 @@ import re
 from .guide import plain, Catalog
 
 def cell(value):
-    value = re.sub(r"([),]|\.md|\.py)<br>", r"\1", value)
-    value = re.sub(r"&lt;([^&gt;]+)&gt;", r"<\1>", value)
-    return value.replace("<br>", "").strip()
+    value = re.sub(r"([),.\u2192]|\.md|\.py)<br>", r"\1 ", value)
+    value = value.replace("<br>", "")
+    return re.sub(r"\s+", " ", plain(value)).strip()
 
 def roadmap(catalog):
     doc = catalog.show("calendar#chapter-3")
@@ -49,11 +49,11 @@ def get_weekly_item(catalog, selector):
                     raise ValueError("안내서에 없는 주차입니다. week --list로 주차 목록을 확인하세요.")
     elif any(item["id"] == selector for item in items):
         item = next((item for item in items if item["id"] == selector), None)
-    elif selector == "makeup":
+    elif selector in ("makeup", "보강"):
         target = next((item["week"] for item in items if item["makeup"]), None)
         if target is None:
             raise ValueError("보강 주차가 존재하지 않습니다")
-        id = "week-"+ str(target) + "-" + selector
+        id = "week-" + str(target) + "-makeup"
         item = next((item for item in items if item["id"]==id), None)
     else:
         raise ValueError("잘못된 입력입니다. 주차 선택시 week 2, 보강 주차 선택시 week makeup으로 입력하세요")

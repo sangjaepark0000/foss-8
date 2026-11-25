@@ -138,10 +138,21 @@ def check_required_files(repository_path):
 
 def format_file_results(results):
     lines = []
+    counts = {"존재": 0, "누락": 0, "파일 아님": 0, "확인 불가": 0}
 
     for item in results:
-        lines.append(f"[{item['status']}] {item['name']}")
+        status = item["status"]
+        lines.append(f"[{status}] {item['name']}")
+        if status in counts:
+            counts[status] += 1
 
+    summary_parts = [f"존재 {counts['존재']}개", f"누락 {counts['누락']}개"]
+    for extra in ("파일 아님", "확인 불가"):
+        if counts[extra]:
+            summary_parts.append(f"{extra} {counts[extra]}개")
+
+    lines.append("")
+    lines.append(" · ".join(summary_parts))
     lines.append("")
     lines.append("문서 내용은 직접 확인해주세요.")
 
@@ -166,14 +177,26 @@ def format_activity_rules():
     return "\n".join(lines)
 
 
-def collect_activity(last_7_days=False):
+def collect_activity(last_7_days=False, path=None):
     from . import activity, minutes
 
-    team = minutes.load_config()
-    remote = urlsplit(team["repository"])
-    if remote.hostname != "github.com":
+    start_path = None
+    if path is not None:
+        start_path = Path(path).expanduser().resolve()
+        if not start_path.is_dir():
+            raise ValueError(f"검사 경로가 존재하는 폴더가 아닙니다: {start_path}")
+
+    team = minutes.load_config(start=start_path)
+    repo_raw = team["repository"]
+    if "://" in repo_raw:
+        remote = urlsplit(repo_raw)
+        if remote.hostname != "github.com":
+            raise ValueError("GitHub 저장소 폴더에서 실행하세요.")
+        repo = remote.path.strip("/").removesuffix(".git")
+    else:
+        repo = repo_raw.strip("/").removesuffix(".git")
+    if not repo or "/" not in repo:
         raise ValueError("GitHub 저장소 폴더에서 실행하세요.")
-    repo = remote.path.strip("/").removesuffix(".git")
 
     members = team["members"]
     if not members:

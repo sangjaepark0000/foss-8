@@ -52,9 +52,17 @@ def cycles(catalog=None):
     return sorted(result, key=lambda item: item.due_at)
 
 
+def parse_date(value):
+    if isinstance(value, date):
+        return value
+    try:
+        return date.fromisoformat(value)
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f'날짜는 YYYY-MM-DD 형식으로 입력하세요: {value}') from exc
+
+
 def select_cycle(on, week=None, catalog=None):
-    if isinstance(on, str):
-        on = date.fromisoformat(on)
+    on = parse_date(on)
     available = cycles(catalog)
     if week is not None:
         key = 'makeup' if str(week) in ('makeup', '보강') else str(week)
@@ -125,7 +133,10 @@ def load_config(path=None, team_name=None, start=None):
     root = project_root(start)
     selected = Path(path).expanduser() if path else root / '.foss8/team.json'
     if selected.is_file() or path:
-        raw = json.loads(selected.read_text(encoding='utf-8'))
+        try:
+            raw = json.loads(selected.read_text(encoding='utf-8'))
+        except json.JSONDecodeError as exc:
+            raise ValueError(f'팀 기본정보 JSON 형식을 확인하세요: {selected}') from exc
     else:
         raw = {'name': root.name, 'repository': '', 'members': []}
         try:
@@ -202,9 +213,7 @@ def activity_count(category):
     return '확인 불가' if category['error'] else str(len(category['links']))
 
 def draft(on=None, week=None, config=None, catalog=None, *, fetch_activity=False):
-    on = on or today()
-    if isinstance(on, str):
-        on = date.fromisoformat(on)
+    on = parse_date(on or today())
     catalog = catalog or Catalog()
     cycle = select_cycle(on, week, catalog)
     config = normalize_config(config or {})
