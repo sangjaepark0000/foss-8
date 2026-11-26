@@ -103,6 +103,8 @@ class MinutesPdfTests(unittest.TestCase):
 
     def test_format_command_rejects_mixed_draft_and_pdf_options(self):
         for args in [ ['format', 'minutes', '--pdf', str(self.source), '--date', '2026-10-28'],
+                      ['format', 'minutes', '--pdf', str(self.source), '--previous', 'prev.md'],
+                      ['format', 'minutes', '--pdf', str(self.source), '--activity', 'act.json'],
                       ['format', 'proposal', '--pdf', str(self.source)],
                       ['format', 'minutes', '--browser', '/browser/chromium'] ]:
             with self.subTest(args=args), redirect_stderr(StringIO()) as error, patch('foss8.minutes_pdf.export') as export:

@@ -115,7 +115,7 @@ class Document:
 class Catalog:
     def __init__(self):
         local = Path(__file__).resolve().parents[1] / "docs/guide"
-        self.root = local if (local / "source-map.json").exists() else files("foss8").joinpath("data/guide")
+        self.root = local if (local / "source-map.json").exists() else files("foss8").joinpath("guide_data")
         self.manifest = json.loads(self.root.joinpath("source-map.json").read_text(encoding="utf-8"))
         documents = []
         for path in sorted(self.root.iterdir(), key=lambda item: item.name):
@@ -133,7 +133,7 @@ class Catalog:
             name = name[:-3]
         name = ALIASES.get(name, name)
         if name not in self.documents:
-            raise ValueError(f"알 수 없는 문서: {selector}. oss guide list로 ID를 확인하세요.")
+            raise ValueError(f"알 수 없는 문서: {selector}")
         doc = self.documents[name]
         if anchor and f'<a id="{anchor}"></a>' not in doc.markdown:
             raise ValueError(f"알 수 없는 원문 위치: {selector}")

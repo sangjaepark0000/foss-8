@@ -1,4 +1,7 @@
+from unicodedata import east_asian_width
+from datetime import date, timedelta
 from pathlib import Path
+from urllib.parse import urlsplit
 from .guide import Catalog, plain
 
 # 평가 항목별 확인 방식과 안내
@@ -135,11 +138,133 @@ def check_required_files(repository_path):
 
 def format_file_results(results):
     lines = []
+    counts = {"존재": 0, "누락": 0, "파일 아님": 0, "확인 불가": 0}
 
     for item in results:
-        lines.append(f"[{item['status']}] {item['name']}")
+        status = item["status"]
+        lines.append(f"[{status}] {item['name']}")
+        if status in counts:
+            counts[status] += 1
 
+    summary_parts = [f"존재 {counts['존재']}개", f"누락 {counts['누락']}개"]
+    for extra in ("파일 아님", "확인 불가"):
+        if counts[extra]:
+            summary_parts.append(f"{extra} {counts[extra]}개")
+
+    lines.append("")
+    lines.append(" · ".join(summary_parts))
     lines.append("")
     lines.append("문서 내용은 직접 확인해주세요.")
 
+    return "\n".join(lines)
+
+ACTIVITY_RULES = (
+    ("commits", "커밋", 2, date(2026, 10, 9)),
+    ("prs_created", "PR 생성", 1, date(2026, 10, 30)),
+    ("prs_merged", "PR 병합", 1, date(2026, 10, 30)),
+    ("issues", "이슈 작성", 1, date(2026, 10, 9)),
+)
+ACTIVITY_END = date(2026, 12, 13)
+EXAM_START = date(2026, 10, 19)
+EXAM_END = date(2026, 10, 25)
+
+
+def format_activity_rules():
+    lines = ["[주간 활동 기준]", "집계 주간: 월요일~일요일 (한국 시간)"]
+    for _, label, minimum, starts_on in ACTIVITY_RULES:
+        lines.append(f"- {label}: 주 {minimum}건 이상 ({starts_on}~{ACTIVITY_END})")
+    lines.append(f"중간고사 면제: {EXAM_START}~{EXAM_END}")
+    return "\n".join(lines)
+
+
+def collect_activity(last_7_days=False, path=None):
+    from . import activity, minutes
+
+    start_path = None
+    if path is not None:
+        start_path = Path(path).expanduser().resolve()
+        if not start_path.is_dir():
+            raise ValueError(f"검사 경로가 존재하는 폴더가 아닙니다: {start_path}")
+
+    team = minutes.load_config(start=start_path)
+    repo_raw = team["repository"]
+    if "://" in repo_raw:
+        remote = urlsplit(repo_raw)
+        if remote.hostname != "github.com":
+            raise ValueError("GitHub 저장소 폴더에서 실행하세요.")
+        repo = remote.path.strip("/").removesuffix(".git")
+    else:
+        repo = repo_raw.strip("/").removesuffix(".git")
+    if not repo or "/" not in repo:
+        raise ValueError("GitHub 저장소 폴더에서 실행하세요.")
+
+    members = team["members"]
+    if not members:
+        raise ValueError("README의 팀원 표에 GitHub ID를 등록하세요.")
+
+    today = minutes.today()
+    start = today - timedelta(days=6 if last_7_days else today.weekday())
+    return activity.collect(repo, start.isoformat(), today.isoformat(), members)
+
+def activity_cell(category, start, end, starts_on, minimum):
+    if category["error"]:
+        return "확인 불가"
+    if end < starts_on or start > ACTIVITY_END:
+        return "대상 아님"
+    if EXAM_START <= start and end <= EXAM_END:
+        return "면제"
+    if start < starts_on or end > ACTIVITY_END or start <= EXAM_END and end >= EXAM_START:
+        return "수동 확인"
+    return f"{len(category['links'])}/{minimum}"
+
+
+def terminal_width(text):
+    return sum(2 if east_asian_width(char) in ("W", "F") else 1 for char in text)
+
+
+def format_activity_table(rows):
+    widths = [max(map(terminal_width, column)) for column in zip(*rows)]
+    lines = []
+
+    for index, row in enumerate(rows):
+        cells = [cell + " " * (width - terminal_width(cell)) for cell, width in zip(row, widths)]
+        lines.append(" | ".join(cells).rstrip())
+        if index == 0:
+            lines.append("-+-".join("-" * width for width in widths))
+
+    return lines
+
+
+def format_activity_results(data, show_links=False, last_7_days=False):
+    start = date.fromisoformat(data["start"])
+    end = date.fromisoformat(data["end"])
+    title = "[최근 7일 활동]" if last_7_days else "[이번 주 활동 점검]"
+    lines = [title, f"저장소: {data['repository']}", f"조회 기간: {start}~{end} (한국 시간)", ""]
+    rows = [("팀원", "커밋", "PR 생성·병합", "이슈")]
+    details = []
+
+    for member in data["members"]:
+        name = member["name"]
+        cells = {}
+
+        for key, label, minimum, starts_on in ACTIVITY_RULES:
+            category = member["categories"][key]
+            cells[key] = activity_cell(category, start, end, starts_on, minimum)
+
+            if category["error"]:
+                details.append(f"- {name} · {label}: {category['error']}")
+            elif show_links:
+                details.extend(f"- {name} · {label}: {link}" for link in category["links"])
+
+        prs = f"{cells['prs_created']} · {cells['prs_merged']}"
+        rows.append((name, cells["commits"], prs, cells["issues"]))
+
+    lines.extend(format_activity_table(rows))
+    lines.append("\n표기: 실적/기준 · PR은 생성, 병합 순서")
+    if last_7_days:
+        lines.append(
+            "참고: 최근 7일 집계 결과는 주간 최소 기준 집계 기간과 다를 수 있습니다. 월요일부터 집계되는 이번 주 실적은 --last-7-days 없이 조회하세요.")
+    if details:
+        lines.extend(["", *details])
+    lines.append("수동 확인: 활동의 실질성, 이슈의 작업 전 등록 여부, PR의 병합 전 승인 여부")
     return "\n".join(lines)

@@ -9,7 +9,7 @@ import subprocess
 import tempfile
 from urllib.parse import urlparse
 
-from . import templates
+from . import activity, templates
 from .guide import Catalog, plain
 
 
@@ -52,9 +52,17 @@ def cycles(catalog=None):
     return sorted(result, key=lambda item: item.due_at)
 
 
+def parse_date(value):
+    if isinstance(value, date):
+        return value
+    try:
+        return date.fromisoformat(value)
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f'날짜는 YYYY-MM-DD 형식으로 입력하세요: {value}') from exc
+
+
 def select_cycle(on, week=None, catalog=None):
-    if isinstance(on, str):
-        on = date.fromisoformat(on)
+    on = parse_date(on)
     available = cycles(catalog)
     if week is not None:
         key = 'makeup' if str(week) in ('makeup', '보강') else str(week)
@@ -125,7 +133,10 @@ def load_config(path=None, team_name=None, start=None):
     root = project_root(start)
     selected = Path(path).expanduser() if path else root / '.foss8/team.json'
     if selected.is_file() or path:
-        raw = json.loads(selected.read_text(encoding='utf-8'))
+        try:
+            raw = json.loads(selected.read_text(encoding='utf-8'))
+        except json.JSONDecodeError as exc:
+            raise ValueError(f'팀 기본정보 JSON 형식을 확인하세요: {selected}') from exc
     else:
         raw = {'name': root.name, 'repository': '', 'members': []}
         try:
@@ -198,16 +209,30 @@ def checklist(catalog, week):
             return values
     return []
 
+def activity_count(category):
+    return '확인 불가' if category['error'] else str(len(category['links']))
 
-def draft(on=None, week=None, config=None, catalog=None):
-    on = on or today()
-    if isinstance(on, str):
-        on = date.fromisoformat(on)
+def draft(on=None, week=None, config=None, catalog=None, *, fetch_activity=False):
+    on = parse_date(on or today())
     catalog = catalog or Catalog()
     cycle = select_cycle(on, week, catalog)
     config = normalize_config(config or {})
     team_name, members = config['name'], config['members']
     period = calendar_period(on, catalog)
+    activity_data = None
+    if fetch_activity:
+        repo = config['repository']
+        if '://' in repo:
+            remote = urlparse(repo)
+            if remote.hostname != 'github.com':
+                raise ValueError('GitHub 저장소 주소를 확인하세요.')
+            repo = remote.path
+        repo = repo.strip('/').removesuffix('.git')
+        if not members:
+            raise ValueError('팀 기본정보에 GitHub ID가 있는 팀원을 등록하세요.')
+        activity_data = activity.collect(
+            repo, cycle.recording_start, cycle.recording_end, members
+        )
     metadata = {'schema_version': 1, 'meeting_date': on.isoformat(), 'period_id': cycle.period_id,
                 'submission_week': cycle.week, 'team': team_name, 'recording_start': cycle.recording_start,
                 'recording_end': cycle.recording_end, 'due_at': cycle.due_at}
@@ -231,8 +256,19 @@ def draft(on=None, week=None, config=None, catalog=None):
             section = int(match[1])
         if section in (2, 5) and line.startswith('|') and all(not c.strip() for c in line.strip('|').split('|')):
             columns = len(line.strip('|').split('|'))
-            for person in members or [{'name': ''}]:
-                result.append('| ' + ' | '.join([person['name'].replace('|', '\\|')] + [''] * (columns - 1)) + ' |')
+            for index, person in enumerate(members or [{'name': ''}]):
+                cells = [person['name'].replace('|', '\\|')] + [''] * (columns - 1)
+                if section == 5 and activity_data is not None:
+                    categories = activity_data['members'][index]['categories']
+                    created = activity_count(categories['prs_created'])
+                    merged = activity_count(categories['prs_merged'])
+                    cells[1:5] = [
+                        activity_count(categories['commits']),
+                        f'{created}/{merged}',
+                        activity_count(categories['reviews']),
+                        activity_count(categories['issues']),
+                    ]
+                result.append('| ' + ' | '.join(cells) + ' |')
         else:
             result.append(line)
     content = '\n'.join(result) + '\n'
@@ -244,6 +280,9 @@ def draft(on=None, week=None, config=None, catalog=None):
     content = re.sub(r'## 6\. 이번 주 점검표 \(부록 A 해당 주차\)\n.*?(?=\n\[원문 양식\])',
                      lambda _: '## 6. 이번 주 점검표 (부록 A ' + period['label'] + ')\n' +
                      '\n'.join('- [ ] ' + value for value in items) + '\n', content, flags=re.S)
+    if activity_data is not None:
+        content += '\n## GitHub 활동 근거 초안 (확인 필요)\n\n'
+        content += activity.markdown(activity_data) + '\n'
     return '<!-- foss8-minutes: ' + json.dumps(metadata, ensure_ascii=False) + ' -->\n' + content
 
 

@@ -48,6 +48,48 @@ class MinutesTests(unittest.TestCase):
         self.assertNotIn('홍길동', content)
         self.assertEqual(sum(line.startswith('## ') for line in content.splitlines()), 6)
 
+    def test_fetch_activity_uses_recording_period_and_fills_member_rows(self):
+        self.config['repository'] = 'https://github.com/owner/project.git'
+        def category(*links, error=None):
+            return {'links': list(links), 'error': error}
+        categories = {
+            'commits': category('https://example/commit'),
+            'prs_created': category('https://example/pr1', 'https://example/pr2'),
+            'prs_merged': category('https://example/pr1'),
+            'reviews': category(error='권한 없음'),
+            'issues': category(),
+        }
+        empty = {key: category() for key in categories}
+        data = {'repository': 'owner/project', 'start': '2026-10-15', 'end': '2026-10-28',
+                'members': [{'name': '가람', 'github': 'garam', 'categories': categories},
+                            {'name': '나래', 'github': 'narae', 'categories': empty}]}
+        with patch('foss8.activity.collect', return_value=data) as collect:
+            content = minutes.draft('2026-10-28', config=self.config, fetch_activity=True)
+        collect.assert_called_once_with('owner/project', '2026-10-15', '2026-10-28', self.config['members'])
+        self.assertIn('| 가람 | 1 | 2/1 | 확인 불가 | 0 |  |  |', content)
+        self.assertIn('| 나래 | 0 | 0/0 | 0 | 0 |  |  |', content)
+        self.assertIn('조회 실패: 권한 없음', content)
+        self.assertIn('[근거 1](https://example/commit)', content)
+
+    def test_fetch_activity_is_opt_in(self):
+        with patch('foss8.activity.collect') as collect:
+            content = minutes.draft('2026-10-14', config=self.config)
+        collect.assert_not_called()
+        self.assertIn('| 가람 |  |  |  |  |  |  |', content)
+        self.assertNotIn('GitHub 활동 근거 초안', content)
+
+    def test_fetch_activity_cli_rejects_incompatible_options(self):
+        base = [sys.executable, str(ROOT / 'main.py'), 'format']
+        for args, message in [
+            (['minutes', '--fetch-activity', '--activity', 'activity.json'], 'not allowed'),
+            (['proposal', '--fetch-activity'], '회의록 초안 생성'),
+            (['minutes', '--fetch-activity', '--pdf', 'minutes.md'], '회의록 초안 생성'),
+        ]:
+            with self.subTest(args=args):
+                result = subprocess.run(base + args, cwd=self.root, capture_output=True, text=True)
+                self.assertEqual(result.returncode, 2)
+                self.assertIn(message, result.stderr)
+
     def test_exam_week_discloses_distinct_submission_cycle_and_sources(self):
         content = minutes.draft('2026-10-21', config=self.config)
         self.assertIn('수업 주차: 8주차', content)
@@ -129,3 +171,33 @@ class MinutesTests(unittest.TestCase):
             git.assert_not_called()
         self.assertEqual(config['name'], '다른 팀')
         self.assertEqual(config['members'], self.config['members'])
+
+    def test_invalid_date_and_malformed_activity_json_show_friendly_errors(self):
+        with self.assertRaisesRegex(ValueError, 'YYYY-MM-DD'):
+            minutes.draft('2026/10/28', config=self.config)
+        bad_team = self.root / 'bad.json'
+        bad_team.write_text('{broken', encoding='utf-8')
+        with self.assertRaisesRegex(ValueError, '팀 기본정보 JSON 형식'):
+            minutes.load_config(bad_team)
+        bad_activity = self.root / 'wrong_activity.json'
+        bad_activity.write_text('{"name": "not-activity"}', encoding='utf-8')
+        result = subprocess.run(
+            [sys.executable, str(ROOT / 'main.py'), 'format', 'minutes', '--date', '2026-10-28', '--activity', str(bad_activity)],
+            cwd=self.root, capture_output=True, text=True,
+        )
+        self.assertEqual(result.returncode, 2)
+        self.assertIn('활동 JSON 형식', result.stderr)
+        self.assertNotIn('Traceback', result.stderr)
+
+    def test_activity_cli_supports_force_overwrite(self):
+        from contextlib import redirect_stderr, redirect_stdout
+        from io import StringIO
+        from foss8 import cli
+        profile = self.root / '팀정보.json'
+        profile.write_text(json.dumps(self.config, ensure_ascii=False), encoding='utf-8')
+        out_path = self.root / 'act.json'
+        sample = {'repository': 'owner/project', 'start': '2026-10-08', 'end': '2026-10-08', 'members': []}
+        with patch('foss8.activity.collect', return_value=sample), redirect_stdout(StringIO()), redirect_stderr(StringIO()):
+            self.assertEqual(cli.main(['activity', '--repo', 'owner/project', '--start', '2026-10-08', '--end', '2026-10-08', '--team-file', str(profile), '-o', str(out_path)]), 0)
+            self.assertEqual(cli.main(['activity', '--repo', 'owner/project', '--start', '2026-10-08', '--end', '2026-10-08', '--team-file', str(profile), '-o', str(out_path)]), 2)
+            self.assertEqual(cli.main(['activity', '--repo', 'owner/project', '--start', '2026-10-08', '--end', '2026-10-08', '--team-file', str(profile), '-o', str(out_path), '--force']), 0)

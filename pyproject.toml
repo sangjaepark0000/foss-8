@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "foss8"
+dynamic = ["version"]
+description = "OSS 팀프로젝트 안내 CLI"
+readme = "README.md"
+requires-python = ">=3.12"
+
+[project.scripts]
+oss = "foss8.cli:main"
+
+[tool.setuptools]
+packages = ["foss8", "foss8.guide_data"]
+
+[tool.setuptools.package-dir]
+"foss8.guide_data" = "docs/guide"
+
+[tool.setuptools.package-data]
+"foss8.guide_data" = ["*.md", "source-map.json"]
+
+[tool.setuptools.dynamic]
+version = {attr = "foss8.__version__"}
