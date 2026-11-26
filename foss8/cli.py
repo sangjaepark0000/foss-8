@@ -172,6 +172,9 @@ def main(argv=None):
             print(f"검사 대상: {repository_path}")
             print()
             print(check.format_file_results(results))
+            # 릴리스 태그 검사
+            print()
+            print(check.format_tag_result(check.check_release_tag(repository_path)))
 
             return 0
         if args.command == "week":

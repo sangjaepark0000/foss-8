@@ -1,3 +1,5 @@
+import os
+import subprocess
 from unicodedata import east_asian_width
 from datetime import date, timedelta
 from pathlib import Path
@@ -23,8 +25,8 @@ CHECK_METHODS = {
     },
     "협업 절차(기준 4·5)": {
         "method": "혼합",
-        "auto_help": "PR·리뷰·병합 기록",
-        "manual_help": "모든 기능이 해당 절차를 거쳤는지와 타 팀 이슈 해결 내용을 확인하세요.",
+        "auto_help": "이번 주 PR 생성·병합 건수 (check activity)",
+        "manual_help": "모든 기능이 리뷰를 거쳐 병합됐는지, 타 팀 이슈 해결과 받은 PR 처리 내용을 확인하세요.",
     },
 }
 
@@ -37,6 +39,8 @@ REQUIRED_FILES = (
     "requirements.txt",
     "main.py",
 )
+
+RELEASE_TAG = "v1.0.0"
 
 def load_result_items():
     # 15.5절의 결과물 평가 항목을 리스트로 반환
@@ -158,6 +162,34 @@ def format_file_results(results):
 
     return "\n".join(lines)
 
+def check_release_tag(repository_path):
+    # 평가 기준은 GitHub에 올린 태그이므로 로컬 태그가 아닌 origin을 조회
+    try:
+        result = subprocess.run(
+            ["git", "ls-remote", "--exit-code", "origin", f"refs/tags/{RELEASE_TAG}"],
+            cwd=repository_path,
+            stdin=subprocess.DEVNULL,
+            stdout=subprocess.DEVNULL,
+            stderr=subprocess.DEVNULL,
+            env={**os.environ, "GIT_TERMINAL_PROMPT": "0", "GCM_INTERACTIVE": "never"},
+            timeout=10,
+            check=False,
+        )
+    except (OSError, subprocess.TimeoutExpired):
+        return "확인 불가"
+
+    # 종료 코드 0은 태그 있음, 2는 태그 없음, 그 외는 origin 미설정·접속 실패 등
+    return {0: "존재", 2: "없음"}.get(result.returncode, "확인 불가")
+
+def format_tag_result(status):
+    return "\n".join([
+        "[태그 검사]",
+        f"[{status}] {RELEASE_TAG} (origin 기준)",
+        "",
+        "새 폴더에서 설치·실행되는지는 직접 확인해주세요.",
+    ])
+
+
 ACTIVITY_RULES = (
     ("commits", "커밋", 2, date(2026, 10, 9)),
     ("prs_created", "PR 생성", 1, date(2026, 10, 30)),
@@ -235,6 +267,21 @@ def format_activity_table(rows):
     return lines
 
 
+def format_activity_errors(errors):
+    lines = []
+
+    # 같은 오류 메시지는 한 번만 표시하고, 해당하는 팀원과 항목을 모아서 보여줌
+    for error, targets in errors.items():
+        message = error.replace("\n", "\n  ")
+        lines.append(f"- 조회 실패: {message}")
+        for name, labels in targets.items():
+            lines.append(f"  · {name}: {', '.join(labels)}")
+        if "gh auth login" in error:
+            lines.append("  해결: gh 설치와 로그인 상태를 확인하세요. (gh auth status)")
+
+    return lines
+
+
 def format_activity_results(data, show_links=False, last_7_days=False):
     start = date.fromisoformat(data["start"])
     end = date.fromisoformat(data["end"])
@@ -242,6 +289,7 @@ def format_activity_results(data, show_links=False, last_7_days=False):
     lines = [title, f"저장소: {data['repository']}", f"조회 기간: {start}~{end} (한국 시간)", ""]
     rows = [("팀원", "커밋", "PR 생성·병합", "이슈")]
     details = []
+    errors = {}  # {오류 메시지: {팀원 이름: [항목, ...]}}
 
     for member in data["members"]:
         name = member["name"]
@@ -252,7 +300,8 @@ def format_activity_results(data, show_links=False, last_7_days=False):
             cells[key] = activity_cell(category, start, end, starts_on, minimum)
 
             if category["error"]:
-                details.append(f"- {name} · {label}: {category['error']}")
+                targets = errors.setdefault(category["error"], {})
+                targets.setdefault(name, []).append(label)
             elif show_links:
                 details.extend(f"- {name} · {label}: {link}" for link in category["links"])
 
@@ -264,6 +313,7 @@ def format_activity_results(data, show_links=False, last_7_days=False):
     if last_7_days:
         lines.append(
             "참고: 최근 7일 집계 결과는 주간 최소 기준 집계 기간과 다를 수 있습니다. 월요일부터 집계되는 이번 주 실적은 --last-7-days 없이 조회하세요.")
+    details = format_activity_errors(errors) + details
     if details:
         lines.extend(["", *details])
     lines.append("수동 확인: 활동의 실질성, 이슈의 작업 전 등록 여부, PR의 병합 전 승인 여부")
