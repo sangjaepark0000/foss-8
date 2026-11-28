@@ -63,12 +63,17 @@ def get_weekly_item(catalog, selector):
         raise ValueError("잘못된 입력입니다. 주차 선택시 week 2, 보강 주차 선택시 week makeup으로 입력하세요")
     return item
 
-def result_line(item, week_progress):
+def result_line(item, week_progress=None):
+    tasks = week_progress["tasks"] if week_progress is not None else [
+        {"role": task["role"], "text": task["text"], "completed": False}
+        for task in item["tasks"]
+    ]
+    memo = week_progress.get("memo", "") if week_progress is not None else ""
     lines = [f"{item['label']}", f"수업 내용:{item['lesson']}", "", "** 할 일 **"]
-    for task_number, task in enumerate(week_progress["tasks"], start=1):
+    for task_number, task in enumerate(tasks, start=1):
         completed = "[완료]" if task["completed"] else "[--]"
         lines.append(f"{task_number}. {completed} {task['role']}: {task['text']}")
-    lines += ["", "** 제출 **", f"• {item['turnin']}",""]
-    if week_progress["memo"] != "":
-        lines.append(f"메모: {week_progress.get('memo')}")
+    lines += ["", "** 제출 **", f"• {item['turnin']}", ""]
+    if memo != "":
+        lines.append(f"메모: {memo}")
     return "\n".join(lines)
