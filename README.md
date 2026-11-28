@@ -81,6 +81,10 @@ python main.py week           # 다가오는 가장 가까운 주차 할 일
 python main.py week --list    # 전체 주차 목록 확인
 python main.py week 13        # 특정 주차(13주차) 조회
 python main.py week makeup    # 4주차 보강(12/11) 일정 조회 (week 보강도 가능)
+python main.py week 2 --done 1           # 출력된 1번 할 일 완료/취소
+python main.py week 2 --memo 회의 전 확인  # 주차 메모 작성/교체
+python main.py week 2 --memo              # 주차 메모 삭제
+python main.py week --help
 ```
 
 예시 출력(`python main.py week 13`):
@@ -96,6 +100,19 @@ python main.py week makeup    # 4주차 보강(12/11) 일정 조회 (week 보강
 ** 제출 **
 - 회의록 #8: 11/26(목)
 ```
+
+주차를 생략하면 다가오는 가장 가까운 수업일을 선택합니다. 모든 수업일이 지났으면 마지막 주차를 표시합니다.
+`--done`은 출력된 할 일 번호를 사용하며, 같은 번호로 다시 실행하면 완료를 취소합니다.
+메모는 주차마다 하나씩 저장하며, 새 내용을 입력하면 기존 메모를 교체합니다.
+완료 상태와 메모는 다시 실행해도 유지됩니다.
+
+진행 상황은 현재 사용자 계정의 `foss8/week_progress.json`에 저장됩니다.
+Linux는 `$XDG_DATA_HOME`(미설정 시 `~/.local/share`), macOS는 `~/Library/Application Support`,
+Windows는 `%APPDATA%`(미설정 시 사용자 폴더의 `AppData/Roaming`) 아래에 저장하며,
+같은 사용자 계정에서 실행한 저장소 사본들은 이 파일을 공유합니다.
+
+안내서가 바뀌면 최신 할 일 목록을 표시합니다. 역할과 문구가 같은 항목의 완료 상태와 주차 메모는 유지하고,
+새 항목이나 역할·문구가 수정된 항목은 미완료로 시작합니다.
 
 ### 2. 서식 조회 (`format`)
 

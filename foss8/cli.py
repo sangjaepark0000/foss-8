@@ -63,7 +63,9 @@ def parser():
     check.add_argument("--show-links", action="store_true", help="활동 점검 결과에 근거 링크도 표시")
     check.add_argument("--last-7-days", action="store_true", help="오늘을 포함한 최근 7일 활동 조회")
     week = commands.add_parser("week", help="주차별 할 일 조회")
-    week.add_argument("week", nargs="?", help="조회할 주차 숫자 입력, 생략하면 다가오는 가장 가까운 주차 할 일 출력")
+    week.add_argument("selector", nargs="?", help="조회할 주차 숫자 입력, 생략하면 다가오는 가장 가까운 주차 할 일 출력")
+    week.add_argument("--done", help="할 일 번호를 선택해 할 일 완료 표시, 다시 실행시 미완료 상태로 전환")
+    week.add_argument("--memo", nargs="*", help="해당 주 메모 수정, 내용을 입력하지 않을 시 메모 삭제")
     week.add_argument("--list", action="store_true", help="주차 목록 확인")
     return root
 
@@ -184,8 +186,17 @@ def main(argv=None):
                 for item in data:
                     print(f"{item['id']:20} {item['label']}")
                 return 0
-            data = weeks.get_weekly_item(catalog, args.week or weeks.get_this_week(catalog))
-            print(weeks.result_line(data))
+            data = weeks.get_weekly_item(catalog, args.selector or weeks.get_this_week(catalog))
+            from .week_progress import load_progress
+            progress_data = load_progress(catalog)
+            if args.done:
+                from .week_progress import change_completed
+                change_completed(progress_data, data['id'], args.done)
+            if args.memo is not None:
+                memo = " ".join(args.memo)
+                from .week_progress import change_memo
+                change_memo(progress_data, data['id'], memo)
+            print(weeks.result_line(data, progress_data[data['id']]))
             return 0
         if args.command is None:
             print("OSS 팀프로젝트 도구")

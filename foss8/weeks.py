@@ -24,12 +24,16 @@ def roadmap(catalog):
         month, day = map(int, when.groups())
         id = f"week-{week}" + ("-makeup" if makeup else "")
         tasks = []
-        for task in columns[3].split("•"):
-            task = task.strip()
-            if not task:
+        task = columns[3].split("•")
+        for line in task:
+            line = line.strip()
+            if not line:
                 continue
-            role, _, text = task.partition(":")
-            tasks.append({"role": role if _ else "공통", "text": text if _ else task})
+            matches = re.findall(r"([^:]+):(.+?)(?=\s+[^\s:]+:|$)",line)
+            if matches:
+                tasks.extend({"role":role.strip(), "text": text.strip()}for role, text in matches)
+            else:
+                tasks.append({"role":"공통", "text": line.strip()})
         result.append({"id": id, "week": week, "date":date(year, month, day).isoformat(), "makeup": makeup,
                        "label": f"{week}주차" + (" 보강" if makeup else "") + f" · {date(year, month, day)}",
                        "lesson": columns[2], "tasks": tasks, "turnin": columns[4]})
@@ -46,7 +50,7 @@ def get_weekly_item(catalog, selector):
         id = "week-"+ str(selector)
         item = next((item for item in items if item["id"]==id), None)
         if item is None:
-                    raise ValueError("안내서에 없는 주차입니다. week --list로 주차 목록을 확인하세요.")
+            raise ValueError("안내서에 없는 주차입니다. week --list로 주차 목록을 확인하세요.")
     elif any(item["id"] == selector for item in items):
         item = next((item for item in items if item["id"] == selector), None)
     elif selector in ("makeup", "보강"):
@@ -59,8 +63,17 @@ def get_weekly_item(catalog, selector):
         raise ValueError("잘못된 입력입니다. 주차 선택시 week 2, 보강 주차 선택시 week makeup으로 입력하세요")
     return item
 
-def result_line(item):
+def result_line(item, week_progress=None):
+    tasks = week_progress["tasks"] if week_progress is not None else [
+        {"role": task["role"], "text": task["text"], "completed": False}
+        for task in item["tasks"]
+    ]
+    memo = week_progress.get("memo", "") if week_progress is not None else ""
     lines = [f"{item['label']}", f"수업 내용:{item['lesson']}", "", "** 할 일 **"]
-    lines += [f"- {task['role']}: {task['text']}" for task in item["tasks"]]
-    lines += ["", "** 제출 **", f"- {item['turnin']}"]
+    for task_number, task in enumerate(tasks, start=1):
+        completed = "[완료]" if task["completed"] else "[--]"
+        lines.append(f"{task_number}. {completed} {task['role']}: {task['text']}")
+    lines += ["", "** 제출 **", f"• {item['turnin']}", ""]
+    if memo != "":
+        lines.append(f"메모: {memo}")
     return "\n".join(lines)
