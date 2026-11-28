@@ -14,9 +14,9 @@ It brings the templates, evaluation criteria, weekly schedule, and GitHub activi
 
 | Feature | Commands | Description | Owner |
 |---|---|---|---|
-| Weekly schedule lookup | `oss week`, `oss week --list` | View class topics, tasks, and deadlines for the current, specific, or makeup week from the 15-week roadmap | 양하윤 |
+| Weekly schedule & progress | `oss week`, `oss week --list` | View class topics, tasks, and deadlines for the current, specific, or makeup week from the 15-week roadmap, with task completion (`--done`) and weekly notes (`--memo`) | 양하윤 |
 | Templates, drafts & PDF export | `oss format`, `oss activity` | Generate Markdown templates for minutes, proposal, interim, and final reports; prefill team info, previous actions, and GitHub activity; export submission PDFs | 박상재 |
-| Evaluation, file & activity checks | `oss check`, `oss check activity` | Show the 4 deliverable evaluation criteria (30 pts), check the 6 required repository files, and inspect weekly GitHub activity per member | 백지훈 |
+| Evaluation, file & activity checks | `oss check`, `oss check activity` | Show the 4 deliverable evaluation criteria (30 pts), check the 6 required repository files and the `v1.0.0` tag on `origin`, and inspect weekly GitHub activity per member | 백지훈 |
 
 ## Team Project Guide
 
@@ -77,10 +77,14 @@ oss --help
 ### 1. Checking the Weekly Schedule (`week`)
 
 ```bash
-python main.py week           # Upcoming nearest week's tasks
-python main.py week --list    # List all weeks in the roadmap
-python main.py week 13        # View a specific week (Week 13)
-python main.py week makeup    # View the makeup week (Dec 11; "week 보강" is also supported)
+python main.py week                      # Upcoming nearest week's tasks
+python main.py week --list               # List all weeks in the roadmap
+python main.py week 13                   # View a specific week (Week 13)
+python main.py week makeup               # View the makeup week (Dec 11; "week 보강" is also supported)
+python main.py week 2 --done 1           # Toggle completion for task #1
+python main.py week 2 --memo 회의 전 확인  # Save or replace the note for Week 2
+python main.py week 2 --memo             # Delete the note for Week 2
+python main.py week --help
 ```
 
 Example output (`python main.py week 13`):
@@ -90,12 +94,23 @@ Example output (`python main.py week 13`):
 수업 내용:프로젝트 공개 파일, 더 좋은 풀 리퀘스트, 되돌리기, 브랜치 보호
 
 ** 할 일 **
-- 팀: 상대 팀 리뷰 반영 → 병합 확인(~12/3). 우리 저장소에 온 풀 리퀘스트 병합
-- 팀: 기능 동결 — 새 기능 금지, 버그 수정·문서만. README·CONTRIBUTING·행동 수칙·LICENSE 최종 정비(14.2)
+1. [--] 팀: 상대 팀 리뷰 반영 → 병합 확인(~12/3). 우리 저장소에온 풀 리퀘스트 병합
+2. [--] 팀: 기능 동결 — 새 기능 금지, 버그 수정·문서만. README·CONTRIBUTING·행동 수칙·LICENSE 최종정비(14.2)
 
 ** 제출 **
-- 회의록 #8: 11/26(목)
+• 회의록 #8: 11/26(목)
 ```
+
+Omitting the week selects the nearest upcoming class date, or the final week once all class dates have passed.
+`--done` takes the printed task number and toggles completion when run again with the same number.
+One note is stored per week, and passing new text replaces the existing note. Completion states and notes persist across runs.
+
+Progress is stored under the current user account in `foss8/week_progress.json`:
+under `$XDG_DATA_HOME` (default `~/.local/share`) on Linux, `~/Library/Application Support` on macOS,
+and `%APPDATA%` (default `AppData/Roaming` in the user directory) on Windows.
+Separate clones run under the same user account share this file.
+
+When the guide changes, the latest task list is displayed: completion states for tasks with matching role and text and weekly notes are preserved, while newly added or modified tasks start incomplete.
 
 ### 2. Displaying Templates (`format`)
 
@@ -200,6 +215,8 @@ Each criterion's status is displayed as `미확인` (unverified), as completion 
 The basic file check verifies whether `README.md`, `LICENSE`, `CONTRIBUTING.md`,
 `CODE_OF_CONDUCT.md`, `requirements.txt`, and `main.py` exist in the target directory, and summarizes status counts (`존재 N개 · 누락 M개`) at the end.
 Omitting `--path` inspects the current working directory.
+
+Next, `[태그 검사]` checks whether the `v1.0.0` tag exists on the repository's `origin` remote (`[존재]` / `[없음]` / `[확인 불가]`).
 
 Even when all files exist, their contents, functional behavior, reproducibility, and collaboration workflows must still be verified manually.
 Specifying a directory or file path that does not exist produces an error.
